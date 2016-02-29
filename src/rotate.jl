@@ -60,3 +60,22 @@ function rotate_expand(img::AbstractImage, angle)
     assert2d(img)
     shareproperties(img, rotate_expand(data(img), isxfirst(img) ? angle : -angle))
 end
+
+function rotate_crop{T}(A::AbstractMatrix{T}, angle)
+    ϕ = _simplify_angle(angle)
+
+    if ϕ == 0
+        A
+    elseif ϕ == 1π
+        Images.reflect(A)
+    else
+        A_tfm = _ta_rotate(A, ϕ)
+        B = similar(A)
+        transform!(B, A_tfm)
+    end
+end
+
+function rotate_crop(img::AbstractImage, angle)
+    assert2d(img)
+    shareproperties(img, rotate_crop(data(img), isxfirst(img) ? angle : -angle))
+end

@@ -6,7 +6,8 @@ using Interpolations
 
 export
 
-    rotate_expand
+    rotate_expand,
+    rotate_crop
 
 include("rotate.jl")
 
