@@ -21,21 +21,19 @@ function _expand_size{R}(height, width, ϕ::R)
 
     h1 = sin(θ) * width
     h2 = sin(half_pi - θ) * height
-    height_new = h1 + h2
+    height_new = floor(Int, h1 + h2)
 
     w1 = cos(θ) * width
     w2 = cos(half_pi - θ) * height
-    width_new = w1 + w2
+    width_new = floor(Int, w1 + w2)
     height_new, width_new
 end
 
 function _ta_rotate{T}(A::AbstractMatrix{T}, ϕ)
-    height, width = size(A)
-
     itp = interpolate(A, BSpline(Linear()), OnGrid())
     etp = extrapolate(itp, zero(T))
 
-    tfm = tformrigid([ϕ, height/2, width/2])::AffineTransform{Float64,2}
+    tfm = tformrotate(ϕ)
     TransformedArray(etp, tfm)
 end
 
@@ -53,14 +51,12 @@ function rotate_expand{T}(A::AbstractMatrix{T}, angle)
     else
         A_tfm = _ta_rotate(A, ϕ)
         h, w = _expand_size(size(A,1), size(A,2), ϕ)
-        h_half = floor(Int, h/2)
-        w_half = floor(Int, w/2)
-        B_float = Base.unsafe_getindex(A_tfm, -(h_half-1):h_half, -(w_half-1):w_half)
-        convert(typeof(A), B_float)
+        B = similar(A, h, w)
+        transform!(B, A_tfm)
     end
 end
 
-function rotate_expand{T}(img::AbstractImage{T}, angle)
+function rotate_expand(img::AbstractImage, angle)
     assert2d(img)
     shareproperties(img, rotate_expand(data(img), isxfirst(img) ? angle : -angle))
 end
