@@ -5,7 +5,7 @@ function _simplify_angle{R}(angle::R)
     ϕ < zero(R) ? two_pi + ϕ : ϕ
 end
 
-function _expand_size{R}(height, width, ϕ::R)
+function _expand_size{R<:Real}(height, width, ϕ::R)
     two_pi = R(2) * π
     half_pi = π / R(2)
 
