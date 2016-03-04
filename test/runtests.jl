@@ -1,5 +1,14 @@
 using Augmentor
-using Base.Test
+using FactCheck
 
-# write your own tests here
-@test 1 == 1
+tests = [
+    ("tst_common.jl", "Utility methods"),
+]
+
+for (fn, desc) in tests
+    facts("$desc ($fn)") do
+        include(fn)
+    end
+end
+
+FactCheck.exitstatus()
