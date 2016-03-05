@@ -7,7 +7,13 @@ abstract ImageOperation
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
-@inline perform(op::FlipX, img) = hit_chance(op.chance) ? flipdim(img, 1) : img
+@inline function perform{T}(op::FlipX, img::T)
+    if hit_chance(op.chance)
+        flipdim(img, 1)
+    else
+        img
+    end::T
+end
 
 # ========================================
 
@@ -15,6 +21,12 @@ abstract ImageOperation
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
-@inline perform(op::FlipY, img) = hit_chance(op.chance) ? flipdim(img, 2) : img
+@inline function perform{T}(op::FlipY, img::T)
+    if hit_chance(op.chance)
+        flipdim(img, 2)
+    else
+        img
+    end::T
+end
 
 
