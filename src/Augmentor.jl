@@ -21,6 +21,7 @@ export
 
 include("common.jl")
 include("rotate.jl")
+include("flipdim.jl")
 include("imageoperation.jl")
 include("pipeline.jl")
 

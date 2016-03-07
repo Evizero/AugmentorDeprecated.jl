@@ -1,15 +1,19 @@
 
 abstract ImageOperation
 
+multiplier(::ImageOperation) = error("Every ImageOperation needs to specify a multiplication factor")
+
 # ========================================
 
 @defstruct FlipX <: ImageOperation (
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
+multiplier(::FlipX) = 2
+
 @inline function transform{T}(op::FlipX, img::T)
     if hit_chance(op.chance)
-        flipdim(img, 1)
+        flipx(img)
     else
         img
     end::T
@@ -21,12 +25,13 @@ end
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
+multiplier(::FlipY) = 2
+
 @inline function transform{T}(op::FlipY, img::T)
     if hit_chance(op.chance)
-        flipdim(img, 2)
+        flipy(img)
     else
         img
     end::T
 end
-
 
