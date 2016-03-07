@@ -17,7 +17,7 @@ export
     Pipeline,
         LinearPipeline,
 
-    perform
+    transform
 
 include("common.jl")
 include("rotate.jl")

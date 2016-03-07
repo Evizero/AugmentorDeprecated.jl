@@ -5,7 +5,7 @@ type LinearPipeline <: Pipeline
     transforms::Vector{ImageOperation}
 end
 
-function _perform(ops, N, types, img)
+function _transform(ops, N, types, img)
     ex = :(img_0 = img)
     for i in 1:N
         types[i] <: Any || throw(ArgumentError("Pipline must consist of ImageOperation objects"))
@@ -13,7 +13,7 @@ function _perform(ops, N, types, img)
         vout = symbol("img_$i")
         ex = quote
             $ex
-            $vout = perform(ops[$i], $vin)
+            $vout = transform(ops[$i], $vin)
         end
     end
     vlast = symbol("img_$N")
@@ -21,11 +21,11 @@ function _perform(ops, N, types, img)
     ex
 end
 
-@generated function perform{N}(ops::NTuple{N}, img)
-    _perform(ops, N, ops.parameters, img)
+@generated function transform{N}(ops::NTuple{N}, img)
+    _transform(ops, N, ops.parameters, img)
 end
 
-function perform{T}(pl::LinearPipeline, img::T)
-    perform((pl.transforms...), img)::T
+function transform{T}(pl::LinearPipeline, img::T)
+    transform((pl.transforms...), img)::T
 end
 

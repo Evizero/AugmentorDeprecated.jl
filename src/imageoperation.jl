@@ -7,7 +7,7 @@ abstract ImageOperation
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
-@inline function perform{T}(op::FlipX, img::T)
+@inline function transform{T}(op::FlipX, img::T)
     if hit_chance(op.chance)
         flipdim(img, 1)
     else
@@ -21,7 +21,7 @@ end
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
-@inline function perform{T}(op::FlipY, img::T)
+@inline function transform{T}(op::FlipY, img::T)
     if hit_chance(op.chance)
         flipdim(img, 2)
     else
