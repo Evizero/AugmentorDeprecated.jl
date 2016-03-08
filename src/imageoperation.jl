@@ -1,12 +1,12 @@
 
 abstract ImageOperation
 
-multiplier(::ImageOperation) = error("Every ImageOperation needs to specify a multiplication factor")
+multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs to specify a multiplication factor"))
 
 # ========================================
 
 @defstruct FlipX <: ImageOperation (
-    (chance::Float64 = .5, 0 < chance <= 1),
+    (chance::Float64 = .5, 0 <= chance <= 1),
 )
 
 Base.show(io::IO, op::FlipX) = print(io, "FlipX with $(op.chance*100) % chance")
@@ -23,7 +23,7 @@ end
 # ========================================
 
 @defstruct FlipY <: ImageOperation (
-    (chance::Float64 = .5, 0 < chance <= 1),
+    (chance::Float64 = .5, 0 <= chance <= 1),
 )
 
 Base.show(io::IO, op::FlipY) = print(io, "FlipY with $(op.chance*100) % chance")

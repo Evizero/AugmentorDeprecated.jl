@@ -18,6 +18,8 @@ export
         FlipX,
         FlipY,
 
+    multiplier,
+
     Pipeline,
         LinearPipeline,
 
