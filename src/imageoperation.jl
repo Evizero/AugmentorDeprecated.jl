@@ -9,6 +9,7 @@ multiplier(::ImageOperation) = error("Every ImageOperation needs to specify a mu
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
+Base.show(io::IO, op::FlipX) = print(io, "FlipX with $(op.chance*100) % chance")
 multiplier(::FlipX) = 2
 
 @inline function transform{T}(op::FlipX, img::T)
@@ -25,6 +26,7 @@ end
     (chance::Float64 = .5, 0 < chance <= 1),
 )
 
+Base.show(io::IO, op::FlipY) = print(io, "FlipY with $(op.chance*100) % chance")
 multiplier(::FlipY) = 2
 
 @inline function transform{T}(op::FlipY, img::T)
