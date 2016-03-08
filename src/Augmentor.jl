@@ -17,8 +17,12 @@ export
     ImageOperation,
         FlipX,
         FlipY,
+        Resize,
 
     multiplier,
+
+    ImageSource,
+        DirImageSource,
 
     Pipeline,
         LinearPipeline,
@@ -29,6 +33,8 @@ include("common.jl")
 include("rotate.jl")
 include("flipdim.jl")
 include("imageoperation.jl")
+include("imagesource.jl")
 include("pipeline.jl")
 
-end # module
+end
+
