@@ -10,6 +10,10 @@ export
     rotate_expand,
     rotate_crop,
 
+    flipx,
+    flipy,
+    flipz,
+
     ImageOperation,
         FlipX,
         FlipY,
