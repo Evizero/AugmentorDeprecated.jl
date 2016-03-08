@@ -27,3 +27,15 @@ context("FlipY") do
     @fact transform(FlipY(1), img) --> flipdim(img, "y")
 end
 
+context("Resize") do
+    @fact Resize <: ImageOperation --> true
+    @fact multiplier(Resize()) --> 1
+    op = Resize()
+    @fact op.width --> 64
+    @fact op.height --> 64
+    op = Resize(width = 23, height = 12)
+    @fact op.width --> 23
+    @fact op.height --> 12
+    @fact size(transform(op, img)) --> (23, 12)
+end
+

@@ -1,4 +1,3 @@
-
 abstract ImageOperation
 
 multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs to specify a multiplication factor"))
@@ -34,6 +33,24 @@ multiplier(::FlipY) = 2
         flipy(img)
     else
         img
+    end::T
+end
+
+# ========================================
+
+@defstruct Resize <: ImageOperation (
+    (width::Int  = 64, 1 <= width),
+    (height::Int = 64, 1 <= height),
+)
+
+Base.show(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height)")
+multiplier(::Resize) = 1
+
+@inline function transform{T}(op::Resize, img::T)
+    if isxfirst(img)
+        Images.imresize(img, (op.width, op.height))
+    else
+        Images.imresize(img, (op.height, op.width))
     end::T
 end
 
