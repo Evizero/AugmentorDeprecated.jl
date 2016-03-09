@@ -34,6 +34,7 @@ include("rotate.jl")
 include("flipdim.jl")
 include("imageoperation.jl")
 include("imagesource.jl")
+include("dirimagesource.jl")
 include("pipeline.jl")
 
 end
