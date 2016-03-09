@@ -5,6 +5,10 @@ function Base.rand(s::ImageSource)
     s[index]
 end
 
+function Base.rand(s::ImageSource, n::Integer)
+    [rand(s) for _ in 1:n]
+end
+
 Base.eltype{T<:ImageSource}(::Type{T}) = Image
 Base.endof(s::ImageSource) = length(s)
 

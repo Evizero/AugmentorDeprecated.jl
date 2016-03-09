@@ -12,7 +12,7 @@ type LinearPipeline <: Pipeline
 end
 
 function Base.rand(pl::LinearPipeline)
-    transform(pl, rand(pl.imagesource)...)
+    transform(pl, rand(pl.imagesource))
 end
 
 function Base.push!(pl::LinearPipeline, op::ImageOperation)
@@ -50,33 +50,20 @@ function _transform(ops, N, types, img)
     ex
 end
 
-@generated function transform{N}(ops::NTuple{N}, img)
+@generated function transform{N,T<:AbstractImage}(ops::NTuple{N}, img::T)
     @inbounds res = _transform(ops, N, ops.parameters, img)
     res
 end
 
-function transform(pl::LinearPipeline, imgs::AbstractArray, labels::AbstractArray)
-    @assert size(imgs) == size(labels)
-    imgs_out = similar(imgs)
-    labels_out = similar(labels)
-    for iter in eachindex(imgs)
-        img_out, label_out = transform(pl, imgs[iter], labels[iter])
-        imgs_out[iter] = img_out
-        labels_out[iter] = label_out
-    end
-    imgs_out, labels_out
-end
-
 function transform(pl::LinearPipeline, imgs::AbstractArray)
     imgs_out = similar(imgs)
+    pl_tuple = (pl.operations...)
     for iter in eachindex(imgs)
-        imgs_out[iter] = transform(pl, imgs[iter])
+        img = imgs[iter]
+        T = typeof(img)
+        imgs_out[iter] = transform(pl_tuple, img)::T
     end
     imgs_out
-end
-
-function transform{T<:AbstractImage}(pl::Pipeline, img::T, label)
-    transform(pl, img), label
 end
 
 function transform{T<:AbstractImage}(pl::LinearPipeline, img::T)

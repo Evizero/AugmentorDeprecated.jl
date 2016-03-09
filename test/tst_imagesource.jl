@@ -27,14 +27,11 @@ context("DirImageSource") do
     src = DirImageSource(dir)
     @fact length(src) --> 3
 
-    img, lbl = rand(src)
+    img = rand(src)
     @fact typeof(img) <: Image --> true
-    @fact typeof(lbl) <: UTF8String --> true
 
-    imgs, lbls = rand(src, 2)
+    imgs = rand(src, 2)
     @fact typeof(imgs) <: Vector --> true
-    @fact typeof(lbls) <: Vector --> true
     @fact eltype(imgs) <: Image --> true
-    @fact eltype(lbls) <: UTF8String --> true
 end
 

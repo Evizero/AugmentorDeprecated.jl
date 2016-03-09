@@ -3,6 +3,15 @@ immutable DirImageSource <: ImageSource
     files::Vector{UTF8String}
 end
 
+function _name(filename)
+    ending = match(r"\.[a-zA-Z]+$", filename)
+    if ending == nothing || ending.offset == 1
+        return filename
+    else
+        filename[1:(ending.offset-1)]
+    end
+end
+
 function DirImageSource(path = "."; expand = false, nargs...)
     filepaths = listfiles(path; expand = expand, nargs...)
     filenames = map(_ -> relpath(_, path), filepaths)
@@ -11,20 +20,13 @@ end
 
 function Base.getindex(s::DirImageSource, index::Integer)
     filename = s.files[index]
-    label = UTF8String(dirname(filename))
+    img_dir = dirname(filename)
+    img_dir = length(img_dir) == 0 ? "." : img_dir
+    img_name = _name(relpath(filename, img_dir))
     img = load(joinpath(s.path, filename))::Image
-    img, label
-end
-
-function Base.rand(s::DirImageSource, n)
-    imgs = Array(Image, n)
-    labels = Array(UTF8String, n)
-    @inbounds for i = 1:n
-        img, label = rand(s)
-        imgs[i] = img
-        labels[i] = label
-    end
-    imgs, labels
+    img["name"] = img_name
+    img["category"] = img_dir
+    img
 end
 
 Base.length(s::DirImageSource) = length(s.files)

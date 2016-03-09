@@ -15,18 +15,18 @@ end
 """
     listfiles([dir, hidden=false, expand=false, recursive=true, formats=[".png", ".jpg", ".jpeg", ".bmp"]) -> Vector{UTF8String}
 
-Returns the relative paths to the visible files in the directory `dir`
-that have a file-ending specified in `formats`.
-if `dir` is not provided the current working path will be used.
+Returns the relative paths to those visible files in the directory `dir`
+whose file-endings are specified in `formats`.
+If `dir` is not provided the current working path will be used.
 
 - `hidden`: If `true`, then files starting with "." are also included.
 
-- `recursive`: If `true`, then the function will recursively step
-through all the subdirectories as well and append the paths to
+- `recursive`: If `true`, then the function will also recursively step
+through all the subdirectories and append the paths to
 their content relative to `dir`.
 
 - `expand`: If `true`, then all the paths will be expaned to the full
-absolute paths instead of being realtive to `dir`
+absolute paths instead of being realtive to `dir`.
 
 - `formats`: The allowed file endings. Files with a different suffix
 will not be included in the return value.
