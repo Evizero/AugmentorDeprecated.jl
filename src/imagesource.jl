@@ -1,6 +1,20 @@
 abstract ImageSource
 
-function listfiles(dir; hidden=false, expand=false, recursive=true)
+"""
+    listfiles([dir, hidden=false, expand=false, recursive=true]) -> Vector{UTF8String}
+
+Returns the relative paths to the visible files in the directory `dir`.
+
+- `hidden`: If `true`, then files starting with "." are also included.
+
+- `recursive`: If `true`, then the function will recursively step
+through all the subdirectories as well and append the paths to
+their content relative to `dir`.
+
+- `expand`: If `true`, then all the paths will be expaned to the full
+absolute paths instead of being realtive to `dir`
+"""
+function listfiles(dir = "."; hidden=false, expand=false, recursive=true)
     dircontent = convert(Vector{UTF8String}, readdir(dir))
 
     # exclude hidden files (i.e. the ones starting with ".")
