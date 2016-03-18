@@ -28,3 +28,11 @@ todo
 
 This code is free to use under the terms of the MIT license.
 
+## Acknowledgment
+
+This package makes heavy use of the following packages in order to provide it's main functionality. To see at full list of utilized packages, please take a look at the REQUIRE file.
+
+- [Images.jl](https://github.com/timholy/Images.jl)
+- [AffineTransforms.jl](https://github.com/timholy/AffineTransforms.jl)
+- [Interpolations.jl](https://github.com/tlycken/Interpolations.jl)
+
