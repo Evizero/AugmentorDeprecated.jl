@@ -1,3 +1,34 @@
+"""
+`abstract ImageSource`
+
+Description
+============
+
+Abstract supertype for all image sources.
+Every subtype of ImageSource must implement the read-only
+functions of the array interface.
+Additionally, they must fully implement the iterator interface.
+
+Methods
+========
+
+- **`rand`** : Loads and returns a random image, or an array of
+images depending on the parameters.
+
+- **`length`** : Returns the total number of images that are available.
+
+- **`getindex`** : Loads and returns the image of the given index.
+
+Author(s)
+==========
+
+- Christof Stocker (Github: https://github.com/Evizero)
+
+see also
+=========
+
+`DirImageSource`
+"""
 abstract ImageSource
 
 function Base.rand(s::ImageSource)

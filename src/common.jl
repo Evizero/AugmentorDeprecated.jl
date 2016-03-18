@@ -13,11 +13,22 @@ function Base.endswith{T<:AbstractString}(filename::AbstractString, suffixes::Ab
 end
 
 """
-    listfiles([dir, hidden=false, expand=false, recursive=true, formats=[".png", ".jpg", ".jpeg", ".bmp"]) -> Vector{UTF8String}
+`listfiles(dir; nargs...)` → `Vector{UTF8String}`
+
+Description
+============
 
 Returns the relative paths to those visible files in the directory `dir`
 whose file-endings are specified in `formats`.
 If `dir` is not provided the current working path will be used.
+
+Usage
+======
+
+    listfiles([dir, hidden=false, expand=false, recursive=true, formats=[".png", ".jpg", ".jpeg", ".bmp"])
+
+Arguments
+==========
 
 - `hidden`: If `true`, then files starting with "." are also included.
 
@@ -30,6 +41,16 @@ absolute paths instead of being realtive to `dir`.
 
 - `formats`: The allowed file endings. Files with a different suffix
 will not be included in the return value.
+
+Author(s)
+==========
+
+- Christof Stocker (Github: https://github.com/Evizero)
+
+see also
+=========
+
+`DirImageSource`
 """
 function listfiles(
         dir = ".";
