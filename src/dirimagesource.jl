@@ -17,7 +17,7 @@ of the array interface.
 Additionally, it fully implements the iterator interface and can be
 used as for loop to iterate over all the stored images.
 
- It Usage
+Usage
 ======
 
     DirImageSource(path = "."; hidden=false, expand=false, recursive=true, formats=[".png", ".jpg", ".jpeg", ".bmp"])
