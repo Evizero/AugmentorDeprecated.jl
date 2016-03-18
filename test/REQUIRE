@@ -1,3 +1,6 @@
 FactCheck
 Images
 TestImages
+@osx QuartzImageIO
+@windows ImageMagick
+@linux ImageMagick
