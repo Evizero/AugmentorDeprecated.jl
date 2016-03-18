@@ -1,37 +1,37 @@
 dir = joinpath(Pkg.dir("Augmentor"), "test/sampledir")
 
-context("listfiles") do
+@testset "listfiles" begin
     lst = Augmentor.listfiles(dir;
             expand=false, hidden=false, recursive=false)
-    @fact typeof(lst) <: Vector{UTF8String} --> true
-    @fact length(lst) --> 2
+    @test typeof(lst) <: Vector{UTF8String}
+    @test length(lst) == 2
 
     lst = Augmentor.listfiles(dir;
             expand=false, hidden=true, recursive=false)
-    @fact typeof(lst) <: Vector{UTF8String} --> true
-    @fact length(lst) --> 3
+    @test typeof(lst) <: Vector{UTF8String}
+    @test length(lst) == 3
 
     lst = Augmentor.listfiles(dir;
             expand=false, hidden=false, recursive=true)
-    @fact typeof(lst) <: Vector{UTF8String} --> true
-    @fact length(lst) --> 3
+    @test typeof(lst) <: Vector{UTF8String}
+    @test length(lst) == 3
 
     lst = Augmentor.listfiles(dir;
             expand=false, hidden=true, recursive=true)
-    @fact typeof(lst) <: Vector{UTF8String} --> true
-    @fact length(lst) --> 5
+    @test typeof(lst) <: Vector{UTF8String}
+    @test length(lst) == 5
 end
 
-context("DirImageSource") do
-    @fact DirImageSource <: ImageSource --> true
+@testset "DirImageSource" begin
+    @test DirImageSource <: ImageSource
     src = DirImageSource(dir)
-    @fact length(src) --> 3
+    @test length(src) == 3
 
     img = rand(src)
-    @fact typeof(img) <: Image --> true
+    @test typeof(img) <: Image
 
     imgs = rand(src, 2)
-    @fact typeof(imgs) <: Vector --> true
-    @fact eltype(imgs) <: Image --> true
+    @test typeof(imgs) <: Vector
+    @test eltype(imgs) <: Image
 end
 

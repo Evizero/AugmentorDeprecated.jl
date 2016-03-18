@@ -1,7 +1,13 @@
 using Augmentor
 using Images
 using TestImages
-using FactCheck
+
+if VERSION >= v"0.5-"
+    using Base.Test
+else
+    using BaseTestNext
+    const Test = BaseTestNext
+end
 
 type FaultyOp <: Augmentor.ImageOperation end
 
@@ -14,9 +20,8 @@ tests = [
 ]
 
 for (fn, desc) in tests
-    facts("$desc ($fn)") do
+    @testset "$desc ($fn)" begin
         include(fn)
     end
 end
 
-FactCheck.exitstatus()
