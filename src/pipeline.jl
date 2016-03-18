@@ -2,17 +2,11 @@
 abstract Pipeline
 
 type LinearPipeline <: Pipeline
-    imagesource::ImageSource
     operations::Vector{ImageOperation}
 
-    function LinearPipeline(src::ImageSource, ops::Vector{ImageOperation}
-= Array{ImageOperation,1}())
-        new(src, ops)
+    function LinearPipeline(ops::Vector{ImageOperation} = Array{ImageOperation,1}())
+        new(ops)
     end
-end
-
-function Base.rand(pl::LinearPipeline)
-    transform(pl, rand(pl.imagesource))
 end
 
 function Base.push!(pl::LinearPipeline, op::ImageOperation)
@@ -22,16 +16,13 @@ end
 
 function Base.show(io::IO, pl::LinearPipeline)
     println(io, "LinearPipeline")
-    println(io, "- source: $(pl.imagesource.path)")
     println(io, "- $(length(pl.operations)) operation(s): ", )
-
     maxfactor = 1
-
     for op in pl.operations
         println(io, "    - $op (factor: $(multiplier(op))x)")
         maxfactor = maxfactor * multiplier(op)
     end
-    print(io, "- new dataset size: $(length(pl.imagesource) * maxfactor) (factor: $(maxfactor)x)")
+    print(io, "- total factor: $(maxfactor)x")
 end
 
 function _transform(ops, N, types, img)
