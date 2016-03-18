@@ -1,8 +1,9 @@
 # Augmentor
 
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 [![Build Status](https://travis-ci.org/Evizero/Augmentor.jl.svg?branch=master)](https://travis-ci.org/Evizero/Augmentor.jl)
 
-Image augmentation library in native Julia.
+An image augmentation library in for [Julia](julialang.org).
 
 ## Installation
 
@@ -22,4 +23,8 @@ Pkg.checkout("Augmentor")
 ## Usage
 
 todo
+
+## License
+
+This code is free to use under the terms of the MIT license.
 
