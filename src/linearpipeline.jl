@@ -146,7 +146,7 @@ function _transform(ops, N, types, img)
     ex
 end
 
-@generated function transform{N,T<:AbstractImage}(ops::NTuple{N}, img::T)
+@generated function transform{N,T}(ops::NTuple{N}, img::T)
     @inbounds res = _transform(ops, N, ops.parameters, img)
     res
 end
@@ -162,7 +162,7 @@ function transform(pl::LinearPipeline, imgs::AbstractArray)
     imgs_out
 end
 
-function transform{T<:AbstractImage}(pl::LinearPipeline, img::T)
+function transform{T}(pl::LinearPipeline, img::T)
     transform((pl.operations...), img)::T
 end
 

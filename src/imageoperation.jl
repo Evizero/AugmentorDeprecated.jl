@@ -2,41 +2,65 @@ abstract ImageOperation
 
 multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs to specify a multiplication factor"))
 
-# ========================================
+@inline function transform(op::ImageOperation, imgs) #::Tuple)
+    transform(op, imgs[1]), transform(op, imgs[2])
+end
 
-@defstruct FlipX <: ImageOperation (
-    (chance::Float64 = .5, 0 <= chance <= 1),
-)
+# ==========================================================
 
-Base.show(io::IO, op::FlipX) = print(io, "FlipX with $(op.chance*100) % chance")
+type ProbableOperation{T<:ImageOperation} <: ImageOperation
+    operation::T
+    chance::Float64
+end
+
+function ProbableOperation{T<:ImageOperation}(op::T; chance::Real = .5)
+    0 <= chance <= 1. || throw(ArgumentError("chance has to be between 0 and 1"))
+    ProbableOperation{T}(op, Float64(chance))
+end
+
+multiplier(po::ProbableOperation) = multiplier(po.operation)
+
+function Base.show(io::IO, po::ProbableOperation)
+    print(io, round(Int, po.chance*100), "% chance to ", po.operation)
+end
+
+function transform{T}(po::ProbableOperation, img::T)
+    if hit_chance(po.chance)
+        transform(po.operation, img)
+    else
+        img
+    end::T
+end
+
+# ==========================================================
+
+immutable FlipX <: ImageOperation
+end
+
+FlipX(chance) = ProbableOperation(FlipX(); chance = chance)
+
+Base.show(io::IO, op::FlipX) = print(io, "FlipX")
 multiplier(::FlipX) = 2
 
-@inline function transform{T}(op::FlipX, img::T)
-    if hit_chance(op.chance)
-        flipx(img)
-    else
-        img
-    end::T
+@inline function transform{T<:AbstractImage}(op::FlipX, img::T)
+    flipx(img)::T
 end
 
-# ========================================
+# ==========================================================
 
-@defstruct FlipY <: ImageOperation (
-    (chance::Float64 = .5, 0 <= chance <= 1),
-)
+immutable FlipY <: ImageOperation
+end
 
-Base.show(io::IO, op::FlipY) = print(io, "FlipY with $(op.chance*100) % chance")
+FlipY(chance) = ProbableOperation(FlipY(); chance = chance)
+
+Base.show(io::IO, op::FlipY) = print(io, "FlipY")
 multiplier(::FlipY) = 2
 
-@inline function transform{T}(op::FlipY, img::T)
-    if hit_chance(op.chance)
-        flipy(img)
-    else
-        img
-    end::T
+@inline function transform{T<:AbstractImage}(op::FlipY, img::T)
+    flipy(img)::T
 end
 
-# ========================================
+# ==========================================================
 
 @defstruct Resize <: ImageOperation (
     (width::Int  = 64, 1 <= width),
@@ -46,7 +70,7 @@ end
 Base.show(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height)")
 multiplier(::Resize) = 1
 
-@inline function transform{T}(op::Resize, img::T)
+function transform{T<:AbstractImage}(op::Resize, img::T)
     if isxfirst(img)
         Images.imresize(img, (op.width, op.height))
     else

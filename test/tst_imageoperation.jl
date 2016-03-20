@@ -1,5 +1,6 @@
 A = UInt8[200 150; 50 1]
 img = grayim(A)
+img2 = grayim(A+10)
 
 @testset "ImageOperation" begin
     @test_throws ArgumentError multiplier(FaultyOp())
@@ -7,10 +8,12 @@ end
 
 @testset "FlipX" begin
     @test FlipX <: ImageOperation
-    @test multiplier(FlipX()) == 2
     op = FlipX()
-    @test op.chance == 0.5
+    @test multiplier(op) == 2
+    @test typeof(op) <: FlipX
     op = FlipX(0.7)
+    @test multiplier(op) == 2
+    @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
     @test transform(FlipX(0), img) == img
     @test transform(FlipX(1), img) == flipdim(img, "x")
@@ -18,10 +21,12 @@ end
 
 @testset "FlipY" begin
     @test FlipY <: ImageOperation
-    @test multiplier(FlipY()) == 2
     op = FlipY()
-    @test op.chance == 0.5
+    @test multiplier(op) == 2
+    @test typeof(op) <: FlipY
     op = FlipY(0.7)
+    @test multiplier(op) == 2
+    @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
     @test transform(FlipY(0), img) == img
     @test transform(FlipY(1), img) == flipdim(img, "y")
@@ -37,5 +42,17 @@ end
     @test op.width == 23
     @test op.height == 12
     @test size(transform(op, img)) == (23, 12)
+end
+
+@testset "Tuple of Image" begin
+    imgs = (img, img2)
+    op = FlipX()
+    out1, out2 = transform(op, imgs)
+    @test out1 == flipx(img)
+    @test out2 == flipx(img2)
+    op = FlipX(1)
+    out1, out2 = transform(op, imgs)
+    @test out1 == flipx(img)
+    @test out2 == flipx(img2)
 end
 
