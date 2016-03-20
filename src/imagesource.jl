@@ -4,18 +4,19 @@
 Description
 ============
 
-Abstract supertype for all image sources.
-Every subtype of ImageSource must implement the read-only
-functions of the array interface.
-Additionally, they must fully implement the iterator interface.
+Abstract supertype for all image sources. Every subtype of
+`ImageSource` must implement the read-only functions of the array
+interface. Additionally, they must fully implement the iterator
+interface.
 
 Methods
 ========
 
 - **`rand`** : Loads and returns a random image, or an array of
-images depending on the parameters.
+images (depending on the parameters).
 
-- **`length`** : Returns the total number of images that are available.
+- **`length`** : Returns the total number of images that are
+available in the image source.
 
 - **`getindex`** : Loads and returns the image of the given index.
 
@@ -26,6 +27,8 @@ Author(s)
 
 see also
 =========
+
+`rand`, `length`
 
 `DirImageSource`
 """

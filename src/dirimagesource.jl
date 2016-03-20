@@ -11,9 +11,9 @@ Note that subdirectories will be treated as categories and their
 relative paths will be stored as metadata within the loaded image
 object.
 
-Every subtype of ImageSource implements most read-only functions
+Every subtype of `ImageSource` implements most read-only functions
 of the array interface. Additionally, it fully implements the
-iterator interface and can be used as for loop to iterate over
+iterator interface and can be used as for-loop to iterate over
 all the stored images.
 
 Usage
@@ -30,7 +30,7 @@ the subdirectories contain the actual images. However, for this
 to work `recursive` has to be set to `true`
 
 - **`expand`** : If `true`, all the paths will be extended to
-absolute paths instead of being  relative to the root directory
+absolute paths instead of being relative to the root directory
 specified by `path`.
 It is generally recommended to set `expand = false` (default).
 
@@ -38,7 +38,7 @@ It is generally recommended to set `expand = false` (default).
 `path` will be processed as well. That implies that if any
 subdirectory, or their subdirectories, contain any images of
 a format specified by `formats`, then those images will be part
-of the `DirImageSource`.
+of the `DirImageSource`. Defaults to `true`
 
 - **`formats`** : Array of strings. Specifies which file endings
 should be considered an image. Any file of such ending will be
@@ -86,6 +86,8 @@ Examples
 
 see also
 =========
+
+`rand`, `length`
 
 `ImageSource`
 """

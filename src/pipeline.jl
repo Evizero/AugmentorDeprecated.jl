@@ -11,15 +11,15 @@ oulined below.
 Methods
 ========
 
-- **`fit!`** : Fits those image operations of the pipeline, which
-have learnable parameters, to the given trainingset.
+- **`fit!`** : Fits all the image operations of the pipeline,
+which have learnable parameters, to the given trainingset.
 
 - **`transform`** : Applies the image operations of the pipline
 to the given image or set of images and returns those.
 
-- **`summary`** : Computes and prints a verbose description of the
-image processing pipeline. The computation for this function is a
-little more involed than for `show`.
+- **`summary`** : Computes and prints a verbose description of
+the image processing pipeline. The computation for this function
+is a little more involved than for `show`.
 
 Author(s)
 ==========

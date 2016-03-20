@@ -18,8 +18,8 @@ end
 Description
 ============
 
-Returns the relative paths to those visible files in the directory
-`dir` whose file-endings are specified in `formats`. If `dir` is
+Returns the relative paths to all the visible files in the directory
+`dir` whose file-endings are contained within `formats`. If `dir` is
 not provided the current working path will be used.
 
 Usage
@@ -33,11 +33,11 @@ Arguments
 - `hidden`: If `true`, then files starting with "." are also included.
 
 - `recursive`: If `true`, then the function will also recursively step
-through all the subdirectories and append the paths to
-their content relative to `dir`.
+through all the subdirectories and append the paths to their content
+relative to `dir`.
 
-- `expand`: If `true`, then all the paths will be expaned to the full
-absolute paths instead of being realtive to `dir`.
+- `expand`: If `true`, then all the paths will be expaneded to the
+full absolute paths instead of being relpathtive to `dir`.
 
 - `formats`: The allowed file endings. Files with a different suffix
 will not be included in the return value.

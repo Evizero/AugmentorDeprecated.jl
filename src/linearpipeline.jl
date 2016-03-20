@@ -10,9 +10,16 @@ of image operations.
 The contained `ImageOperation`s are stored as a vector, in which
 the first element will be the first operation applied to an image
 passed to `transform`.
-The result of the first operation will then be fed as input to the
-second one, and so on, until all operations were applied. The
+The outcome of the first operation will then be fed as input to
+the second one, and so on, until all operations were applied. The
 outcome of the last operation will then be returned as the result.
+
+Usage
+======
+
+    LinearPipeline(operations)
+
+    LinearPipeline(operations...)
 
 Methods
 ========
@@ -24,7 +31,7 @@ pipeline contains.
 pipeline. Returns itself.
 
 - **`append!`** : Adds the elements of the second parameter, which
-can be either another pipeline or some other collection of
+can either be another `LinearPipeline` or some other collection of
 `ImageOperation`s, to the end of the current pipeline.
 Returns itself.
 
@@ -34,16 +41,16 @@ at the given position (index). Returns itself.
 - **`deleteat!`** : Removes the `ImageOperation` at the specified
 position from the pipeline. Returns itself.
 
-- **`fit!`** : Fits those image operations of the pipeline, which
-have learnable parameters, to the given trainingset.
+- **`fit!`** : Fits all the image operations of the pipeline,
+which have learnable parameters, to the given trainingset.
 
 - **`transform`** : Applies the `ImageOperation`s of the pipeline
-one after another to the given image or set of images and returns
+one after another to the given image, or set of images, and returns
 the transformed image(s).
 
 - **`summary`** : Computes and prints a verbose description of the
 image processing pipeline. The computation for this function is a
-little more involed than for `show`.
+little more involved than for `show`.
 
 Author(s)
 ==========
@@ -63,8 +70,8 @@ Examples
     pl = LinearPipeline()
 
     # add operations to pipeline
-    push!(pl, FlipX())
-    push!(pl, FlipY(chance = 1))
+    push!(pl, FlipX(0.5))
+    push!(pl, FlipY(0.1))
     push!(pl, Resize(64,64))
 
     # transform example image
