@@ -1,5 +1,11 @@
 abstract ImageOperation
 
+function _log_operation!(op::ImageOperation, img::Image)
+    history = get!(properties(img), "operations", Array{ImageOperation,1}())
+    push!(history, op)
+    img
+end
+
 multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs to specify a multiplication factor"))
 
 @inline function transform(op::ImageOperation, imgs) #::Tuple)
@@ -21,7 +27,7 @@ end
 multiplier(po::ProbableOperation) = multiplier(po.operation)
 
 function Base.show(io::IO, po::ProbableOperation)
-    print(io, round(Int, po.chance*100), "% chance to ", po.operation)
+    print(io, round(Int, po.chance*100), "% chance to: ", po.operation)
 end
 
 function transform{T}(po::ProbableOperation, img::T)
@@ -39,11 +45,12 @@ end
 
 FlipX(chance) = ProbableOperation(FlipX(); chance = chance)
 
-Base.show(io::IO, op::FlipX) = print(io, "FlipX")
+Base.show(io::IO, op::FlipX) = print(io, "Flip x-axis.")
 multiplier(::FlipX) = 2
 
 @inline function transform{T<:AbstractImage}(op::FlipX, img::T)
-    flipx(img)::T
+    result = copyproperties(img, flipx(img))::T
+    _log_operation!(op, result)
 end
 
 # ==========================================================
@@ -53,11 +60,12 @@ end
 
 FlipY(chance) = ProbableOperation(FlipY(); chance = chance)
 
-Base.show(io::IO, op::FlipY) = print(io, "FlipY")
+Base.show(io::IO, op::FlipY) = print(io, "Flip y-axis.")
 multiplier(::FlipY) = 2
 
 @inline function transform{T<:AbstractImage}(op::FlipY, img::T)
-    flipy(img)::T
+    result = copyproperties(img, flipy(img))::T
+    _log_operation!(op, result)
 end
 
 # ==========================================================
@@ -67,14 +75,15 @@ end
     (height::Int = 64, 1 <= height),
 )
 
-Base.show(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height)")
+Base.show(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height).")
 multiplier(::Resize) = 1
 
 function transform{T<:AbstractImage}(op::Resize, img::T)
-    if isxfirst(img)
-        Images.imresize(img, (op.width, op.height))
+    result = if isxfirst(img)
+        copyproperties(img, Images.imresize(img, (op.width, op.height)))
     else
-        Images.imresize(img, (op.height, op.width))
+        copyproperties(img, Images.imresize(img, (op.height, op.width)))
     end::T
+    _log_operation!(op, result)
 end
 
