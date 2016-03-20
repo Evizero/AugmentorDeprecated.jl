@@ -36,6 +36,7 @@ include("imageoperation.jl")
 include("imagesource.jl")
 include("dirimagesource.jl")
 include("pipeline.jl")
+include("linearpipeline.jl")
 
 end
 

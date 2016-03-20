@@ -17,6 +17,7 @@ tests = [
     ("tst_flipdim.jl", "Low-level functionality for image mirroring"),
     ("tst_imageoperation.jl", "High-level abstractions for image operations"),
     ("tst_imagesource.jl", "High-level abstractions for image sources"),
+    ("tst_pipeline.jl", "Pipeline implementations"),
 ]
 
 for (fn, desc) in tests
