@@ -18,9 +18,9 @@ end
 Description
 ============
 
-Returns the relative paths to those visible files in the directory `dir`
-whose file-endings are specified in `formats`.
-If `dir` is not provided the current working path will be used.
+Returns the relative paths to those visible files in the directory
+`dir` whose file-endings are specified in `formats`. If `dir` is
+not provided the current working path will be used.
 
 Usage
 ======
