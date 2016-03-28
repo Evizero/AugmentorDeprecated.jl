@@ -58,13 +58,23 @@ img_y = permutedims(img_x, [2, 1])
     # test types stability
     @test typeof(rotate_expand(A, deg2rad(90))) <: typeof(A)
     @test typeof(rotate_expand(img_x, deg2rad(90))) <: typeof(img_x)
+    @test typeof(rotate_expand(A, deg2rad(180))) <: typeof(A)
+    @test typeof(rotate_expand(img_x, deg2rad(180))) <: typeof(img_x)
+    @test typeof(rotate_expand(A, deg2rad(270))) <: typeof(A)
+    @test typeof(rotate_expand(img_x, deg2rad(270))) <: typeof(img_x)
 
     # test values for some sample matrices
     @test rotate_expand(A, deg2rad(90)) == rotr90(A)
+    @test rotate_expand(A, deg2rad(180)) == rot180(A)
+    @test rotate_expand(A, deg2rad(270)) == rotl90(A)
 
     # test values for some sample images
     @test raw(rotate_expand(img_x, deg2rad(90))) == rotr90(A)
     @test raw(rotate_expand(img_y, deg2rad(90))) == rotl90(A')
+    @test raw(rotate_expand(img_x, deg2rad(270))) == rotl90(A)
+    @test raw(rotate_expand(img_y, deg2rad(270))) == rotr90(A')
+    @test raw(rotate_expand(img_x, deg2rad(180))) == rot180(A)
+    @test raw(rotate_expand(img_y, deg2rad(180))) == rot180(A')
 end
 
 @testset "rotate_crop" begin

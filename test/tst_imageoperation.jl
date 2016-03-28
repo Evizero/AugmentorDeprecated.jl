@@ -45,6 +45,32 @@ end
     @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
 end
 
+@testset "Rotate180" begin
+    @test Rotate180 <: ImageOperation
+    op = Rotate180()
+    @test multiplier(op) == 2
+    @test typeof(op) <: Rotate180
+    op = Rotate180(0.7)
+    @test multiplier(op) == 2
+    @test typeof(op) <: Augmentor.ProbableOperation
+    @test op.chance == 0.7
+    @test transform(Rotate180(0), img) == img
+    @test transform(Rotate180(1), img) == rotate_expand(img, deg2rad(180))
+end
+
+@testset "Rotate270" begin
+    @test Rotate270 <: ImageOperation
+    op = Rotate270()
+    @test multiplier(op) == 2
+    @test typeof(op) <: Rotate270
+    op = Rotate270(0.7)
+    @test multiplier(op) == 2
+    @test typeof(op) <: Augmentor.ProbableOperation
+    @test op.chance == 0.7
+    @test transform(Rotate270(0), img) == img
+    @test transform(Rotate270(1), img) == rotate_expand(img, deg2rad(270))
+end
+
 @testset "Resize" begin
     @test Resize <: ImageOperation
     @test multiplier(Resize()) == 1

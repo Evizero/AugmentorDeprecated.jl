@@ -159,8 +159,8 @@ LinearPipeline
 - [x] `FlipY(chance = 1)`
 - [ ] `Transpose(chance = 1)`
 - [x] `Rotate90(chance = 1)`
-- [ ] `Rotate180(chance = 1)`
-- [ ] `Rotate270(chance = 1)`
+- [x] `Rotate180(chance = 1)`
+- [x] `Rotate270(chance = 1)`
 - [x] `Resize(height, width)`
 - [ ] `Scale(height, width)`
 - [ ] `Rotate(degree)`: arbirary rotations

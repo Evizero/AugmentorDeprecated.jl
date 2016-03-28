@@ -18,6 +18,8 @@ export
         FlipX,
         FlipY,
         Rotate90,
+        Rotate180,
+        Rotate270,
         Resize,
 
     multiplier,

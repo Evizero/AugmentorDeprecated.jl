@@ -85,6 +85,36 @@ end
 
 # ==========================================================
 
+immutable Rotate180 <: ImageOperation
+end
+
+Rotate180(chance) = ProbableOperation(Rotate180(); chance = chance)
+
+Base.show(io::IO, op::Rotate180) = print(io, "Rotate 180 degrees.")
+multiplier(::Rotate180) = 2
+
+@inline function transform{T<:AbstractImage}(op::Rotate180, img::T)
+    result = copyproperties(img, rotate_expand(img, 1π))::T
+    _log_operation!(op, result)
+end
+
+# ==========================================================
+
+immutable Rotate270 <: ImageOperation
+end
+
+Rotate270(chance) = ProbableOperation(Rotate270(); chance = chance)
+
+Base.show(io::IO, op::Rotate270) = print(io, "Rotate 270 degrees.")
+multiplier(::Rotate270) = 2
+
+@inline function transform{T<:AbstractImage}(op::Rotate270, img::T)
+    result = copyproperties(img, rotate_expand(img, -π/2))::T
+    _log_operation!(op, result)
+end
+
+# ==========================================================
+
 @defstruct Resize <: ImageOperation (
     (width::Int  = 64, 1 <= width),
     (height::Int = 64, 1 <= height),
