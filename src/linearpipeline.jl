@@ -158,7 +158,7 @@ end
     res
 end
 
-function transform(pl::LinearPipeline, imgs::AbstractArray)
+function transform{I<:AbstractImage}(pl::LinearPipeline, imgs::AbstractArray{I})
     imgs_out = similar(imgs)
     pl_tuple = (pl.operations...)
     for iter in eachindex(imgs)

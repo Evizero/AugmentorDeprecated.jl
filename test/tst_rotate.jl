@@ -50,10 +50,21 @@ end
     @test Augmentor._expand_size(768, 512, deg2rad(190)) == (845, 637)
 end
 
+A = UInt8[200 150; 50 1]
+img_x = grayim(A)
+img_y = permutedims(img_x, [2, 1])
+
 @testset "rotate_expand" begin
-    #pending "test types for some sample matrices"
-    #pending "test values for some sample matrices"
-    #pending "test values for some sample images"
+    # test types stability
+    @test typeof(rotate_expand(A, deg2rad(90))) <: typeof(A)
+    @test typeof(rotate_expand(img_x, deg2rad(90))) <: typeof(img_x)
+
+    # test values for some sample matrices
+    @test rotate_expand(A, deg2rad(90)) == rotr90(A)
+
+    # test values for some sample images
+    @test raw(rotate_expand(img_x, deg2rad(90))) == rotr90(A)
+    @test raw(rotate_expand(img_y, deg2rad(90))) == rotl90(A')
 end
 
 @testset "rotate_crop" begin

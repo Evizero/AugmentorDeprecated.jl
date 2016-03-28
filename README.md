@@ -158,7 +158,7 @@ LinearPipeline
 - [x] `FlipX(chance = 1)`
 - [x] `FlipY(chance = 1)`
 - [ ] `Transpose(chance = 1)`
-- [ ] `Rotate90(chance = 1)`
+- [x] `Rotate90(chance = 1)`
 - [ ] `Rotate180(chance = 1)`
 - [ ] `Rotate270(chance = 1)`
 - [x] `Resize(height, width)`

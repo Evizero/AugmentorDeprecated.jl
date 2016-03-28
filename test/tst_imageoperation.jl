@@ -32,6 +32,19 @@ end
     @test transform(FlipY(1), img) == flipdim(img, "y")
 end
 
+@testset "Rotate90" begin
+    @test Rotate90 <: ImageOperation
+    op = Rotate90()
+    @test multiplier(op) == 2
+    @test typeof(op) <: Rotate90
+    op = Rotate90(0.7)
+    @test multiplier(op) == 2
+    @test typeof(op) <: Augmentor.ProbableOperation
+    @test op.chance == 0.7
+    @test transform(Rotate90(0), img) == img
+    @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
+end
+
 @testset "Resize" begin
     @test Resize <: ImageOperation
     @test multiplier(Resize()) == 1

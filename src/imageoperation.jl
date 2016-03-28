@@ -70,6 +70,21 @@ end
 
 # ==========================================================
 
+immutable Rotate90 <: ImageOperation
+end
+
+Rotate90(chance) = ProbableOperation(Rotate90(); chance = chance)
+
+Base.show(io::IO, op::Rotate90) = print(io, "Rotate 90 degrees.")
+multiplier(::Rotate90) = 2
+
+@inline function transform{T<:AbstractImage}(op::Rotate90, img::T)
+    result = copyproperties(img, rotate_expand(img, π/2))::T
+    _log_operation!(op, result)
+end
+
+# ==========================================================
+
 @defstruct Resize <: ImageOperation (
     (width::Int  = 64, 1 <= width),
     (height::Int = 64, 1 <= height),

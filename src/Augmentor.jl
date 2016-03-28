@@ -17,6 +17,7 @@ export
     ImageOperation,
         FlipX,
         FlipY,
+        Rotate90,
         Resize,
 
     multiplier,
