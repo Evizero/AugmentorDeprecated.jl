@@ -10,10 +10,6 @@ export
     rotate_expand,
     rotate_crop,
 
-    flipx,
-    flipy,
-    flipz,
-
     ImageOperation,
         FlipX,
         FlipY,
@@ -34,7 +30,6 @@ export
 
 include("common.jl")
 include("rotate.jl")
-include("flipdim.jl")
 include("imageoperation.jl")
 include("imagesource.jl")
 include("dirimagesource.jl")
