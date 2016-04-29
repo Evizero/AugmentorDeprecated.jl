@@ -17,6 +17,7 @@ tests = [
     ("tst_imageoperation.jl", "High-level abstractions for image operations"),
     ("tst_imagesource.jl", "High-level abstractions for image sources"),
     ("tst_pipeline.jl", "Pipeline implementations"),
+    ("tst_MLDataUtils.jl", "Data Access Pattern integration"),
 ]
 
 for (fn, desc) in tests

@@ -1,6 +1,6 @@
 BaseTestNext
-Images
 TestImages
+MLDataUtils
 @osx QuartzImageIO
 @windows ImageMagick
 @linux ImageMagick

@@ -1,5 +1,6 @@
 module Augmentor
 
+using Requires
 using Images
 using AffineTransforms
 using Interpolations
@@ -35,6 +36,9 @@ include("imagesource.jl")
 include("dirimagesource.jl")
 include("pipeline.jl")
 include("linearpipeline.jl")
+
+# Lazy loading for package integrations
+@require MLDataUtils include("integrations/MLDataUtils.jl")
 
 end
 

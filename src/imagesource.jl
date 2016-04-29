@@ -40,7 +40,12 @@ function Base.rand(s::ImageSource)
 end
 
 function Base.rand(s::ImageSource, n::Integer)
-    [rand(s) for _ in 1:n]
+    idx = rand(1:length(s), n)
+    s[idx]
+end
+
+function Base.getindex(s::ImageSource, idx::AbstractVector)
+    [s[i] for i in idx]
 end
 
 Base.eltype{T<:ImageSource}(::Type{T}) = Image
