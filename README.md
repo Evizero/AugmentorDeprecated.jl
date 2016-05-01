@@ -2,6 +2,7 @@
 
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
 [![Build Status](https://travis-ci.org/Evizero/Augmentor.jl.svg?branch=master)](https://travis-ci.org/Evizero/Augmentor.jl)
+[![Documentation Status](https://readthedocs.org/projects/augmentorjl/badge/?version=latest)](http://augmentorjl.readthedocs.io/en/latest/?badge=latest)
 
 An image augmentation library in for [Julia](julialang.org).
 
