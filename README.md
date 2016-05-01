@@ -4,18 +4,27 @@
 [![Build Status](https://travis-ci.org/Evizero/Augmentor.jl.svg?branch=master)](https://travis-ci.org/Evizero/Augmentor.jl)
 [![Documentation Status](https://readthedocs.org/projects/augmentorjl/badge/?version=latest)](http://augmentorjl.readthedocs.io/en/latest/?badge=latest)
 
-An image augmentation library in for [Julia](julialang.org).
+Augmentor is an image-augmentation library designed to render the
+process of artificial dataset enlargement more convenient, less
+error prone, and easier to reproduce.
+
+**Augmentor.jl** is the [Julia](http://julialang.org) package
+for *Augmentor*. You can find the Python version
+[here](https://github.com/mdbloice/Augmentor).
 
 ## Installation
 
-Developed for Julia 0.4
+To install Augmentor.jl, start up Julia and type the following code
+snipped into the REPL. It makes use of the native Julia package
+manager.
 
 ```julia
 Pkg.clone("git@github.com:Evizero/Augmentor.jl.git")
-using Augmentor
 ```
 
-For the latest developer version:
+Additionally, for example if you encounter any sudden issues,
+you can manually choose to be on the latest (untagged)
+development version.
 
 ```julia
 Pkg.checkout("Augmentor")
@@ -23,8 +32,31 @@ Pkg.checkout("Augmentor")
 
 ## Usage
 
+Once installed the Augmentor package can be imported just as any
+other Julia package.
+
+```julia
+using Augmentor
+```
+
+## Documentation
+
+
+Check out the **[latest documentation](http://augmentorjl.readthedocs.io/en/latest/index.html)**
+
+Additionally, you can make use of Julia's native docsystem.
+The following example shows how to get additional information
+on `DirImageSource` within Julia's REPL:
+
+```julia
+?DirImageSource
+```
+
+## Overview
+
 There are three basic building-blocks to create a system for image
-augmentation, namely an *image source* an *image operation pipeline*.
+augmentation, namely an *image source*, *image operations*, and
+an *image operation pipeline*.
 
 - `ImageSouce`: Functionality to access images from some data source,
 such as a directory.
@@ -38,9 +70,10 @@ of images. Operations can also be lifted into a `ProbableOperation`,
 which have a random probability of occuring, depending on the
 hyperparameter `chance`.
 
-### Hello World
+### Examples
 
-Create a simple probabilistic pipeline which can be sampled on the fly
+The following code shows how to create a simple probabilistic
+pipeline, which can be sampled on the fly:
 
 ```julia
 # load an example image
@@ -82,26 +115,6 @@ imgs = rand(src, 5) # Vector{Image}
 imgs_new = transform(pl, imgs)
 ```
 
-### Image sources
-
-Abstract supertype for all image sources. Every subtype of
-`ImageSource` must implement the read-only functions of the array
-interface. Additionally, they must fully implement the iterator
-interface so that they can be used as for-loops to iterate over
-all the stored images.
-
-Currently there is one type of `ImageSource` implemented.
-It focuses on filesystem based image storage.
-
-#### `DirImageSource`
-
-Concrete implementation of `ImageSource` for (nested) directories
-of a local filesystem. The purpose of `DirImageSource` is to
-seamlessly load images from a directory and its subdirectories.
-Note that subdirectories will be treated as categories and their
-relative paths will be stored as metadata within the loaded image
-object.
-
 ```julia
 # create the image source by indexing the directory's content.
 # Note: this command won't actually load any images.
@@ -119,28 +132,9 @@ for img in src
 end
 ```
 
-### Pipelines
-
-Pipelines are container objects that define what kind of operations
-are performed and in what order. They are designed for convenient
-user interaction and provide some information on what is going on.
-
-Currently there is one concrete implementation of `Pipeline`, which
-is specialized for purely linear sequences of image operations.
-
-#### `LinearPipeline`
-
-Subtype of `Pipeline` for linear chains of operations, which may
-or may not be probabilistic (i.e. have a random chance for occuring).
-The contained `ImageOperation`s are stored as a vector, in which
-the first element will be the first operation applied to an image
-passed to `transform`.
-The outcome of the first operation will then be fed as input to
-the second one, and so on, until all operations were applied. The
-outcome of the last operation will then be returned as the result.
+It is also possible to create a pipeline in a more concise way
 
 ```julia
-# create complete pipeline in one line
 pl = LinearPipeline(FlipX(.5), FlipY(.5), Resize(32,32))
 ```
 
@@ -152,20 +146,6 @@ LinearPipeline
     - Resize to 32x32. (factor: 1x)
 - total factor: 4x
 ```
-
-### Image operations
-
-- [ ] `ConvertGrayscale()`
-- [x] `FlipX(chance = 1)`
-- [x] `FlipY(chance = 1)`
-- [ ] `Transpose(chance = 1)`
-- [x] `Rotate90(chance = 1)`
-- [x] `Rotate180(chance = 1)`
-- [x] `Rotate270(chance = 1)`
-- [x] `Resize(height, width)`
-- [ ] `Scale(height, width)`
-- [ ] `Rotate(degree)`: arbirary rotations
-- [ ] `Crop(height, width)`
 
 ## License
 

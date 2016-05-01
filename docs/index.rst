@@ -1,16 +1,32 @@
-.. Augmentor.jl documentation master file, created by
-   sphinx-quickstart on Sun May  1 15:57:24 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Augmentor.jl Documentation
+===========================
 
-Welcome to Augmentor.jl's documentation!
-========================================
+Augmentor is an image-augmentation library designed to render the
+process of artificial dataset enlargement more convenient,
+less error prone, and easier to reproduce.
 
-Contents:
+.. note::
+
+   **Augmentor.jl** is the `Julia <http://julialang.org>`_ package
+   for *Augmentor*. You can find the Python version
+   `here <https://github.com/mdbloice/Augmentor>`_ .
+
+
+For details on a specific aspect, see the documentation outlined below.
 
 .. toctree::
    :maxdepth: 2
+   :caption: User Guide
 
+   userguide/install
+   userguide/gettingstarted
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API Documentation
+
+   api/imagesource
+   api/pipeline
 
 
 Indices and tables
