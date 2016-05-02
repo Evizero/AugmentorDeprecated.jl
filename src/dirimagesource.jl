@@ -29,6 +29,9 @@ This can also be just a container for subdirectories, in which
 the subdirectories contain the actual images. However, for this
 to work `recursive` has to be set to `true`
 
+- **`hidden`** : If `true`, all the hidden files within `path`
+will be processed as well.
+
 - **`expand`** : If `true`, all the paths will be extended to
 absolute paths instead of being relative to the root directory
 specified by `path`.

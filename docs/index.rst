@@ -27,6 +27,7 @@ For details on a specific aspect, see the documentation outlined below.
 
    api/imagesource
    api/pipeline
+   api/imageoperation.rst
 
 
 Indices and tables
