@@ -4,7 +4,6 @@ using Requires
 using Images
 using AffineTransforms
 using Interpolations
-using SimpleStructs
 
 export
 

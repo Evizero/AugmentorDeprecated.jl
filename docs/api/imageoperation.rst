@@ -2,16 +2,71 @@ Image Operations
 ==============
 
 All the possible transformations that can be composed together in a
-pipeline are subtypes of :class:`ImageOperation`. Each concrete
-subclass defines a specific transformation that can be applied to an
-image, or a set of images. Furthermore, Operations can also be lifted
-into a :class:`ProbableOperation`, which have a random probability of
-occurring, depending on the function parameters.
+pipeline are subtypes of :class:`ImageOperation`.
 
+.. class:: ImageOperation
 
-FlipX
-------
+   Abstract supertype for all image operation. Every subtype of
+   :class:`ImageOperation` must implement the :func:`transform`
+   and the :func:`multiplier` methods.
 
-FlipY
-------
+.. function:: transform(operation, image) -> Image
+
+   Applies the transformation to the given Image or set of images.
+   This function effectifely specifies the exact effect the
+   operation has on the input it receives.
+
+.. function:: multiplier(operation) -> Int
+
+   Specifies how many unique output variations the operation can
+   result in (counting the case of not being applied to the input).
+
+Each concrete subclass defines a specific transformation that can
+be applied to an image, or a set of images. Furthermore, Operations
+can also be lifted into a :class:`ProbableOperation`, which have a
+random probability of occurring, depending on the function parameters.
+
+.. class:: FlipX
+
+   Reverses the x-order of each pixel row. Another way of describing
+   it would be to mirror the image on the y-axis, or to mirror the
+   image horizontally.
+
+.. class:: FlipY
+
+   Reverses the y-order of each pixel column. Another way of
+   describing it would be to mirror the image on the x-axis, or to
+   mirror the image vertically.
+
+.. class:: Rotate90
+
+   Rotates the image upwards 90 degrees. This is a special case
+   rotation because it can be performed very efficiently by simply
+   rearranging the existing pixels. However, it is generally not the
+   case that the output image will have the same size as the input
+   image, which is something to be aware of.
+
+.. class:: Rotate180
+
+   Rotates the image 180 degrees. This is a special case rotation
+   because it can be performed very efficiently by simply rearranging
+   the existing pixels. Furthermore, the output images is guaranteed
+   to have the same dimensions as the input image.
+
+.. class:: Rotate270
+
+   Rotates the image upwards 270 degrees, which can also be described
+   as rotating the image downwards 90 degrees. This is a special case
+   rotation, because it can be performed very efficiently by simply
+   rearranging the existing pixels. However, it is generally not the
+   case that the output image will have the same size as the input
+   image, which is something to be aware of.
+
+.. class:: Resize
+
+   Transforms the image intoto a fixed specified pixel size. This
+   operation does not take any measures to preserve aspect ratio
+   of the source image.  Instead, the original image will simply be
+   resized to the given dimensions. This is useful when one needs a
+   set of images to all be of the exact same size.
 
