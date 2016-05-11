@@ -17,6 +17,7 @@ export
         Rotate180,
         Rotate270,
         Resize,
+        Zoom,
 
     multiplier,
 
@@ -36,6 +37,7 @@ include("imageoperation.jl")
 include("operations/flipx.jl")
 include("operations/flipy.jl")
 include("operations/resize.jl")
+include("operations/zoom.jl")
 include("operations/rotate90.jl")
 include("operations/rotate180.jl")
 include("operations/rotate270.jl")
