@@ -29,10 +29,19 @@ export
     transform
 
 include("common.jl")
+
 include("rotate.jl")
 include("imageoperation.jl")
+include("operations/flipx.jl")
+include("operations/flipy.jl")
+include("operations/resize.jl")
+include("operations/rotate90.jl")
+include("operations/rotate180.jl")
+include("operations/rotate270.jl")
+
 include("imagesource.jl")
 include("dirimagesource.jl")
+
 include("pipeline.jl")
 include("linearpipeline.jl")
 
