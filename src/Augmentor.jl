@@ -31,6 +31,7 @@ export
 include("common.jl")
 
 include("rotate.jl")
+include("crop.jl")
 include("imageoperation.jl")
 include("operations/flipx.jl")
 include("operations/flipy.jl")

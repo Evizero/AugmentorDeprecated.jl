@@ -31,17 +31,17 @@ see also
 """
 abstract ImageOperation
 
-function _log_operation!(op::ImageOperation, img::Image)
-    history = get!(properties(img), "operations", Array{ImageOperation,1}())
-    push!(history, op)
-    img
-end
-
 multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs to specify a multiplication factor"))
 
 # TODO: make this cleaner for dispatch
 @inline function transform(op::ImageOperation, imgs) #::Tuple)
     transform(op, imgs[1]), transform(op, imgs[2])
+end
+
+function _log_operation!(op::ImageOperation, img::Image)
+    history = get!(properties(img), "operations", Array{ImageOperation,1}())
+    push!(history, op)
+    img
 end
 
 # ==========================================================
