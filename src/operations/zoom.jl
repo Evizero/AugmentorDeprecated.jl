@@ -3,6 +3,8 @@ immutable Zoom <: ImageOperation
     ratio::Float64
 end
 
+Zoom(; ratio::Float64 = 1.) = Zoom(ratio)
+
 Base.show(io::IO, op::Zoom) = print(io, "Zoom to a $(op.ratio) aspect ratio.")
 multiplier(::Zoom) = 1
 

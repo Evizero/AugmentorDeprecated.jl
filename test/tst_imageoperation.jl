@@ -83,6 +83,20 @@ end
     @test size(transform(op, img)) == (23, 12)
 end
 
+@testset "Zoom" begin
+    @test Zoom <: ImageOperation
+    @test multiplier(Zoom()) == 1
+    op = Zoom(1/2)
+    @test op.ratio == .5
+    op = Zoom(1)
+    @test op.ratio == 1.
+
+    img_1 = grayim(rand(UInt8, 50, 20))
+    @test size(transform(op, img_1)) == (20, 20)
+    img_2 = grayim(rand(UInt8, 10, 20))
+    @test size(transform(op, img_2)) == (10, 10)
+end
+
 @testset "Tuple of Image" begin
     imgs = (img, img2)
     op = FlipX()
