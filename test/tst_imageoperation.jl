@@ -17,6 +17,7 @@ end
     @test op.chance == 0.7
     @test transform(FlipX(0), img) == img
     @test transform(FlipX(1), img) == flipdim(img, "x")
+    @imagetest "FlipX" transform(FlipX(), testimg)
 end
 
 @testset "FlipY" begin
@@ -30,6 +31,7 @@ end
     @test op.chance == 0.7
     @test transform(FlipY(0), img) == img
     @test transform(FlipY(1), img) == flipdim(img, "y")
+    @imagetest "FlipY" transform(FlipY(), testimg)
 end
 
 @testset "Rotate90" begin
@@ -43,6 +45,7 @@ end
     @test op.chance == 0.7
     @test transform(Rotate90(0), img) == img
     @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
+    @imagetest "Rotate90" transform(Rotate90(), testimg)
 end
 
 @testset "Rotate180" begin
@@ -56,6 +59,7 @@ end
     @test op.chance == 0.7
     @test transform(Rotate180(0), img) == img
     @test transform(Rotate180(1), img) == rotate_expand(img, deg2rad(180))
+    @imagetest "Rotate180" transform(Rotate180(), testimg)
 end
 
 @testset "Rotate270" begin
@@ -69,6 +73,7 @@ end
     @test op.chance == 0.7
     @test transform(Rotate270(0), img) == img
     @test transform(Rotate270(1), img) == rotate_expand(img, deg2rad(270))
+    @imagetest "Rotate270" transform(Rotate270(), testimg)
 end
 
 @testset "Resize" begin
@@ -81,6 +86,7 @@ end
     @test op.width == 23
     @test op.height == 12
     @test size(transform(op, img)) == (23, 12)
+    @imagetest "Resize" transform(Resize(160, 80), testimg)
 end
 
 @testset "Zoom" begin
@@ -95,6 +101,7 @@ end
     @test size(transform(op, img_1)) == (20, 20)
     img_2 = grayim(rand(UInt8, 10, 20))
     @test size(transform(op, img_2)) == (10, 10)
+    @imagetest "Zoom" transform(Zoom(2.), testimg)
 end
 
 @testset "Tuple of Image" begin

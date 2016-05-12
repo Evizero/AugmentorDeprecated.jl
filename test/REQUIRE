@@ -4,3 +4,4 @@ MLDataUtils
 @osx QuartzImageIO
 @windows ImageMagick
 @linux ImageMagick
+VisualRegressionTests

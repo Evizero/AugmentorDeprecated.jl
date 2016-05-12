@@ -1,12 +1,30 @@
 using Augmentor
 using Images
 using TestImages
+using VisualRegressionTests
 
 if VERSION >= v"0.5-"
     using Base.Test
 else
     using BaseTestNext
     const Test = BaseTestNext
+end
+
+refdir = Pkg.dir("Augmentor", "test", "refimg")
+testimg = load(joinpath(refdir, "testimage.png"))
+
+function imagetest_impl(testname, testfun)
+    refimgpath = joinpath(refdir, "$testname.png")
+    result = test_images(VisualTest(testfun, refimgpath))
+    @test success(result)
+end
+
+macro imagetest(testname, expr)
+    esc(quote
+        imagetest_impl(string($testname), path -> begin
+            save(path, $expr)
+        end)
+    end)
 end
 
 type FaultyOp <: Augmentor.ImageOperation end
