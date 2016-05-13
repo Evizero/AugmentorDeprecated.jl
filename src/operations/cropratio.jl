@@ -1,11 +1,16 @@
 
 immutable CropRatio <: ImageOperation
     ratio::Float64
+
+    function CropRatio(ratio::Real)
+        ratio > 0 || throw(ArgumentError("ratio has to be greater than 0"))
+        new(Float64(ratio))
+    end
 end
 
-CropRatio(; ratio::Float64 = 1.) = CropRatio(ratio)
+CropRatio(; ratio = 1.) = CropRatio(ratio)
 
-Base.show(io::IO, op::CropRatio) = print(io, "Crop to a $(op.ratio) aspect ratio.")
+Base.show(io::IO, op::CropRatio) = print(io, "Crop to $(op.ratio) aspect ratio.")
 multiplier(::CropRatio) = 1
 
 function transform{T<:AbstractImage}(op::CropRatio, img::T)
@@ -15,8 +20,8 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
     nw = floor(Int, h * op.ratio)
     nh = floor(Int, w / op.ratio)
 
-    if nw == w || nh == h
-        return img
+    result = if nw == w || nh == h
+        img
     elseif nw < w
         i = floor(Int, (w - nw) / 2)
         @assert nw > 0 && i > 0
@@ -25,6 +30,7 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
         i = floor(Int, (h - nh) / 2)
         @assert nh > 0 && i > 0
         crop(img, 1:w, i:(i+nh-1))
-    end
+    end::T
+    _log_operation!(op, result)
 end
 

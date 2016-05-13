@@ -92,8 +92,12 @@ end
 @testset "CropRatio" begin
     @test CropRatio <: ImageOperation
     @test multiplier(CropRatio()) == 1
+    op = CropRatio(1//2)
+    @test op.ratio == .5
     op = CropRatio(1/2)
     @test op.ratio == .5
+    op = CropRatio(ratio = 1)
+    @test op.ratio == 1.
     op = CropRatio(1)
     @test op.ratio == 1.
 
@@ -102,6 +106,22 @@ end
     img_2 = grayim(rand(UInt8, 10, 20))
     @test size(transform(op, img_2)) == (10, 10)
     @imagetest "CropRatio" transform(CropRatio(2.), testimg)
+end
+
+@testset "Zoom" begin
+    @test Zoom <: ImageOperation
+    @test multiplier(Zoom()) == 1
+    op = Zoom(1//2)
+    @test op.factor == .5
+    op = Zoom(1/2)
+    @test op.factor == .5
+    op = Zoom(factor = 1)
+    @test op.factor == 1.
+    op = Zoom(1)
+    @test op.factor == 1.
+
+    @imagetest "Zoom08" transform(Zoom(0.8), testimg)
+    @imagetest "Zoom12" transform(Zoom(1.2), testimg)
 end
 
 @testset "Tuple of Image" begin
