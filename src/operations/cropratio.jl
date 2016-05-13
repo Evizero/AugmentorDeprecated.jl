@@ -1,14 +1,14 @@
 
-immutable Zoom <: ImageOperation
+immutable CropRatio <: ImageOperation
     ratio::Float64
 end
 
-Zoom(; ratio::Float64 = 1.) = Zoom(ratio)
+CropRatio(; ratio::Float64 = 1.) = CropRatio(ratio)
 
-Base.show(io::IO, op::Zoom) = print(io, "Zoom to a $(op.ratio) aspect ratio.")
-multiplier(::Zoom) = 1
+Base.show(io::IO, op::CropRatio) = print(io, "Crop to a $(op.ratio) aspect ratio.")
+multiplier(::CropRatio) = 1
 
-function transform{T<:AbstractImage}(op::Zoom, img::T)
+function transform{T<:AbstractImage}(op::CropRatio, img::T)
     w = width(img)
     h = height(img)
 
