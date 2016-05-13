@@ -32,11 +32,23 @@ random probability of occurring, depending on the function parameters.
    it would be to mirror the image on the y-axis, or to mirror the
    image horizontally.
 
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output                                         |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/FlipX.png         |
++------------------------------------------------+------------------------------------------------+
+
 .. class:: FlipY
 
    Reverses the y-order of each pixel column. Another way of
    describing it would be to mirror the image on the x-axis, or to
    mirror the image vertically.
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output                                         |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/FlipY.png         |
++------------------------------------------------+------------------------------------------------+
 
 .. class:: Rotate90
 
@@ -46,12 +58,24 @@ random probability of occurring, depending on the function parameters.
    case that the output image will have the same size as the input
    image, which is something to be aware of.
 
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output                                         |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate90.png      |
++------------------------------------------------+------------------------------------------------+
+
 .. class:: Rotate180
 
    Rotates the image 180 degrees. This is a special case rotation
    because it can be performed very efficiently by simply rearranging
    the existing pixels. Furthermore, the output images is guaranteed
    to have the same dimensions as the input image.
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output                                         |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate180.png     |
++------------------------------------------------+------------------------------------------------+
 
 .. class:: Rotate270
 
@@ -62,11 +86,49 @@ random probability of occurring, depending on the function parameters.
    case that the output image will have the same size as the input
    image, which is something to be aware of.
 
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output                                         |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate270.png     |
++------------------------------------------------+------------------------------------------------+
+
 .. class:: Resize
 
-   Transforms the image intoto a fixed specified pixel size. This
+   Transforms the image into a fixed specified pixel size. This
    operation does not take any measures to preserve aspect ratio
-   of the source image.  Instead, the original image will simply be
+   of the source image. Instead, the original image will simply be
    resized to the given dimensions. This is useful when one needs a
    set of images to all be of the exact same size.
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``Resize(160, 80)``                 |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Resize.png        |
++------------------------------------------------+------------------------------------------------+
+
+.. class:: Zoom
+
+   Multiplies the image height and image width equally by some
+   constant factor. This means that the size of the output image
+   depends on the size of the input image. If one wants to resize
+   each dimension by a different factor, use :class:`Scale` instead.
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``Zoom(0.8)``                       |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Zoom08.png        |
++------------------------------------------------+------------------------------------------------+
+
+.. class:: CropRatio
+
+   Crops out the biggest area around the center of the given image
+   such that said sub-image satisfies the specified aspect ratio
+   (i.e. width divided by height).
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``CropRatio(2)``                    |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropRatio.png     |
++------------------------------------------------+------------------------------------------------+
+
 
