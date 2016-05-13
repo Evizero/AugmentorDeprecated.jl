@@ -1,4 +1,55 @@
+"""
+`Zoom <: ImageOperation`
 
+Description
+============
+
+Multiplies the image height and image width equally by some
+constant factor. This means that the size of the output image
+depends on the size of the input image. If one wants to resize
+each dimension by a different factor, use :class:`Scale` instead.
+
+Usage
+======
+
+    Zoom()
+
+    Zoom(factor = 2)
+
+Arguments
+==========
+
+- **`factor`** : The constant factor that should be used to scale
+both width and height of the output image
+
+Methods
+========
+
+- **`transform`** : Applies the transformation to the given Image
+or set of images
+
+Author(s)
+==========
+
+- Christof Stocker (Github: https://github.com/Evizero)
+
+Examples
+========
+
+    using Augmentor
+    using TestImages
+
+    # load an example image
+    img = testimage("lena")
+
+    # Zoom the image to twice its size
+    img_new = transform(Zoom(2), img)
+
+see also
+=========
+
+`ImageOperation`, `ProbableOperation`, `transform`
+"""
 immutable Zoom <: ImageOperation
     factor::Float64
 
