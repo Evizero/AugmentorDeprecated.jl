@@ -28,6 +28,7 @@ end
     @test multiplier(op) == 1
     @test typeof(op) <: FlipY
     op = FlipY(0.7)
+    show(op); println()
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
@@ -93,6 +94,7 @@ end
     @test op.height == 12
     @test size(transform(op, img)) == (23, 12)
     @imagetest "Resize" transform(Resize(160, 80), testimg)
+    @imagetest "Resize_y" permutedims(transform(Resize(160, 80), permutedims(testimg, [2, 1])), [2, 1])
 end
 
 @testset "CropRatio" begin
@@ -154,7 +156,7 @@ end
     @test op.height == 0.5
 
     @imagetest "Scale_x" transform(Scale(0.8, 1.2), testimg)
-    #@imagetest "Scale_y" transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1]))
+    @imagetest "Scale_y" permutedims(transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1])), [2, 1])
 end
 
 @testset "Tuple of Image" begin
