@@ -56,7 +56,7 @@ function ProbableOperation{T<:ImageOperation}(op::T; chance::Real = .5)
     ProbableOperation{T}(op, Float64(chance))
 end
 
-multiplier(po::ProbableOperation) = multiplier(po.operation)
+multiplier(po::ProbableOperation) = 1 + multiplier(po.operation)
 
 function Base.show(io::IO, po::ProbableOperation)
     print(io, round(Int, po.chance*100), "% chance to: ", po.operation)

@@ -62,7 +62,7 @@ end
 FlipX(chance) = ProbableOperation(FlipX(); chance = chance)
 
 Base.show(io::IO, op::FlipX) = print(io, "Flip x-axis.")
-multiplier(::FlipX) = 2
+multiplier(::FlipX) = 1
 
 function transform{T<:AbstractImage}(op::FlipX, img::T)
     result = copyproperties(img, flipx(img))::T

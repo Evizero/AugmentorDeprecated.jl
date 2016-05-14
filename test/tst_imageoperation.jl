@@ -9,7 +9,8 @@ end
 @testset "FlipX" begin
     @test FlipX <: ImageOperation
     op = FlipX()
-    @test multiplier(op) == 2
+    show(op); println()
+    @test multiplier(op) == 1
     @test typeof(op) <: FlipX
     op = FlipX(0.7)
     @test multiplier(op) == 2
@@ -23,7 +24,8 @@ end
 @testset "FlipY" begin
     @test FlipY <: ImageOperation
     op = FlipY()
-    @test multiplier(op) == 2
+    show(op); println()
+    @test multiplier(op) == 1
     @test typeof(op) <: FlipY
     op = FlipY(0.7)
     @test multiplier(op) == 2
@@ -37,7 +39,8 @@ end
 @testset "Rotate90" begin
     @test Rotate90 <: ImageOperation
     op = Rotate90()
-    @test multiplier(op) == 2
+    show(op); println()
+    @test multiplier(op) == 1
     @test typeof(op) <: Rotate90
     op = Rotate90(0.7)
     @test multiplier(op) == 2
@@ -51,7 +54,8 @@ end
 @testset "Rotate180" begin
     @test Rotate180 <: ImageOperation
     op = Rotate180()
-    @test multiplier(op) == 2
+    show(op); println()
+    @test multiplier(op) == 1
     @test typeof(op) <: Rotate180
     op = Rotate180(0.7)
     @test multiplier(op) == 2
@@ -65,7 +69,8 @@ end
 @testset "Rotate270" begin
     @test Rotate270 <: ImageOperation
     op = Rotate270()
-    @test multiplier(op) == 2
+    show(op); println()
+    @test multiplier(op) == 1
     @test typeof(op) <: Rotate270
     op = Rotate270(0.7)
     @test multiplier(op) == 2
@@ -80,6 +85,7 @@ end
     @test Resize <: ImageOperation
     @test multiplier(Resize()) == 1
     op = Resize()
+    show(op); println()
     @test op.width == 64
     @test op.height == 64
     op = Resize(width = 23, height = 12)
@@ -93,6 +99,7 @@ end
     @test CropRatio <: ImageOperation
     @test multiplier(CropRatio()) == 1
     op = CropRatio(1//2)
+    show(op); println()
     @test op.ratio == .5
     op = CropRatio(1/2)
     @test op.ratio == .5
@@ -101,6 +108,7 @@ end
     op = CropRatio(1)
     @test op.ratio == 1.
 
+    @test transform(CropRatio(1), img) == img
     img_1 = grayim(rand(UInt8, 50, 20))
     @test size(transform(op, img_1)) == (20, 20)
     img_2 = grayim(rand(UInt8, 10, 20))
@@ -112,6 +120,7 @@ end
     @test Zoom <: ImageOperation
     @test multiplier(Zoom()) == 1
     op = Zoom(1//2)
+    show(op); println()
     @test op.factor == .5
     op = Zoom(1/2)
     @test op.factor == .5
@@ -128,6 +137,7 @@ end
     @test Scale <: ImageOperation
     @test multiplier(Scale()) == 1
     op = Scale(2, .5)
+    show(op); println()
     @test op.width == 2
     @test op.height == .5
     op = Scale()

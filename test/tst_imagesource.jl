@@ -20,6 +20,11 @@ dir = joinpath(Pkg.dir("Augmentor"), "test/sampledir")
             expand=false, hidden=true, recursive=true)
     @test typeof(lst) <: Vector{UTF8String}
     @test length(lst) == 5
+
+    lst = Augmentor.listfiles(dir;
+            expand=true, hidden=true, recursive=true)
+    @test typeof(lst) <: Vector{UTF8String}
+    @test length(lst) == 5
 end
 
 @testset "DirImageSource" begin

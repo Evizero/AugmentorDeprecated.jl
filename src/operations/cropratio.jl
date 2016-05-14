@@ -69,6 +69,8 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
 
     nw = floor(Int, h * op.ratio)
     nh = floor(Int, w / op.ratio)
+    nw = nw > 1 ? nw : 1
+    nh = nh > 1 ? nh : 1
 
     result = if nw == w || nh == h
         img

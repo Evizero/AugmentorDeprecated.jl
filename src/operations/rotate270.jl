@@ -66,7 +66,7 @@ end
 Rotate270(chance) = ProbableOperation(Rotate270(); chance = chance)
 
 Base.show(io::IO, op::Rotate270) = print(io, "Rotate 270 degrees.")
-multiplier(::Rotate270) = 2
+multiplier(::Rotate270) = 1
 
 function transform{T<:AbstractImage}(op::Rotate270, img::T)
     result = copyproperties(img, rotate_expand(img, -π/2))::T

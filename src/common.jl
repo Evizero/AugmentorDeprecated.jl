@@ -70,7 +70,7 @@ function listfiles(
 
     # fully expand the path for all files if requested
     if expand
-        dircontent = map(abspath, dircontent)
+        dircontent = convert(Vector{UTF8String}, map(abspath, dircontent))
     end
 
     # just filter out entries that are files (exclude dirs)
