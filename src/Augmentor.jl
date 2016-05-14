@@ -19,6 +19,7 @@ export
         Resize,
         CropRatio,
         Zoom,
+        Scale,
 
     multiplier,
 
@@ -40,6 +41,7 @@ include("operations/flipy.jl")
 include("operations/resize.jl")
 include("operations/cropratio.jl")
 include("operations/zoom.jl")
+include("operations/scale.jl")
 include("operations/rotate90.jl")
 include("operations/rotate180.jl")
 include("operations/rotate270.jl")

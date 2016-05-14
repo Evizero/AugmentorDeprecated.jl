@@ -119,6 +119,19 @@ random probability of occurring, depending on the function parameters.
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Zoom08.png        |
 +------------------------------------------------+------------------------------------------------+
 
+.. class:: Scale
+
+   Multiplies the image height and image width by individually specified
+   constant factors. This means that the size of the output image
+   depends on the size of the input image. If one wants to resize
+   each dimension by the same factor, use :class:`Zoom` instead.
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``Scale(0.8, 1.2)``                 |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Scale_x.png       |
++------------------------------------------------+------------------------------------------------+
+
 .. class:: CropRatio
 
    Crops out the biggest area around the center of the given image

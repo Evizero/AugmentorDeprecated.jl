@@ -124,6 +124,29 @@ end
     @imagetest "Zoom12" transform(Zoom(1.2), testimg)
 end
 
+@testset "Scale" begin
+    @test Scale <: ImageOperation
+    @test multiplier(Scale()) == 1
+    op = Scale(2, .5)
+    @test op.width == 2
+    @test op.height == .5
+    op = Scale()
+    @test op.width == 1
+    @test op.height == 1
+    op = Scale(width = 2)
+    @test op.width == 2
+    @test op.height == 1
+    op = Scale(height = 2)
+    @test op.width == 1
+    @test op.height == 2
+    op = Scale(width = 1.5, height = 0.5)
+    @test op.width == 1.5
+    @test op.height == 0.5
+
+    @imagetest "Scale_x" transform(Scale(0.8, 1.2), testimg)
+    #@imagetest "Scale_y" transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1]))
+end
+
 @testset "Tuple of Image" begin
     imgs = (img, img2)
     op = FlipX()
