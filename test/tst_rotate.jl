@@ -48,6 +48,7 @@ end
     @test Augmentor._expand_size(768, 512, deg2rad(45)) == (905, 905)
     @test Augmentor._expand_size(768, 512, deg2rad(120)) == (827, 921)
     @test Augmentor._expand_size(768, 512, deg2rad(190)) == (845, 637)
+    @test Augmentor._expand_size(768, 512, deg2rad(300)) == (827, 921)
 end
 
 A = UInt8[200 150; 50 1]
@@ -56,6 +57,8 @@ img_y = permutedims(img_x, [2, 1])
 
 @testset "rotate_expand" begin
     # test types stability
+    @test typeof(rotate_expand(A, deg2rad(0))) <: typeof(A)
+    @test typeof(rotate_expand(img_x, deg2rad(0))) <: typeof(img_x)
     @test typeof(rotate_expand(A, deg2rad(90))) <: typeof(A)
     @test typeof(rotate_expand(img_x, deg2rad(90))) <: typeof(img_x)
     @test typeof(rotate_expand(A, deg2rad(180))) <: typeof(A)
@@ -64,11 +67,14 @@ img_y = permutedims(img_x, [2, 1])
     @test typeof(rotate_expand(img_x, deg2rad(270))) <: typeof(img_x)
 
     # test values for some sample matrices
+    @test rotate_expand(A, deg2rad(0)) == A
     @test rotate_expand(A, deg2rad(90)) == rotr90(A)
     @test rotate_expand(A, deg2rad(180)) == rot180(A)
     @test rotate_expand(A, deg2rad(270)) == rotl90(A)
 
     # test values for some sample images
+    @test raw(rotate_expand(img_x, deg2rad(0))) == A
+    @test raw(rotate_expand(img_y, deg2rad(0))) == A'
     @test raw(rotate_expand(img_x, deg2rad(90))) == rotr90(A)
     @test raw(rotate_expand(img_y, deg2rad(90))) == rotl90(A')
     @test raw(rotate_expand(img_x, deg2rad(270))) == rotl90(A)
@@ -79,7 +85,19 @@ end
 
 @testset "rotate_crop" begin
     #pending "test types for some sample matrices"
+    @test typeof(rotate_crop(A, deg2rad(0))) <: typeof(A)
+    @test typeof(rotate_crop(img_x, deg2rad(0))) <: typeof(img_x)
+    @test typeof(rotate_crop(A, deg2rad(180))) <: typeof(A)
+    @test typeof(rotate_crop(img_x, deg2rad(180))) <: typeof(img_x)
+
     #pending "test values for some sample matrices"
+    @test rotate_crop(A, deg2rad(0)) == A
+    @test rotate_crop(A, deg2rad(180)) == rot180(A)
+
     #pending "test values for some sample images"
+    @test raw(rotate_crop(img_x, deg2rad(0))) == A
+    @test raw(rotate_crop(img_y, deg2rad(0))) == A'
+    @test raw(rotate_crop(img_x, deg2rad(180))) == rot180(A)
+    @test raw(rotate_crop(img_y, deg2rad(180))) == rot180(A')
 end
 
