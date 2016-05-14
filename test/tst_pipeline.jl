@@ -35,6 +35,7 @@ end
         @test typeof(pl[1]) <: FlipY
         @test typeof(pl.operations[2]) <: FlipX
         @test typeof(pl[2]) <: FlipX
+        Base.show(pl)
 
         @test push!(pl, Resize(32, 32)) == pl
         @test length(pl.operations) == length(pl) == 3
@@ -83,6 +84,7 @@ end
         @test typeof(pl[5]) <: FlipX
         @test typeof(pl[6]) <: FlipY
         @test typeof(pl[7]) <: FlipX
+        @test typeof(pl[end]) <: FlipX
     end
 
     @testset "iterator interface" begin
@@ -99,5 +101,10 @@ end
             end
         end
         @test count == 3
+    end
+
+    @testset "concrete pipeline and image" begin
+        pl = LinearPipeline([FlipX(), FlipY(), CropRatio(1.5), Resize(64,64)])
+        @imagetest "LinearPipeline" transform(pl, testimg)
     end
 end
