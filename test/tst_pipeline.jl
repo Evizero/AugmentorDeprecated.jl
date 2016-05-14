@@ -36,6 +36,7 @@ end
         @test typeof(pl.operations[2]) <: FlipX
         @test typeof(pl[2]) <: FlipX
         Base.show(pl)
+        println()
 
         @test push!(pl, Resize(32, 32)) == pl
         @test length(pl.operations) == length(pl) == 3
