@@ -81,15 +81,16 @@ pipeline, which can be sampled on the fly:
 ```julia
 # load an example image
 using TestImages
-img = testimage("lena")
+img = testimage("toucan")
 
 # create empty pipeline
 pl = LinearPipeline()
 
 # add operations to pipeline
-push!(pl, FlipX(0.5)) # lifted to ProbableOperation{FlipX}. 50% chance of occuring
-push!(pl, FlipY())    # not lifted. will always occur
-push!(pl, Resize(64,64))
+push!(pl, FlipX(0.5))     # lifted to ProbableOperation{FlipX}. 50% chance of occuring
+push!(pl, FlipY())        # not lifted. will always occur
+push!(pl, CropRatio(1.5)) # crop out biggest area that satisfies aspect ration
+push!(pl, Resize(64,64))
 
 # transform example image
 img_new = transform(pl, img)
@@ -99,11 +100,15 @@ img_new = transform(pl, img)
 RGBA Images.Image with:
   data: 64x64 Array{ColorTypes.RGBA{FixedPointNumbers.UFixed{UInt8,8}},2}
   properties:
-    operations:  Flip y-axis. Resize to 64x64.
+    operations:  Flip x-axis. Flip y-axis. Crop to 1.5 aspect ratio. Resize to 64x64.
     imagedescription: <suppressed>
     spatialorder:  x y
     pixelspacing:  1 1
 ```
+
+Input (`img`)                       | Output (`img_new`)
+:----------------------------------:|:------------------------------:
+![input](test/refimg/testimage.png) | ![output](test/refimg/LinearPipeline.png)
 
 You can also use an `ImageSource` to sample input data from
 
