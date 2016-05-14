@@ -81,6 +81,11 @@ img_y = permutedims(img_x, [2, 1])
     @test raw(rotate_expand(img_y, deg2rad(270))) == rotr90(A')
     @test raw(rotate_expand(img_x, deg2rad(180))) == rot180(A)
     @test raw(rotate_expand(img_y, deg2rad(180))) == rot180(A')
+
+    @imagetest "rotate_expand_45" rotate_expand(testimg, deg2rad(45))
+    @imagetest "rotate_expand_120" rotate_expand(testimg, deg2rad(120))
+    @imagetest "rotate_expand_220" rotate_expand(testimg, deg2rad(220))
+    @imagetest "rotate_expand_320" rotate_expand(testimg, deg2rad(320))
 end
 
 @testset "rotate_crop" begin
@@ -99,5 +104,10 @@ end
     @test raw(rotate_crop(img_y, deg2rad(0))) == A'
     @test raw(rotate_crop(img_x, deg2rad(180))) == rot180(A)
     @test raw(rotate_crop(img_y, deg2rad(180))) == rot180(A')
+
+    @imagetest "rotate_crop_45" rotate_crop(testimg, deg2rad(45))
+    @imagetest "rotate_crop_120" rotate_crop(testimg, deg2rad(120))
+    @imagetest "rotate_crop_220" rotate_crop(testimg, deg2rad(220))
+    @imagetest "rotate_crop_320" rotate_crop(testimg, deg2rad(320))
 end
 
