@@ -144,4 +144,15 @@ random probability of occurring, depending on the function parameters.
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropRatio.png     |
 +------------------------------------------------+------------------------------------------------+
 
+.. class:: CropSize
+
+    Crops out the area of the specified pixel dimensions
+    around the center of the given image
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``CropSize(64, 32)``                |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropSize.png      |
++------------------------------------------------+------------------------------------------------+
+
 

@@ -118,6 +118,28 @@ end
     @imagetest "CropRatio" transform(CropRatio(2.), testimg)
 end
 
+@testset "CropSize" begin
+    @test CropSize <: ImageOperation
+    @test multiplier(CropSize()) == 1
+    op = CropSize(2, 3)
+    show(op); println()
+    @test op.width == 2
+    @test op.height == 3
+    op = CropSize(width = 4, height = 5)
+    @test op.width == 4
+    @test op.height == 5
+    op = CropSize()
+    @test op.width == 64
+    @test op.height == 64
+
+    op = CropSize(20, 10)
+    img_1 = grayim(rand(UInt8, 50, 20))
+    @test size(transform(op, img_1)) == (20, 10)
+    img_2 = grayim(rand(UInt8, 30, 40))
+    @test size(transform(op, img_2)) == (20, 10)
+    @imagetest "CropSize" transform(CropSize(64, 32), testimg)
+end
+
 @testset "Zoom" begin
     @test Zoom <: ImageOperation
     @test multiplier(Zoom()) == 1

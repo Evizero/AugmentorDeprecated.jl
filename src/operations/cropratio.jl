@@ -76,11 +76,11 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
         img
     elseif nw < w
         i = floor(Int, (w - nw) / 2)
-        @assert nw > 0 && i > 0
+        @assert i > 0
         crop(img, i:(i+nw-1), 1:h)
     elseif nh < h
         i = floor(Int, (h - nh) / 2)
-        @assert nh > 0 && i > 0
+        @assert i > 0
         crop(img, 1:w, i:(i+nh-1))
     end::T
     _log_operation!(op, result)
