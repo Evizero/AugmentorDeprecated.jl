@@ -155,4 +155,15 @@ random probability of occurring, depending on the function parameters.
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropSize.png      |
 +------------------------------------------------+------------------------------------------------+
 
+.. class:: Crop
 
+    Crops out the area of the specified pixel dimensions starting
+    at a specified position, which in turn denotes the top-left corner
+    of the crop. A position of `x = 1`, and `y = 1` would mean that
+    the crop is located in the top-left corner of the given image
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``Crop(45, 10, 64, 32)``            |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Crop.png          |
++------------------------------------------------+------------------------------------------------+

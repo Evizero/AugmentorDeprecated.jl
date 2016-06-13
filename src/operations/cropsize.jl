@@ -56,8 +56,8 @@ immutable CropSize <: ImageOperation
     height::Int
 
     function CropSize(width::Int, height::Int)
-        width > 0 || throw(ArgumentError("ratio has to be greater than 0"))
-        height > 0 || throw(ArgumentError("ratio has to be greater than 0"))
+        width > 0 || throw(ArgumentError("width has to be greater than 0"))
+        height > 0 || throw(ArgumentError("height has to be greater than 0"))
         new(width, height)
     end
 end
