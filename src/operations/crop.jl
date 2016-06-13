@@ -91,6 +91,6 @@ function transform{T<:AbstractImage}(op::Crop, img::T)
     y_end < h || throw(ArgumentError("height of crop window is out of bounds"))
 
     result = crop(img, op.x:x_end, op.y:y_end)
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

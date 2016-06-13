@@ -66,6 +66,6 @@ multiplier(::FlipX) = 1
 
 function transform{T<:AbstractImage}(op::FlipX, img::T)
     result = copyproperties(img, flipx(img))::T
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

@@ -69,6 +69,6 @@ function transform{T<:AbstractImage}(op::Zoom, img::T)
     xn = ceil(Int, x * op.factor)
     yn = ceil(Int, y * op.factor)
     result = copyproperties(img, Images.imresize(img, (xn, yn)))
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

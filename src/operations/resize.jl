@@ -74,6 +74,6 @@ function transform{T<:AbstractImage}(op::Resize, img::T)
     else
         copyproperties(img, Images.imresize(img, (op.height, op.width)))
     end::T
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

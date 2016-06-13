@@ -83,6 +83,6 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
         @assert i > 0
         crop(img, 1:w, i:(i+nh-1))
     end::T
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

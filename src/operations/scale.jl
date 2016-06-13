@@ -75,12 +75,12 @@ function transform{T<:AbstractImage}(op::Scale, img::T)
         x = ceil(Int, s1 * op.width)
         y = ceil(Int, s2 * op.height)
         result = copyproperties(img, Images.imresize(img, (x, y)))
-        _log_operation!(op, result)
+        _log_operation!(result, op)
     else
         x = ceil(Int, s2 * op.width)
         y = ceil(Int, s1 * op.height)
         result = copyproperties(img, Images.imresize(img, (y, x)))
-        _log_operation!(op, result)
+        _log_operation!(result, op)
     end
 end
 

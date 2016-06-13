@@ -81,6 +81,6 @@ function transform{T<:AbstractImage}(op::CropSize, img::T)
     @assert y > 0
 
     result = crop(img, x:(x+op.width-1), y:(y+op.height-1))
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

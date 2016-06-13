@@ -70,6 +70,6 @@ multiplier(::Rotate270) = 1
 
 function transform{T<:AbstractImage}(op::Rotate270, img::T)
     result = copyproperties(img, rotate_expand(img, -π/2))::T
-    _log_operation!(op, result)
+    _log_operation!(result, op)
 end
 

@@ -38,7 +38,7 @@ multiplier(::ImageOperation) = throw(ArgumentError("Every ImageOperation needs t
     transform(op, imgs[1]), transform(op, imgs[2])
 end
 
-function _log_operation!(op::ImageOperation, img::Image)
+function _log_operation!(img::Image, op::ImageOperation)
     history = get!(properties(img), "operations", Array{ImageOperation,1}())
     push!(history, op)
     img
