@@ -167,3 +167,15 @@ random probability of occurring, depending on the function parameters.
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Crop.png          |
 +------------------------------------------------+------------------------------------------------+
+
+.. class:: RCropSize
+
+    Crops out an area of the specified pixel dimensions
+    at a randomized position of the given image
+
++------------------------------------------------+------------------------------------------------+
+| Input                                          | Output for ``CropSize(64, 32)``                |
++================================================+================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropSize.png      |
++------------------------------------------------+------------------------------------------------+
+

@@ -140,6 +140,27 @@ end
     @imagetest "CropSize" transform(CropSize(64, 32), testimg)
 end
 
+@testset "RCropSize" begin
+    @test RCropSize <: ImageOperation
+    @test multiplier(RCropSize()) == 1
+    op = RCropSize(2, 3)
+    show(op); println()
+    @test op.width == 2
+    @test op.height == 3
+    op = RCropSize(width = 4, height = 5)
+    @test op.width == 4
+    @test op.height == 5
+    op = RCropSize()
+    @test op.width == 64
+    @test op.height == 64
+
+    op = RCropSize(20, 10)
+    img_1 = grayim(rand(UInt8, 50, 20))
+    @test size(transform(op, img_1)) == (20, 10)
+    img_2 = grayim(rand(UInt8, 30, 40))
+    @test size(transform(op, img_2)) == (20, 10)
+end
+
 @testset "Crop" begin
     @test Crop <: ImageOperation
     @test multiplier(Crop()) == 1

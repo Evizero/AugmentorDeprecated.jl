@@ -7,6 +7,20 @@
 Augmentor is an image-augmentation library designed to render the
 process of artificial dataset enlargement more convenient, less
 error prone, and easier to reproduce.
+This is achieved using probabilistic transformation pipelines.
+
+The following code snipped shows how such a pipeline can be
+specified using simple building blocks. To show the effect we
+compiled a few resulting output images into a gif while using
+the famous lena image as input.
+
+```julia
+LinearPipeline(Rotate90(.5), Rotate270(.5), FlipX(.5), FlipY(.5), RCropSize(128, 128), Resize(64, 64))
+```
+
+Input                               | Output
+:----------------------------------:|:------------------------------:
+![lena](https://cloud.githubusercontent.com/assets/10854026/16039252/03ce762e-3229-11e6-8670-a25cf9a149ca.png) | ![pipeline](https://cloud.githubusercontent.com/assets/10854026/16039237/f252481c-3228-11e6-84b0-c20f796270d9.gif)
 
 **Augmentor.jl** is the [Julia](http://julialang.org) package
 for *Augmentor*. You can find the Python version
