@@ -20,6 +20,7 @@ export
         CropRatio,
         CropSize,
         RCropSize,
+        RCropRatio,
         Crop,
         Zoom,
         Scale,
@@ -45,6 +46,7 @@ include("operations/resize.jl")
 include("operations/cropratio.jl")
 include("operations/cropsize.jl")
 include("operations/rcropsize.jl")
+include("operations/rcropratio.jl")
 include("operations/crop.jl")
 include("operations/zoom.jl")
 include("operations/scale.jl")

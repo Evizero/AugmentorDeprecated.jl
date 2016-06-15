@@ -224,6 +224,43 @@ end
     @test size(transform(op, img_2)) == (20, 10)
 end
 
+@testset "RCropRatio" begin
+    @test RCropRatio <: ImageOperation
+    @test multiplier(RCropRatio()) == 1
+    op = RCropRatio(1//2)
+    show(op); println()
+    @test op.ratio == .5
+    op = RCropRatio(1/2)
+    @test op.ratio == .5
+    op = RCropRatio(ratio = 1)
+    @test op.ratio == 1.
+    op = RCropRatio(1)
+    @test op.ratio == 1.
+    @test typeof(last(transform(RCropRatio(), img)["operations"])) <: RCropRatio
+
+    @test_throws ArgumentError transform(RCropRatio(0.), img)
+    @test_throws ArgumentError transform(RCropRatio(-1.), img)
+
+    @test size(transform(RCropRatio(1), img)) == (2, 2)
+    @test size(transform(RCropRatio(2), img)) == (2, 1)
+    @test size(transform(RCropRatio(10), img)) == (2, 1)
+    @test size(transform(RCropRatio(.5), img)) == (1, 2)
+    @test size(transform(RCropRatio(.1), img)) == (1, 2)
+
+    @test size(transform(RCropRatio(1), img3)) == (3, 3)
+    @test size(transform(RCropRatio(1.5), img3)) == (3, 2)
+    @test size(transform(RCropRatio(2), img3)) == (3, 1)
+    @test size(transform(RCropRatio(10), img3)) == (3, 1)
+    @test size(transform(RCropRatio(.7), img3)) == (2, 3)
+    @test size(transform(RCropRatio(.5), img3)) == (1, 3)
+    @test size(transform(RCropRatio(.1), img3)) == (1, 3)
+
+    img_1 = grayim(rand(UInt8, 50, 20))
+    @test size(transform(op, img_1)) == (20, 20)
+    img_2 = grayim(rand(UInt8, 10, 20))
+    @test size(transform(op, img_2)) == (10, 10)
+end
+
 @testset "Crop" begin
     @test Crop <: ImageOperation
     @test multiplier(Crop()) == 1
