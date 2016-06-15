@@ -18,6 +18,7 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
+    @test typeof(last(transform(FlipX(), img)["operations"])) <: FlipX
     @test transform(FlipX(0), img) == img
     @test transform(FlipX(1), img) == flipdim(img, "x")
     @imagetest "FlipX" transform(FlipX(), testimg)
@@ -34,6 +35,7 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
+    @test typeof(last(transform(FlipY(), img)["operations"])) <: FlipY
     @test transform(FlipY(0), img) == img
     @test transform(FlipY(1), img) == flipdim(img, "y")
     @imagetest "FlipY" transform(FlipY(), testimg)
@@ -49,6 +51,7 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
+    @test typeof(last(transform(Rotate90(), img)["operations"])) <: Rotate90
     @test transform(Rotate90(0), img) == img
     @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
     @imagetest "Rotate90" transform(Rotate90(), testimg)
@@ -64,6 +67,7 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
+    @test typeof(last(transform(Rotate180(), img)["operations"])) <: Rotate180
     @test transform(Rotate180(0), img) == img
     @test transform(Rotate180(1), img) == rotate_expand(img, deg2rad(180))
     @imagetest "Rotate180" transform(Rotate180(), testimg)
@@ -79,6 +83,7 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
+    @test typeof(last(transform(Rotate270(), img)["operations"])) <: Rotate270
     @test transform(Rotate270(0), img) == img
     @test transform(Rotate270(1), img) == rotate_expand(img, deg2rad(270))
     @imagetest "Rotate270" transform(Rotate270(), testimg)
@@ -94,6 +99,7 @@ end
     op = Resize(width = 23, height = 12)
     @test op.width == 23
     @test op.height == 12
+    @test typeof(last(transform(Resize(), img)["operations"])) <: Resize
     @test size(transform(op, img)) == (23, 12)
     @imagetest "Resize" transform(Resize(160, 80), testimg)
     @imagetest "Resize_y" permutedims(transform(Resize(160, 80), permutedims(testimg, [2, 1])), [2, 1])
@@ -111,6 +117,7 @@ end
     @test op.ratio == 1.
     op = CropRatio(1)
     @test op.ratio == 1.
+    @test typeof(last(transform(CropRatio(), img)["operations"])) <: CropRatio
 
     @test_throws ArgumentError transform(CropRatio(0.), img)
     @test_throws ArgumentError transform(CropRatio(-1.), img)
@@ -148,6 +155,7 @@ end
     op = CropSize()
     @test op.width == 64
     @test op.height == 64
+    @test typeof(last(transform(CropSize(1,1), img)["operations"])) <: CropSize
 
     @test_throws ArgumentError transform(CropSize(3,2), img)
     @test_throws ArgumentError transform(CropSize(2,3), img)
@@ -185,6 +193,7 @@ end
     op = RCropSize()
     @test op.width == 64
     @test op.height == 64
+    @test typeof(last(transform(RCropSize(1,1), img)["operations"])) <: RCropSize
 
     @test_throws ArgumentError transform(RCropSize(3,2), img)
     @test_throws ArgumentError transform(RCropSize(2,3), img)
@@ -234,6 +243,7 @@ end
     @test op.y == 1
     @test op.width == 64
     @test op.height == 64
+    @test typeof(last(transform(Crop(1,1,1,1), img)["operations"])) <: Crop
 
     @test_throws ArgumentError transform(Crop(0,1,1,1), img)
     @test_throws ArgumentError transform(Crop(1,0,1,1), img)
@@ -273,6 +283,7 @@ end
     @test op.factor == 1.
     op = Zoom(1)
     @test op.factor == 1.
+    @test typeof(last(transform(Zoom(), img)["operations"])) <: Zoom
 
     @imagetest "Zoom08" transform(Zoom(0.8), testimg)
     @imagetest "Zoom12" transform(Zoom(1.2), testimg)
@@ -297,6 +308,7 @@ end
     op = Scale(width = 1.5, height = 0.5)
     @test op.width == 1.5
     @test op.height == 0.5
+    @test typeof(last(transform(Scale(), img)["operations"])) <: Scale
 
     @imagetest "Scale_x" transform(Scale(0.8, 1.2), testimg)
     @imagetest "Scale_y" permutedims(transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1])), [2, 1])
@@ -306,6 +318,8 @@ end
     imgs = (img, img2)
     op = FlipX()
     out1, out2 = transform(op, imgs)
+    @test typeof(last(out1["operations"])) <: FlipX
+    @test typeof(last(out2["operations"])) <: FlipX
     @test out1 == flipx(img)
     @test out2 == flipx(img2)
     op = FlipX(1)
