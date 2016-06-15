@@ -47,7 +47,7 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageOperation`, `transform`
 """
 immutable CropRatio <: ImageOperation
     ratio::Float64
@@ -75,11 +75,11 @@ function transform{T<:AbstractImage}(op::CropRatio, img::T)
     result = if nw == w || nh == h
         img
     elseif nw < w
-        i = floor(Int, (w - nw) / 2)
+        i = 1 + floor(Int, (w - nw) / 2)
         @assert i > 0
         crop(img, i:(i+nw-1), 1:h)
     elseif nh < h
-        i = floor(Int, (h - nh) / 2)
+        i = 1 + floor(Int, (h - nh) / 2)
         @assert i > 0
         crop(img, 1:w, i:(i+nh-1))
     end::T

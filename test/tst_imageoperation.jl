@@ -1,6 +1,8 @@
 A = UInt8[200 150; 50 1]
 img = grayim(A)
 img2 = grayim(A+10)
+B = UInt8[200 150 100; 80 50 10; 5 3 0]
+img3 = grayim(B)
 
 @testset "ImageOperation" begin
     @test_throws ArgumentError multiplier(FaultyOp())
@@ -110,12 +112,27 @@ end
     op = CropRatio(1)
     @test op.ratio == 1.
 
-    @test transform(CropRatio(1), img) == img
+    @test_throws ArgumentError transform(CropRatio(0.), img)
+    @test_throws ArgumentError transform(CropRatio(-1.), img)
+
+    @test transform(CropRatio(1), img)  == img
+    @test transform(CropRatio(2), img)  == img[:, 1:1]
+    @test transform(CropRatio(10), img) == img[:, 1:1]
+    @test transform(CropRatio(.5), img) == img[1:1, :]
+    @test transform(CropRatio(.1), img) == img[1:1, :]
+
+    @test transform(CropRatio(1), img3)  == img3
+    @test transform(CropRatio(2), img3)  == img3[:, 2:2]
+    @test transform(CropRatio(10), img3) == img3[:, 2:2]
+    @test transform(CropRatio(.5), img3) == img3[2:2, :]
+    @test transform(CropRatio(.1), img3) == img3[2:2, :]
+
     img_1 = grayim(rand(UInt8, 50, 20))
     @test size(transform(op, img_1)) == (20, 20)
     img_2 = grayim(rand(UInt8, 10, 20))
     @test size(transform(op, img_2)) == (10, 10)
-    @imagetest "CropRatio" transform(CropRatio(2.), testimg)
+    @imagetest "CropRatio2to1" transform(CropRatio(2.), testimg)
+    @imagetest "CropRatio1to2" transform(CropRatio(.5), testimg)
 end
 
 @testset "CropSize" begin
@@ -131,6 +148,21 @@ end
     op = CropSize()
     @test op.width == 64
     @test op.height == 64
+
+    @test_throws ArgumentError transform(CropSize(3,2), img)
+    @test_throws ArgumentError transform(CropSize(2,3), img)
+    @test_throws ArgumentError transform(CropSize(0,2), img)
+    @test_throws ArgumentError transform(CropSize(2,0), img)
+    @test_throws ArgumentError transform(CropSize(-1,2), img)
+    @test_throws ArgumentError transform(CropSize(2,-1), img)
+
+    @test transform(CropSize(2,2), img)  == img
+    @test transform(CropSize(1,1), img)  == img[2:2, 2:2]
+    @test transform(CropSize(3,3), img3) == img3
+    @test transform(CropSize(1,3), img3) == img3[2:2, :]
+    @test transform(CropSize(3,1), img3) == img3[:, 2:2]
+    @test transform(CropSize(2,2), img3) == img3[1:2, 1:2]
+    @test transform(CropSize(1,1), img3) == img3[2:2, 2:2]
 
     op = CropSize(20, 10)
     img_1 = grayim(rand(UInt8, 50, 20))
@@ -153,6 +185,28 @@ end
     op = RCropSize()
     @test op.width == 64
     @test op.height == 64
+
+    @test_throws ArgumentError transform(RCropSize(3,2), img)
+    @test_throws ArgumentError transform(RCropSize(2,3), img)
+    @test_throws ArgumentError transform(RCropSize(0,2), img)
+    @test_throws ArgumentError transform(RCropSize(2,0), img)
+    @test_throws ArgumentError transform(RCropSize(-1,2), img)
+    @test_throws ArgumentError transform(RCropSize(2,-1), img)
+
+    @test size(transform(RCropSize(1,1), img)) == (1, 1)
+    @test size(transform(RCropSize(1,2), img)) == (1, 2)
+    @test size(transform(RCropSize(2,1), img)) == (2, 1)
+    @test size(transform(RCropSize(2,2), img)) == (2, 2)
+
+    @test size(transform(RCropSize(1,1), img3)) == (1, 1)
+    @test size(transform(RCropSize(1,2), img3)) == (1, 2)
+    @test size(transform(RCropSize(2,1), img3)) == (2, 1)
+    @test size(transform(RCropSize(2,2), img3)) == (2, 2)
+    @test size(transform(RCropSize(1,3), img3)) == (1, 3)
+    @test size(transform(RCropSize(3,1), img3)) == (3, 1)
+    @test size(transform(RCropSize(2,3), img3)) == (2, 3)
+    @test size(transform(RCropSize(3,2), img3)) == (3, 2)
+    @test size(transform(RCropSize(3,3), img3)) == (3, 3)
 
     op = RCropSize(20, 10)
     img_1 = grayim(rand(UInt8, 50, 20))
@@ -181,10 +235,28 @@ end
     @test op.width == 64
     @test op.height == 64
 
+    @test_throws ArgumentError transform(Crop(0,1,1,1), img)
+    @test_throws ArgumentError transform(Crop(1,0,1,1), img)
+    @test_throws ArgumentError transform(Crop(1,1,0,1), img)
+    @test_throws ArgumentError transform(Crop(1,1,1,0), img)
+    @test_throws ArgumentError transform(Crop(3,1,1,1), img)
+    @test_throws ArgumentError transform(Crop(1,3,1,1), img)
+    @test_throws ArgumentError transform(Crop(1,1,3,1), img)
+    @test_throws ArgumentError transform(Crop(1,1,1,3), img)
+
+    @test transform(Crop(1,1,1,1), img) == img[1:1, 1:1]
+    @test transform(Crop(2,2,1,1), img) == img[2:2, 2:2]
+    @test transform(Crop(1,1,2,2), img) == img
+    @test transform(Crop(1,1,2,1), img) == img[1:2, 1:1]
+    @test transform(Crop(1,1,1,2), img) == img[1:1, 1:2]
+    @test transform(Crop(2,2,1,1), img3) == img3[2:2, 2:2]
+
     op = Crop(10, 5, 20, 10)
     img_1 = grayim(rand(UInt8, 50, 20))
+    @test transform(op, img_1) == img_1[10:29, 5:14]
     @test size(transform(op, img_1)) == (20, 10)
     img_2 = grayim(rand(UInt8, 30, 40))
+    @test transform(op, img_2) == img_2[10:29, 5:14]
     @test size(transform(op, img_2)) == (20, 10)
     @imagetest "Crop" transform(Crop(45, 10, 64, 32), testimg)
 end

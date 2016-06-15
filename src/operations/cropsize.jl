@@ -75,9 +75,9 @@ function transform{T<:AbstractImage}(op::CropSize, img::T)
 
     cx = floor(Int, w / 2)
     cy = floor(Int, h / 2)
-    x = cx - floor(Int, op.width / 2)
+    x = cx - floor(Int, op.width / 2) + 1
     @assert x > 0
-    y = cy - floor(Int, op.height / 2)
+    y = cy - floor(Int, op.height / 2) + 1
     @assert y > 0
 
     result = crop(img, x:(x+op.width-1), y:(y+op.height-1))

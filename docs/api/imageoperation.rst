@@ -141,7 +141,7 @@ random probability of occurring, depending on the function parameters.
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``CropRatio(2)``                    |
 +================================================+================================================+
-| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropRatio.png     |
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropRatio2to1.png |
 +------------------------------------------------+------------------------------------------------+
 
 .. class:: CropSize

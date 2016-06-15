@@ -82,13 +82,13 @@ multiplier(::Crop) = 1
 function transform{T<:AbstractImage}(op::Crop, img::T)
     w = width(img)
     h = height(img)
-    op.x < w || throw(ArgumentError("x of crop window is out of bounds"))
-    op.y < h || throw(ArgumentError("y of crop window is out of bounds"))
+    op.x <= w || throw(ArgumentError("x of crop window is out of bounds"))
+    op.y <= h || throw(ArgumentError("y of crop window is out of bounds"))
 
     x_end = op.x + op.width - 1
     y_end = op.y + op.height - 1
-    x_end < w || throw(ArgumentError("width of crop window is out of bounds"))
-    y_end < h || throw(ArgumentError("height of crop window is out of bounds"))
+    x_end <= w || throw(ArgumentError("width of crop window is out of bounds"))
+    y_end <= h || throw(ArgumentError("height of crop window is out of bounds"))
 
     result = crop(img, op.x:x_end, op.y:y_end)
     _log_operation!(result, op)

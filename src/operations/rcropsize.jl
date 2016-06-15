@@ -70,8 +70,8 @@ multiplier(::RCropSize) = 1
 function transform{T<:AbstractImage}(op::RCropSize, img::T)
     w = width(img)
     h = height(img)
-    op.width < w || throw(ArgumentError("image width is smaller than desired subimage"))
-    op.height < h || throw(ArgumentError("image height is smaller than desired subimage"))
+    op.width <= w || throw(ArgumentError("image width is smaller than desired subimage"))
+    op.height <= h || throw(ArgumentError("image height is smaller than desired subimage"))
 
     x_max = w - op.width + 1
     @assert x_max > 0
