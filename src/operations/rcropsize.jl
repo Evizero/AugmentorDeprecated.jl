@@ -64,7 +64,7 @@ end
 
 RCropSize(; width::Int = 64, height::Int = 64) = RCropSize(width, height)
 
-Base.show(io::IO, op::RCropSize) = print(io, "Crop a random $(op.width)x$(op.height) window.")
+Base.showcompact(io::IO, op::RCropSize) = print(io, "Crop a random $(op.width)x$(op.height) window.")
 multiplier(::RCropSize) = 1
 
 function transform{T<:AbstractImage}(op::RCropSize, img::T)

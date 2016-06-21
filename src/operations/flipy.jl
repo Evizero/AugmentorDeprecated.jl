@@ -61,7 +61,7 @@ end
 
 FlipY(chance) = ProbableOperation(FlipY(); chance = chance)
 
-Base.show(io::IO, op::FlipY) = print(io, "Flip y-axis.")
+Base.showcompact(io::IO, op::FlipY) = print(io, "Flip y-axis.")
 multiplier(::FlipY) = 1
 
 function transform{T<:AbstractImage}(op::FlipY, img::T)

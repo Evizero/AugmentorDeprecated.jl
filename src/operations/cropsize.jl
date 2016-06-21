@@ -64,7 +64,7 @@ end
 
 CropSize(; width::Int = 64, height::Int = 64) = CropSize(width, height)
 
-Base.show(io::IO, op::CropSize) = print(io, "Crop a centered $(op.width)x$(op.height) window.")
+Base.showcompact(io::IO, op::CropSize) = print(io, "Crop a centered $(op.width)x$(op.height) window.")
 multiplier(::CropSize) = 1
 
 function transform{T<:AbstractImage}(op::CropSize, img::T)

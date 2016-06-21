@@ -63,7 +63,7 @@ end
 
 Rotate180(chance) = ProbableOperation(Rotate180(); chance = chance)
 
-Base.show(io::IO, op::Rotate180) = print(io, "Rotate 180 degrees.")
+Base.showcompact(io::IO, op::Rotate180) = print(io, "Rotate 180 degrees.")
 multiplier(::Rotate180) = 1
 
 function transform{T<:AbstractImage}(op::Rotate180, img::T)

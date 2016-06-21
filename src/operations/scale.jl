@@ -66,7 +66,7 @@ end
 
 Scale(; width = 1, height = 1) = Scale(width, height)
 
-Base.show(io::IO, op::Scale) = print(io, "Scale by $(op.width) x $(op.height).")
+Base.showcompact(io::IO, op::Scale) = print(io, "Scale by $(op.width) x $(op.height).")
 multiplier(::Scale) = 1
 
 function transform{T<:AbstractImage}(op::Scale, img::T)

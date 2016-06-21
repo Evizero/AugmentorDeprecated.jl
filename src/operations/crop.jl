@@ -76,7 +76,7 @@ end
 
 Crop(; x::Int = 1, y::Int = 1, width::Int = 64, height::Int = 64) = Crop(x, y, width, height)
 
-Base.show(io::IO, op::Crop) = print(io, "Crop at x=$(op.x) y=$(op.y) a $(op.width)x$(op.height) window.")
+Base.showcompact(io::IO, op::Crop) = print(io, "Crop at x=$(op.x) y=$(op.y) a $(op.width)x$(op.height) window.")
 multiplier(::Crop) = 1
 
 function transform{T<:AbstractImage}(op::Crop, img::T)

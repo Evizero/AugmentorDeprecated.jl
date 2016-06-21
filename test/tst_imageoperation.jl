@@ -12,6 +12,7 @@ end
     @test NoOp <: ImageOperation
     op = NoOp()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: NoOp
     @test transform(NoOp(), img) == img
@@ -23,6 +24,7 @@ end
     @test FlipX <: ImageOperation
     op = FlipX()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: FlipX
     op = FlipX(0.7)
@@ -39,10 +41,12 @@ end
     @test FlipY <: ImageOperation
     op = FlipY()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: FlipY
     op = FlipY(0.7)
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 2
     @test typeof(op) <: Augmentor.ProbableOperation
     @test op.chance == 0.7
@@ -56,6 +60,7 @@ end
     @test Rotate90 <: ImageOperation
     op = Rotate90()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: Rotate90
     op = Rotate90(0.7)
@@ -72,6 +77,7 @@ end
     @test Rotate180 <: ImageOperation
     op = Rotate180()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: Rotate180
     op = Rotate180(0.7)
@@ -88,6 +94,7 @@ end
     @test Rotate270 <: ImageOperation
     op = Rotate270()
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test typeof(op) <: Rotate270
     op = Rotate270(0.7)
@@ -105,6 +112,7 @@ end
     @test multiplier(Resize()) == 1
     op = Resize()
     show(op); println()
+    showcompact(op); println()
     @test op.width == 64
     @test op.height == 64
     op = Resize(width = 23, height = 12)
@@ -121,6 +129,7 @@ end
     @test multiplier(CropRatio()) == 1
     op = CropRatio(1//2)
     show(op); println()
+    showcompact(op); println()
     @test op.ratio == .5
     op = CropRatio(1/2)
     @test op.ratio == .5
@@ -158,6 +167,7 @@ end
     @test multiplier(CropSize()) == 1
     op = CropSize(2, 3)
     show(op); println()
+    showcompact(op); println()
     @test op.width == 2
     @test op.height == 3
     op = CropSize(width = 4, height = 5)
@@ -196,6 +206,7 @@ end
     @test multiplier(RCropSize()) == 1
     op = RCropSize(2, 3)
     show(op); println()
+    showcompact(op); println()
     @test op.width == 2
     @test op.height == 3
     op = RCropSize(width = 4, height = 5)
@@ -240,6 +251,7 @@ end
     @test multiplier(RCropRatio()) == 1
     op = RCropRatio(1//2)
     show(op); println()
+    showcompact(op); println()
     @test op.ratio == .5
     op = RCropRatio(1/2)
     @test op.ratio == .5
@@ -277,6 +289,7 @@ end
     @test multiplier(Crop()) == 1
     op = Crop(1, 2, 3, 4)
     show(op); println()
+    showcompact(op); println()
     @test op.x == 1
     @test op.y == 2
     @test op.width == 3
@@ -324,6 +337,7 @@ end
     @test multiplier(Zoom()) == 1
     op = Zoom(1//2)
     show(op); println()
+    showcompact(op); println()
     @test op.factor == .5
     op = Zoom(1/2)
     @test op.factor == .5
@@ -342,6 +356,7 @@ end
     @test multiplier(Scale()) == 1
     op = Scale(2, .5)
     show(op); println()
+    showcompact(op); println()
     @test op.width == 2
     @test op.height == .5
     op = Scale()
@@ -367,6 +382,7 @@ end
     @test_throws ArgumentError Either()
     op = Either(NoOp())
     show(op); println()
+    showcompact(op); println()
     @test multiplier(op) == 1
     @test op.operations == [NoOp()]
     @test op.chance == [1.]

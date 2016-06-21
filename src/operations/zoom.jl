@@ -61,7 +61,7 @@ end
 
 Zoom(; factor = 2) = Zoom(factor)
 
-Base.show(io::IO, op::Zoom) = print(io, "Zoom by $(op.factor)x.")
+Base.showcompact(io::IO, op::Zoom) = print(io, "Zoom by $(op.factor)x.")
 multiplier(::Zoom) = 1
 
 function transform{T<:AbstractImage}(op::Zoom, img::T)

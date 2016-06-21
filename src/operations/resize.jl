@@ -65,7 +65,7 @@ end
 
 Resize(;width::Int = 64, height::Int = 64) = Resize(width, height)
 
-Base.show(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height).")
+Base.showcompact(io::IO, op::Resize) = print(io, "Resize to $(op.width)x$(op.height).")
 multiplier(::Resize) = 1
 
 function transform{T<:AbstractImage}(op::Resize, img::T)

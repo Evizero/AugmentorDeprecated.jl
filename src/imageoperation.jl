@@ -58,7 +58,7 @@ end
 
 multiplier(po::ProbableOperation) = 1 + multiplier(po.operation)
 
-function Base.show(io::IO, po::ProbableOperation)
+function Base.showcompact(io::IO, po::ProbableOperation)
     print(io, round(Int, po.chance*100), "% chance to: ", po.operation)
 end
 

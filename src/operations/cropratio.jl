@@ -60,7 +60,7 @@ end
 
 CropRatio(; ratio = 1.) = CropRatio(ratio)
 
-Base.show(io::IO, op::CropRatio) = print(io, "Crop to $(op.ratio) aspect ratio.")
+Base.showcompact(io::IO, op::CropRatio) = print(io, "Crop to $(op.ratio) aspect ratio.")
 multiplier(::CropRatio) = 1
 
 function transform{T<:AbstractImage}(op::CropRatio, img::T)
