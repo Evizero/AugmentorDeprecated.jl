@@ -11,6 +11,8 @@ export
     rotate_crop,
 
     ImageOperation,
+        Either,
+        NoOp,
         FlipX,
         FlipY,
         Rotate90,

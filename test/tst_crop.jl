@@ -1,4 +1,3 @@
-
 A = rand(UInt8, 50, 20)
 img_x = grayim(A)
 img_y = permutedims(img_x, [2, 1])

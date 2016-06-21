@@ -10,7 +10,7 @@ end
 
 RCropRatio(; ratio = 1.) = RCropRatio(ratio)
 
-Base.show(io::IO, op::RCropRatio) = print(io, "Crop to $(op.ratio) aspect ratio.")
+Base.show(io::IO, op::RCropRatio) = print(io, "Crop to random $(op.ratio) aspect ratio.")
 multiplier(::RCropRatio) = 1
 
 function transform{T<:AbstractImage}(op::RCropRatio, img::T)

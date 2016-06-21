@@ -8,6 +8,17 @@ img3 = grayim(B)
     @test_throws ArgumentError multiplier(FaultyOp())
 end
 
+@testset "NoOp" begin
+    @test NoOp <: ImageOperation
+    op = NoOp()
+    show(op); println()
+    @test multiplier(op) == 1
+    @test typeof(op) <: NoOp
+    @test transform(NoOp(), img) == img
+    @test transform(NoOp(), img2) == img2
+    @test transform(NoOp(), img3) == img3
+end
+
 @testset "FlipX" begin
     @test FlipX <: ImageOperation
     op = FlipX()
@@ -349,6 +360,54 @@ end
 
     @imagetest "Scale_x" transform(Scale(0.8, 1.2), testimg)
     @imagetest "Scale_y" permutedims(transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1])), [2, 1])
+end
+
+@testset "Either" begin
+    @test Either <: ImageOperation
+    @test_throws ArgumentError Either()
+    op = Either(NoOp())
+    show(op); println()
+    @test multiplier(op) == 1
+    @test op.operations == [NoOp()]
+    @test op.chance == [1.]
+    @test op.cum_chance == [1.]
+    @test transform(op, img) == img
+    op = Either(FlipX(), FlipY())
+    @test multiplier(op) == 2
+    @test op.operations == [FlipX(), FlipY()]
+    @test op.chance == [.5, .5]
+    @test op.cum_chance == [.5, 1.]
+    op = Either([FlipX(), FlipY()])
+    @test op.operations == [FlipX(), FlipY()]
+    @test op.chance == [.5, .5]
+    @test op.cum_chance == [.5, 1.]
+    @test_throws AssertionError Either(FlipX(), FlipY(), chance = [0., 0.])
+    @test_throws ArgumentError Either(FlipX(), FlipY(), Rotate90(), chance = [.5, .5])
+    op = Either(FlipX(), FlipY(), Rotate90())
+    @test multiplier(op) == 3
+    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.chance == [1/3, 1/3, 1/3]
+    @test op.cum_chance == [1/3, 2/3, 1.]
+    op = Either([FlipX(), FlipY(), Rotate90()])
+    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.chance == [1/3, 1/3, 1/3]
+    @test op.cum_chance == [1/3, 2/3, 1.]
+    op = Either(FlipX(), FlipY(), Rotate90(), chance = [1., 3, 1])
+    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.chance == [.2, .6, .2]
+    @test op.cum_chance == [.2, .8, 1.]
+    op = Either(FlipX(), FlipY(), chance = [1., 0.])
+    @test multiplier(op) == 1
+    @test op.operations == [FlipX(), FlipY()]
+    @test op.chance == [1., 0]
+    @test op.cum_chance == [1., 1.]
+    @test transform(op, deepcopy(img)) == transform(FlipX(), deepcopy(img))
+    op = Either(FlipX(), FlipY(), chance = [0., 1.])
+    @test multiplier(op) == 1
+    @test op.operations == [FlipX(), FlipY()]
+    @test op.chance == [0., 1]
+    @test op.cum_chance == [0., 1.]
+    @test transform(op, deepcopy(img)) == transform(FlipY(), deepcopy(img))
 end
 
 @testset "Tuple of Image" begin
