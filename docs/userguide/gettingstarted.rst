@@ -37,7 +37,7 @@ a number of *image operations*, and an *image operation pipeline*.
     As the name suggests concrete subclasses define a specific
     transformation that can be applied to an image, or a set of
     images. Operations can also be lifted into a
-    :class:`ProbableOperation`, which have a random probability of
+    :class:`Either`, which have a random probability of
     occuring, depending on the hyperparameter.
 
 Using Augmentor.jl
@@ -76,7 +76,7 @@ which can be sampled on the fly
     pl = LinearPipeline()
 
     # add operations to pipeline
-    push!(pl, FlipX(0.5)) # lifted to ProbableOperation{FlipX}. 50% chance of occuring
+    push!(pl, FlipX(0.5)) # lifted to Either(FlipX(), NoOp()). 50% chance of occuring
     push!(pl, FlipY())    # not lifted. will always occur
     push!(pl, Resize(64,64))
 

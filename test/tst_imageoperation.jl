@@ -29,8 +29,8 @@ end
     @test typeof(op) <: FlipX
     op = FlipX(0.7)
     @test multiplier(op) == 2
-    @test typeof(op) <: Augmentor.ProbableOperation
-    @test op.chance == 0.7
+    @test typeof(op) <: Either
+    @test_approx_eq op.chance [0.7, .3]
     @test typeof(last(transform(FlipX(), img)["operations"])) <: FlipX
     @test transform(FlipX(0), img) == img
     @test transform(FlipX(1), img) == flipdim(img, "x")
@@ -48,8 +48,8 @@ end
     show(op); println()
     showcompact(op); println()
     @test multiplier(op) == 2
-    @test typeof(op) <: Augmentor.ProbableOperation
-    @test op.chance == 0.7
+    @test typeof(op) <: Either
+    @test_approx_eq op.chance [0.7, .3]
     @test typeof(last(transform(FlipY(), img)["operations"])) <: FlipY
     @test transform(FlipY(0), img) == img
     @test transform(FlipY(1), img) == flipdim(img, "y")
@@ -65,8 +65,8 @@ end
     @test typeof(op) <: Rotate90
     op = Rotate90(0.7)
     @test multiplier(op) == 2
-    @test typeof(op) <: Augmentor.ProbableOperation
-    @test op.chance == 0.7
+    @test typeof(op) <: Either
+    @test_approx_eq op.chance [0.7, .3]
     @test typeof(last(transform(Rotate90(), img)["operations"])) <: Rotate90
     @test transform(Rotate90(0), img) == img
     @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
@@ -82,8 +82,8 @@ end
     @test typeof(op) <: Rotate180
     op = Rotate180(0.7)
     @test multiplier(op) == 2
-    @test typeof(op) <: Augmentor.ProbableOperation
-    @test op.chance == 0.7
+    @test typeof(op) <: Either
+    @test_approx_eq op.chance [0.7, .3]
     @test typeof(last(transform(Rotate180(), img)["operations"])) <: Rotate180
     @test transform(Rotate180(0), img) == img
     @test transform(Rotate180(1), img) == rotate_expand(img, deg2rad(180))
@@ -99,8 +99,8 @@ end
     @test typeof(op) <: Rotate270
     op = Rotate270(0.7)
     @test multiplier(op) == 2
-    @test typeof(op) <: Augmentor.ProbableOperation
-    @test op.chance == 0.7
+    @test typeof(op) <: Either
+    @test_approx_eq op.chance [0.7, .3]
     @test typeof(last(transform(Rotate270(), img)["operations"])) <: Rotate270
     @test transform(Rotate270(0), img) == img
     @test transform(Rotate270(1), img) == rotate_expand(img, deg2rad(270))

@@ -10,8 +10,8 @@ the existing pixels. Furthermore, the output images is guaranteed
 to have the same dimensions as the input image.
 
 If created using the parameter `chance`, the operation will be
-lifted into a `ProbableOperation`. See the documentation of
-`ProbableOperation` for more information.
+lifted into a `Either`. See the documentation of `Either` for more
+information.
 
 Usage
 ======
@@ -56,7 +56,7 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageOperation`, `Either`, `transform`
 """
 immutable Rotate180 <: ImageOperation
 end

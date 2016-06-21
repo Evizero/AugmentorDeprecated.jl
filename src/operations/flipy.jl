@@ -8,8 +8,8 @@ Reverses the pixel order along the y-axis. In other words it
 mirrors the Image along the x-axis (i.e. vertically).
 
 If created using the parameter `chance`, the operation will be
-lifted into a `ProbableOperation`. See the documentation of
-`ProbableOperation` for more information.
+lifted into a `Either`. See the documentation of `Either` for more
+information.
 
 Usage
 ======
@@ -54,7 +54,7 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageOperation`, `Either`, `transform`
 """
 immutable FlipY <: ImageOperation
 end

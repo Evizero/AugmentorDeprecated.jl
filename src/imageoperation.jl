@@ -46,32 +46,6 @@ end
 
 # ==========================================================
 
-type ProbableOperation{T<:ImageOperation} <: ImageOperation
-    operation::T
-    chance::Float64
-end
-
-function ProbableOperation{T<:ImageOperation}(op::T; chance::Real = .5)
-    0 <= chance <= 1. || throw(ArgumentError("chance has to be between 0 and 1"))
-    ProbableOperation{T}(op, Float64(chance))
-end
-
-multiplier(po::ProbableOperation) = 1 + multiplier(po.operation)
-
-function Base.showcompact(io::IO, po::ProbableOperation)
-    print(io, round(Int, po.chance*100), "% chance to: ", po.operation)
-end
-
-function transform{T}(po::ProbableOperation, img::T)
-    if hit_chance(po.chance)
-        transform(po.operation, img)
-    else
-        img
-    end::T
-end
-
-# ==========================================================
-
 """
 `NoOp <: ImageOperation`
 
@@ -180,6 +154,13 @@ immutable Either <: ImageOperation
 end
 
 Either(args::ImageOperation...; nargs...) = Either(collect(ImageOperation, args); nargs...)
+
+function ProbableOperation{T<:ImageOperation}(op::T; chance::Real = .5)
+    0 <= chance <= 1. || throw(ArgumentError("chance has to be between 0 and 1"))
+    p1 = Float64(chance)
+    p2 = 1 - p1
+    Either(op, NoOp(), chance = [p1, p2])
+end
 
 function Base.show(io::IO, op::Either)
     print(io, "Either (1 out of ", length(op.operations), " operation(s))")

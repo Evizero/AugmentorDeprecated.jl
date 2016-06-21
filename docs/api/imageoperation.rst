@@ -22,8 +22,8 @@ pipeline are subtypes of :class:`ImageOperation`.
    result in (counting the case of not being applied to the input).
 
 Each concrete subclass defines a specific transformation that can
-be applied to an image, or a set of images. Furthermore, Operations
-can also be lifted into a :class:`ProbableOperation`, which have a
+be applied to an image, or a set of images. Furthermore, operations
+can also be lifted into a :class:`Either`, which have a
 random probability of occurring, depending on the function parameters.
 
 .. class:: FlipX
