@@ -173,9 +173,39 @@ random probability of occurring, depending on the function parameters.
     Crops out an area of the specified pixel dimensions
     at a randomized position of the given image
 
-+------------------------------------------------+------------------------------------------------+
-| Input                                          | Output for ``CropSize(64, 32)``                |
-+================================================+================================================+
-| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropSize.png      |
-+------------------------------------------------+------------------------------------------------+
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| Input                                          | Example gif for output of ``RCropSize(64, 32)``                                                                  |
++================================================+==================================================================================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313007/7cf77b18-3977-11e6-8677-7c465b18ea87.gif |
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+
+.. class:: RCropRatio
+
+    Crops out the biggest possible area at some random position
+    of the given image, such that said sub-image satisfies the
+    specified aspect ratio (i.e. width divided by height).
+
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| Input                                          | Example gif for output of ``RCropRatio(2)``                                                                      |
++================================================+==================================================================================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313006/7ceccc54-3977-11e6-9cef-e17f82f58c0f.gif |
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+
+.. class:: Either
+
+    Allows for choosing between different ImageOperations at
+    random. This is particularly useful if one for example wants
+    to first either rotate the image 90 degree clockwise or
+    anticlockwise (but never both) and then apply some other
+    operation(s) afterwards.
+
+    By default each specified image operation has the same
+    probability of occurance. This default behaviour can be
+    overwritten by specifying the parameter `chance` manually
+
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| Input                                          | Example gif for output of ``Either(Rotate90(), Rotate270(), NoOp())``                                            |
++================================================+==================================================================================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313482/b01e2b2a-3979-11e6-9838-aba3cd910bb4.gif |
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 

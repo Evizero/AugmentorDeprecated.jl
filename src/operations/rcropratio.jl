@@ -1,4 +1,54 @@
+"""
+`RCropRatio <: ImageOperation`
 
+Description
+============
+
+Crops out the biggest possible area at some random position of
+the given image, such that said sub-image satisfies the specified
+aspect ratio (i.e. width divided by height).
+
+Usage
+======
+
+    RCropRatio()
+
+    RCropRatio(ratio = 1)
+
+Arguments
+==========
+
+- **`ratio`** : The ratio of image height to image width that
+the output image should satisfy
+
+Methods
+========
+
+- **`transform`** : Applies the transformation to the given Image
+or set of images
+
+Author(s)
+==========
+
+- Christof Stocker (Github: https://github.com/Evizero)
+
+Examples
+========
+
+    using Augmentor
+    using TestImages
+
+    # load an example image
+    img = testimage("lena")
+
+    # Randomly crops the image to a 2:1 aspect ratio
+    img_new = transform(RCropRatio(2), img)
+
+see also
+=========
+
+`ImageOperation`, `transform`
+"""
 immutable RCropRatio <: ImageOperation
     ratio::Float64
 
