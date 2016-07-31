@@ -1,14 +1,20 @@
 module Augmentor
 
+using RecipesBase
 using Requires
 using Images
 using AffineTransforms
+using PiecewiseAffineTransforms
 using Interpolations
 
 export
 
     rotate_expand,
     rotate_crop,
+
+    DisplacementField,
+        uniform_displacement,
+        gaussian_displacement,
 
     ImageOperation,
         Either,
@@ -41,6 +47,8 @@ include("common.jl")
 
 include("rotate.jl")
 include("crop.jl")
+include("displacementfield.jl")
+
 include("imageoperation.jl")
 include("operations/flipx.jl")
 include("operations/flipy.jl")
