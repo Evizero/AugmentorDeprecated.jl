@@ -2,6 +2,14 @@ using Augmentor
 using Images
 using TestImages
 using VisualRegressionTests
+using Plots
+
+ENV["MPLBACKEND"] = "Agg"
+try
+    @eval import PyPlot
+    info("Matplotlib version: $(PyPlot.matplotlib[:__version__])")
+end
+pyplot(size=(200,150), reuse=true)
 
 if VERSION >= v"0.5-"
     using Base.Test
@@ -14,9 +22,19 @@ refdir = Pkg.dir("Augmentor", "test", "refimg")
 testimg = load(joinpath(refdir, "testimage.png"))
 
 function imagetest_impl(testname, testfun)
+    srand(1)
     refimgpath = joinpath(refdir, "$testname.png")
     result = test_images(VisualTest(testfun, refimgpath))
     @test success(result)
+end
+
+macro plottest(testname, expr)
+    esc(quote
+        imagetest_impl(string($testname), fn -> begin
+            $expr
+            png(fn)
+        end)
+    end)
 end
 
 macro imagetest(testname, expr)
@@ -30,6 +48,7 @@ end
 type FaultyOp <: Augmentor.ImageOperation end
 
 tests = [
+    ("tst_displacementfield.jl", "Low-level functionality for image displacement"),
     ("tst_common.jl", "Utility methods"),
     ("tst_rotate.jl", "Low-level functionality for image rotation"),
     ("tst_crop.jl", "Low-level functionality for image cropping"),

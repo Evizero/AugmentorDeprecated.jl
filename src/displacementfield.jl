@@ -4,7 +4,6 @@ immutable DisplacementField
     delta_X::Matrix{Float64}
     delta_Y::Matrix{Float64}
 
-
     function DisplacementField(X::Matrix{Float64}, Y::Matrix{Float64}, delta_X::Matrix{Float64}, delta_Y::Matrix{Float64})
         @assert size(X) == size(Y) == size(delta_X) == size(delta_Y)
         @assert minimum(Y) >= 0 && maximum(X) <= 1
@@ -24,7 +23,7 @@ end
     w, h = size(df.delta_X)
     strengthf = Float64(strength)
 
-    aspect_ratio --> 1.
+    yflip := true
     seriestype := :quiver
 
     quiver := vec([(Float64(df.delta_X[i,j] * strengthf), Float64(df.delta_Y[i,j] * strengthf)) for i=1:w, j=1:h])
@@ -48,7 +47,7 @@ function _1d_uniform_displacement(gridwidth::Int, gridheight::Int, static_border
     else
         @assert gridwidth > 0 && gridheight > 0
         rand(gridwidth, gridheight)
-    end
+    end::Matrix{Float64}
     broadcast!(*, A, A, 2.)
     broadcast!(-, A, A, 1.)
     if normalize

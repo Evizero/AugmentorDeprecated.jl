@@ -5,3 +5,4 @@ MLDataUtils
 @windows ImageMagick
 @linux ImageMagick
 VisualRegressionTests
+Plots
