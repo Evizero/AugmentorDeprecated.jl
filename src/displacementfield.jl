@@ -19,27 +19,30 @@ immutable DisplacementField
     end
 end
 
-@recipe function plot(df::DisplacementField; strength = 1)
+@recipe function plot(df::DisplacementField)
     w, h = size(df.delta_X)
-    strengthf = Float64(strength)
 
     yflip := true
     seriestype := :quiver
 
-    quiver := vec([(Float64(df.delta_X[i,j] * strengthf), Float64(df.delta_Y[i,j] * strengthf)) for i=1:w, j=1:h])
+    quiver := vec([(Float64(df.delta_X[i,j]), Float64(df.delta_Y[i,j])) for i=1:w, j=1:h])
 
     vec([(df.X[i,j], df.Y[i,j]) for i=1:w, j=1:h])
 end
 
 # uniform displacement
 
-function uniform_displacement(gridwidth::Int, gridheight::Int, static_border::Bool = true, normalize::Bool = true)
-    delta_X = _1d_uniform_displacement(gridwidth, gridheight, static_border, normalize)
-    delta_Y = _1d_uniform_displacement(gridwidth, gridheight, static_border, normalize)
+function uniform_displacement(gridwidth::Int, gridheight::Int, scale::Real, static_border::Bool = true, normalize::Bool = true)
+    delta_X = _1d_uniform_displacement(gridwidth, gridheight, Float64(scale), static_border, normalize)
+    delta_Y = _1d_uniform_displacement(gridwidth, gridheight, Float64(scale), static_border, normalize)
     DisplacementField(delta_X, delta_Y)
 end
 
-function _1d_uniform_displacement(gridwidth::Int, gridheight::Int, static_border::Bool = true, normalize::Bool = true)
+function uniform_displacement(gridwidth::Int, gridheight::Int; scale = .2, static_border = true, normalize = true)
+    uniform_displacement(gridwidth, gridheight, scale, static_border, normalize)
+end
+
+function _1d_uniform_displacement(gridwidth::Int, gridheight::Int, scale::Float64, static_border::Bool, normalize::Bool)
     A = if static_border
         @assert gridwidth > 2 && gridheight > 2
         A_inner = rand(gridwidth-2, gridheight-2)
@@ -51,36 +54,40 @@ function _1d_uniform_displacement(gridwidth::Int, gridheight::Int, static_border
     broadcast!(*, A, A, 2.)
     broadcast!(-, A, A, 1.)
     if normalize
-        broadcast!(/, A, A, norm(A))
+        broadcast!(*, A, A, scale / norm(A))
     end
     A
 end
 
 # gaussian displacement fields
 
-function gaussian_displacement(gridwidth::Int, gridheight::Int, sigma::Vector{Float64}, static_border::Bool = true, normalize::Bool = true)
-    delta_X = _1d_gaussian_displacement(gridwidth, gridheight, sigma, static_border, normalize)
-    delta_Y = _1d_gaussian_displacement(gridwidth, gridheight, sigma, static_border, normalize)
+function gaussian_displacement(gridwidth::Int, gridheight::Int, scale::Real, sigma::Vector{Float64}, static_border::Bool = true, normalize::Bool = true)
+    delta_X = _1d_gaussian_displacement(gridwidth, gridheight, Float64(scale), sigma, static_border, normalize)
+    delta_Y = _1d_gaussian_displacement(gridwidth, gridheight, Float64(scale), sigma, static_border, normalize)
     DisplacementField(delta_X, delta_Y)
 end
 
-function gaussian_displacement(gridwidth::Int, gridheight::Int, sigma::Real = 2, static_border::Bool = true, normalize::Bool = true)
-    gaussian_displacement(gridwidth, gridheight, [Float64(sigma), Float64(sigma)], static_border, normalize)
+function gaussian_displacement(gridwidth::Int, gridheight::Int, scale::Real, sigma::Real, static_border::Bool = true, normalize::Bool = true)
+    gaussian_displacement(gridwidth, gridheight, Float64(scale), [Float64(sigma), Float64(sigma)], static_border, normalize)
 end
 
-function _1d_gaussian_displacement(gridwidth::Int, gridheight::Int, sigma::Vector{Float64}, static_border::Bool, normalize::Bool)
+function gaussian_displacement(gridwidth::Int, gridheight::Int; scale = .2, sigma = 2, static_border = true, normalize = true)
+    gaussian_displacement(gridwidth, gridheight, scale, sigma, static_border, normalize)
+end
+
+function _1d_gaussian_displacement(gridwidth::Int, gridheight::Int, scale::Float64, sigma::Vector{Float64}, static_border::Bool, normalize::Bool)
     @assert length(sigma) == 2
     @assert all(sigma .> 0)
     A = if static_border
-        A_inner = _1d_uniform_displacement(gridwidth-2, gridheight-2, false, false)
+        A_inner = _1d_uniform_displacement(gridwidth-2, gridheight-2, 1., false, false)
         Images.imfilter_gaussian_no_nans!(A_inner, sigma)
         padarray(A_inner, [1, 1], [1, 1], "value", 0.)
     else
-        A_t = _1d_uniform_displacement(gridwidth, gridheight, false, false)
+        A_t = _1d_uniform_displacement(gridwidth, gridheight, 1., false, false)
         Images.imfilter_gaussian_no_nans!(A_t, sigma)
     end::Matrix{Float64}
     if normalize
-        broadcast!(/, A, A, norm(A))
+        broadcast!(*, A, A, scale / norm(A))
     end
     A
 end
