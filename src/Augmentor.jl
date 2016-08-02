@@ -16,6 +16,8 @@ export
         uniform_displacement,
         gaussian_displacement,
 
+    DisplacementMesh,
+
     ImageOperation,
         Either,
         NoOp,
@@ -48,6 +50,7 @@ include("common.jl")
 include("rotate.jl")
 include("crop.jl")
 include("displacementfield.jl")
+include("displacementmesh.jl")
 
 include("imageoperation.jl")
 include("operations/flipx.jl")
