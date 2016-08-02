@@ -45,10 +45,10 @@ end
     srand(123)
     df = uniform_displacement(5, 8, .2, true, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (5, 8)
-    @test size(df.Y) == (5, 8)
-    @test size(df.delta_X) == (5, 8)
-    @test size(df.delta_Y) == (5, 8)
+    @test size(df.X) == (8, 5)
+    @test size(df.Y) == (8, 5)
+    @test size(df.delta_X) == (8, 5)
+    @test size(df.delta_Y) == (8, 5)
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
@@ -62,10 +62,10 @@ end
 
     df = uniform_displacement(10, 9, .1, false, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (10, 9)
-    @test size(df.Y) == (10, 9)
-    @test size(df.delta_X) == (10, 9)
-    @test size(df.delta_Y) == (10, 9)
+    @test size(df.X) == (9, 10)
+    @test size(df.Y) == (9, 10)
+    @test size(df.delta_X) == (9, 10)
+    @test size(df.delta_Y) == (9, 10)
     @test sum_border(df.delta_X) > 0.
     @test sum_border(df.delta_Y) > 0.
     test_equidistance(df)
@@ -97,10 +97,10 @@ end
     srand(123)
     df = gaussian_displacement(10, 12, .3, 2, true, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (10, 12)
-    @test size(df.Y) == (10, 12)
-    @test size(df.delta_X) == (10, 12)
-    @test size(df.delta_Y) == (10, 12)
+    @test size(df.X) == (12, 10)
+    @test size(df.Y) == (12, 10)
+    @test size(df.delta_X) == (12, 10)
+    @test size(df.delta_Y) == (12, 10)
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)

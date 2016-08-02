@@ -12,22 +12,22 @@ immutable DisplacementField
     end
 
     function DisplacementField(delta_X::Matrix{Float64}, delta_Y::Matrix{Float64})
-        w, h = size(delta_X)
-        X = [j for i=1:w, j=linspace(0,1,h)]
-        Y = [i for i=linspace(0,1,w), j=1:h]
+        h, w = size(delta_X)
+        X = [j for i=1:h, j=linspace(0,1,w)]
+        Y = [i for i=linspace(0,1,h), j=1:w]
         DisplacementField(X, Y, delta_X, delta_Y)
     end
 end
 
 @recipe function plot(df::DisplacementField)
-    w, h = size(df.delta_X)
+    h, w = size(df.delta_X)
 
     yflip := true
     seriestype := :quiver
 
-    quiver := vec([(Float64(df.delta_X[i,j]), Float64(df.delta_Y[i,j])) for i=1:w, j=1:h])
+    quiver := vec([(Float64(df.delta_X[i,j]), Float64(df.delta_Y[i,j])) for i=1:h, j=1:w])
 
-    vec([(df.X[i,j], df.Y[i,j]) for i=1:w, j=1:h])
+    vec([(df.X[i,j], df.Y[i,j]) for i=1:h, j=1:w])
 end
 
 # uniform displacement
@@ -45,11 +45,11 @@ end
 function _1d_uniform_displacement(gridwidth::Int, gridheight::Int, scale::Float64, static_border::Bool, normalize::Bool)
     A = if static_border
         @assert gridwidth > 2 && gridheight > 2
-        A_inner = rand(gridwidth-2, gridheight-2)
+        A_inner = rand(gridheight-2, gridwidth-2)
         padarray(A_inner, [1, 1], [1, 1], "value", 0.5)
     else
         @assert gridwidth > 0 && gridheight > 0
-        rand(gridwidth, gridheight)
+        rand(gridheight, gridwidth)
     end::Matrix{Float64}
     broadcast!(*, A, A, 2.)
     broadcast!(-, A, A, 1.)
