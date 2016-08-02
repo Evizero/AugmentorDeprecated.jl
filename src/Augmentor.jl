@@ -4,6 +4,7 @@ using RecipesBase
 using Requires
 using Images
 using AffineTransforms
+using FixedPointNumbers
 using PiecewiseAffineTransforms
 using Interpolations
 
@@ -49,10 +50,12 @@ include("common.jl")
 
 include("rotate.jl")
 include("crop.jl")
+
+include("imageoperation.jl")
+
 include("displacementfield.jl")
 include("displacementmesh.jl")
 
-include("imageoperation.jl")
 include("operations/flipx.jl")
 include("operations/flipy.jl")
 include("operations/resize.jl")

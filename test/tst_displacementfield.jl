@@ -95,7 +95,20 @@ end
     @plottest "gaussian_displacement" plot(df)
 
     srand(123)
-    df = gaussian_displacement(10, 12, .3, 2, true, true)
+    df = gaussian_displacement(10, 12, scale = .3, sigma = 1)
+    @testset "iterations" begin
+        srand(123)
+        df2 = gaussian_displacement(10, 12, scale = .3, sigma = 1, iterations = 2)
+        for i = 2:11, j = 2:9
+            if i == 2 || j == 2 || i == 11 || j == 9
+                @test abs(df2.delta_X[i,j]) != abs(df.delta_X[i,j])
+                @test abs(df2.delta_Y[i,j]) != abs(df.delta_Y[i,j])
+            end
+        end
+    end
+
+    srand(123)
+    df = gaussian_displacement(10, 12, .3, 2, 1, true, true)
     @test typeof(df) <: DisplacementField
     @test size(df.X) == (12, 10)
     @test size(df.Y) == (12, 10)
@@ -112,7 +125,7 @@ end
     @test sum_border(df.delta_Y) > 0.
     test_equidistance(df)
 
-    df = gaussian_displacement(10, 12, .3, 2, false, true)
+    df = gaussian_displacement(10, 12, .3, 2, 1, false, true)
     @test typeof(df) <: DisplacementField
     @test sum_border(df.delta_X) > 0.
     @test sum_border(df.delta_Y) > 0.

@@ -5,3 +5,4 @@ AffineTransforms
 Interpolations
 RecipesBase
 PiecewiseAffineTransforms
+FixedPointNumbers
