@@ -48,6 +48,7 @@ end
 type FaultyOp <: Augmentor.ImageOperation end
 
 tests = [
+    ("tst_displacementmesh.jl", "Low-level functionality for image displacement"),
     ("tst_displacementfield.jl", "Low-level functionality for image displacement"),
     ("tst_common.jl", "Utility methods"),
     ("tst_rotate.jl", "Low-level functionality for image rotation"),

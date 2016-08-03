@@ -1,4 +1,4 @@
-immutable DisplacementMesh
+immutable DisplacementMesh <: ImageOperation
     input_vertices::Matrix{Float64}
     output_vertices::Matrix{Float64}
     indices::Matrix{Int}
@@ -20,6 +20,64 @@ DisplacementMesh(field::DisplacementField, img::AbstractImage) = DisplacementMes
 
 function Base.show(io::IO, dm::DisplacementMesh)
     print(io, "DisplacementMesh (vertices: $(size(dm.input_vertices,1)), triangles: $(size(dm.indices,1)))")
+end
+
+@recipe function plot(dm::DisplacementMesh, img::Image)
+    legend --> false
+    yflip := true
+    layout := 2
+
+    @series begin
+        title --> "Input"
+        seriestype := :image
+        subplot := 1
+        img
+    end
+
+    @series begin
+        title --> "Output"
+        seriestype := :image
+        subplot := 2
+        transform(dm,img)
+    end
+
+    dm
+end
+
+@recipe function plot(dm::DisplacementMesh)
+    fillcolor --> :transparent
+    legend --> false
+    yflip := true
+    layout := 2
+
+    for i = 1:size(dm.indices,1)
+        x_in = [dm.input_vertices[dm.indices[i, j], 2] for j = 1:3]
+        y_in = [dm.input_vertices[dm.indices[i, j], 1] for j = 1:3]
+        x_out = [dm.output_vertices[dm.indices[i, j], 2] for j = 1:3]
+        y_out = [dm.output_vertices[dm.indices[i, j], 1] for j = 1:3]
+        @series begin
+            title --> "Input"
+            seriestype := :shape
+            subplot := 1
+            x_in, y_in
+        end
+        @series begin
+            title --> "Output"
+            seriestype := :shape
+            subplot := 2
+            x_out, y_out
+        end
+    end
+end
+
+function transform{T}(dm::DisplacementMesh, img::Image{T})
+    rawdata = convert(Array{Float64, 3}, data(separate(img)))
+    wrp = PiecewiseAffineTransforms.pa_warp(rawdata, dm.input_vertices, dm.output_vertices, dm.indices)
+    if isxfirst(img)
+        copyproperties(img, permutedims(convert(Image{T}, wrp), [2, 1]))
+    else
+        copyproperties(img, convert(Image{T}, wrp))
+    end
 end
 
 function _compute_vertices(field::DisplacementField, img_width::Float64, img_height::Float64)
