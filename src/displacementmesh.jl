@@ -18,6 +18,10 @@ end
 DisplacementMesh(field::DisplacementField, img_size::Tuple{Int,Int}) = DisplacementMesh(field, img_size[1], img_size[2])
 DisplacementMesh(field::DisplacementField, img::AbstractImage) = DisplacementMesh(field, size(img, "x"), size(img, "y"))
 
+function Base.show(io::IO, dm::DisplacementMesh)
+    print(io, "DisplacementMesh (vertices: $(size(dm.input_vertices,1)), triangles: $(size(dm.indices,1)))")
+end
+
 function _compute_vertices(field::DisplacementField, img_width::Float64, img_height::Float64)
     height, width = size(field.X)
     input_vertices  = zeros(height*width, 2)

@@ -21,6 +21,7 @@ end
 
 @testset "uniform_displacement" begin
     df = uniform_displacement(5, 8)
+    println(df)
     @test typeof(df) <: DisplacementField
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
@@ -73,6 +74,7 @@ end
 
 @testset "gaussian_displacement" begin
     df = gaussian_displacement(10, 12)
+    println(df)
     @test typeof(df) <: DisplacementField
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.

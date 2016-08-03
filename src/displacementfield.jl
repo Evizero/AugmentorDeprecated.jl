@@ -20,7 +20,7 @@ immutable DisplacementField <: ImageOperation
 end
 
 function Base.show(io::IO, df::DisplacementField)
-    println(io, "DisplacementField (width: $(size(df.X,2)), height: $(size(df.X,1)))")
+    print(io, "DisplacementField (width: $(size(df.X,2)), height: $(size(df.X,1)))")
 end
 
 @recipe function plot(df::DisplacementField, width = 1, height = 2)
