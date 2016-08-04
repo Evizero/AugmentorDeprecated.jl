@@ -6,3 +6,4 @@ MLDataUtils
 @linux ImageMagick
 VisualRegressionTests
 Plots
+PyPlot
