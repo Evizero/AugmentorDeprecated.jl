@@ -71,12 +71,15 @@ end
 end
 
 function transform{T}(dm::DisplacementMesh, img::Image{T})
-    rawdata = convert(Array{Float64, 3}, data(separate(img)))
+    img_sep = separate(img)
+    rawdata = convert(Array{Float64, 3}, data(img_sep))
     wrp = PiecewiseAffineTransforms.pa_warp(rawdata, dm.input_vertices, dm.output_vertices, dm.indices)
+    rawdata_new = convert(Array{eltype(T),3}, wrp)
+    img_sep_new = Image(rawdata_new, properties(img_sep))
     if isxfirst(img)
-        copyproperties(img, permutedims(convert(Image{T}, wrp), [2, 1]))
+        copyproperties(img, permutedims(convert(Image{T}, img_sep_new), [2, 1]))
     else
-        copyproperties(img, convert(Image{T}, wrp))
+        copyproperties(img, convert(Image{T}, img_sep_new))
     end
 end
 

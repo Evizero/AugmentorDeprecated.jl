@@ -23,6 +23,14 @@ function Base.show(io::IO, df::DisplacementField)
     print(io, "DisplacementField (width: $(size(df.X,2)), height: $(size(df.X,1)))")
 end
 
+@recipe function plot(df::DisplacementField, img::Image)
+    @series begin
+        seriestype := :image
+        img
+    end
+    df, size(img, "x"), size(img, "y")
+end
+
 @recipe function plot(df::DisplacementField, width = 1, height = 2)
     h, w = size(df.delta_X)
 
@@ -32,6 +40,11 @@ end
     quiver := vec([(Float64(df.delta_X[i,j] * width), Float64(df.delta_Y[i,j] * height)) for i=1:h, j=1:w])
 
     vec([(df.X[i,j] * width, df.Y[i,j] * height) for i=1:h, j=1:w])
+end
+
+function transform{T}(df::DisplacementField, img::Image{T})
+    dm = DisplacementMesh(df, img)
+    transform(dm, img)
 end
 
 # uniform displacement

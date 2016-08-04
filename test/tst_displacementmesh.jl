@@ -28,3 +28,11 @@
     # @plottest "displacemen_mesh_2" plot(dm, testimg)
 end
 
+@testset "transform" begin
+    srand(123)
+    df = gaussian_displacement(3, 3, .3, 2)
+    dm = DisplacementMesh(df, testimg)
+
+    @imagetest "DisplacementMesh" transform(dm, testimg)
+end
+

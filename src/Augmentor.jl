@@ -4,7 +4,7 @@ using RecipesBase
 using Requires
 using Images
 using AffineTransforms
-using FixedPointNumbers
+using ColorTypes
 using PiecewiseAffineTransforms
 using Interpolations
 
