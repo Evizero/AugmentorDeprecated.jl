@@ -426,6 +426,85 @@ end
     @test transform(op, deepcopy(img)) == transform(FlipY(), deepcopy(img))
 end
 
+@testset "RandomDisplacement" begin
+    @test RandomDisplacement <: ImageOperation
+    @test multiplier(RandomDisplacement(10,10)) == 1
+    op = RandomDisplacement(4,5)
+    @test op == RandomDisplacement(4., 5.)
+    show(op); println()
+    showcompact(op); println()
+    @test op.gridwidth == 4
+    @test op.gridheight == 5
+    @test op.scale == .2
+    @test op.static_border == true
+    @test op.normalize == true
+
+    @test typeof(last(transform(op, testimg)["operations"])) <: DisplacementField
+
+    op = RandomDisplacement(10,12, scale = .4, normalize = false)
+    @test op.gridwidth == 10
+    @test op.gridheight == 12
+    @test op.scale == .4
+    @test op.static_border == true
+    @test op.normalize == false
+    op = RandomDisplacement(10,12, scale = .4, static_border = false)
+    @test op.gridwidth == 10
+    @test op.gridheight == 12
+    @test op.scale == .4
+    @test op.static_border == false
+    @test op.normalize == true
+
+    @test_throws ArgumentError RandomDisplacement(2,5)
+    @test_throws ArgumentError RandomDisplacement(4,2)
+
+    srand(123)
+    @imagetest "RandomDisplacement" transform(RandomDisplacement(4,5), testimg)
+end
+
+@testset "SmoothedRandomDisplacement" begin
+    @test SmoothedRandomDisplacement <: ImageOperation
+    @test multiplier(SmoothedRandomDisplacement(10,10)) == 1
+    op = SmoothedRandomDisplacement(4,5)
+    @test op == SmoothedRandomDisplacement(4., 5.)
+    show(op); println()
+    showcompact(op); println()
+    @test op.gridwidth == 4
+    @test op.gridheight == 5
+    @test op.scale == .2
+    @test op.sigma == 2.
+    @test op.iterations == 1
+    @test op.static_border == true
+    @test op.normalize == true
+
+    @test typeof(last(transform(op, testimg)["operations"])) <: DisplacementField
+
+    op = SmoothedRandomDisplacement(10,12, scale = .4, sigma = 4, iterations = 9, normalize = false)
+    @test op.gridwidth == 10
+    @test op.gridheight == 12
+    @test op.scale == .4
+    @test op.sigma == 4.
+    @test op.iterations == 9
+    @test op.static_border == true
+    @test op.normalize == false
+    op = SmoothedRandomDisplacement(10,12, scale = 2, sigma = 3, iterations = 2, static_border = false)
+    @test op.gridwidth == 10
+    @test op.gridheight == 12
+    @test op.scale == 2.
+    @test op.sigma == 3.
+    @test op.iterations == 2
+    @test op.static_border == false
+    @test op.normalize == true
+
+    @test_throws ArgumentError SmoothedRandomDisplacement(2,5)
+    @test_throws ArgumentError SmoothedRandomDisplacement(4,2)
+    @test_throws ArgumentError SmoothedRandomDisplacement(4,5, sigma = 0.)
+    @test_throws ArgumentError SmoothedRandomDisplacement(4,5, sigma = -1.)
+    @test_throws ArgumentError SmoothedRandomDisplacement(4,5, iterations = 0)
+
+    srand(123)
+    @imagetest "SmoothedRandomDisplacement" transform(SmoothedRandomDisplacement(4,5), testimg)
+end
+
 @testset "Tuple of Image" begin
     imgs = (img, img2)
     op = FlipX()

@@ -85,7 +85,7 @@ end
     end
 end
 
-function transform{T}(dm::DisplacementMesh, img::Image{T})
+function _transform{T}(dm::DisplacementMesh, img::Image{T})
     img_sep = separate(img)
     rawdata = convert(Array{Float64, 3}, data(img_sep))
     wrp = PiecewiseAffineTransforms.pa_warp(rawdata, dm.input_vertices, dm.output_vertices, dm.indices)
@@ -96,6 +96,11 @@ function transform{T}(dm::DisplacementMesh, img::Image{T})
     else
         copyproperties(img, convert(Image{T}, img_sep_new))
     end
+end
+
+function transform{T<:AbstractImage}(dm::DisplacementMesh, img::T)
+    result = _transform(dm, img)::T
+    _log_operation!(result, dm)::T
 end
 
 function _compute_vertices(field::DisplacementField, img_width::Float64, img_height::Float64)

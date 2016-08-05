@@ -181,6 +181,7 @@ To see at full list of utilized packages, please take a look at
 the REQUIRE file.
 
 - [Images.jl](https://github.com/timholy/Images.jl)
-- [AffineTransforms.jl](https://github.com/timholy/AffineTransforms.jl)
 - [Interpolations.jl](https://github.com/tlycken/Interpolations.jl)
+- [AffineTransforms.jl](https://github.com/timholy/AffineTransforms.jl)
+- [PiecewiseAffineTransforms.jl](https://github.com/dfdx/PiecewiseAffineTransforms.jl)
 

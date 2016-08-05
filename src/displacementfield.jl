@@ -23,6 +23,9 @@ function Base.show(io::IO, df::DisplacementField)
     print(io, "DisplacementField (width: $(size(df.X,2)), height: $(size(df.X,1)))")
 end
 
+Base.showcompact(io::IO, op::DisplacementField) = print(io, "Displace with $(op.gridwidth)x$(op.gridheight) displacement field.")
+multiplier(::DisplacementField) = 1 # not true, basically infinity...
+
 @recipe function plot(df::DisplacementField, img::Image)
     @series begin
         seriestype := :image
@@ -42,9 +45,10 @@ end
     vec([(df.X[i,j] * width, df.Y[i,j] * height) for i=1:h, j=1:w])
 end
 
-function transform{T}(df::DisplacementField, img::Image{T})
+function transform{T<:AbstractImage}(df::DisplacementField, img::T)
     dm = DisplacementMesh(df, img)
-    transform(dm, img)
+    result = _transform(dm, img)::T
+    _log_operation!(result, df)::T
 end
 
 # uniform displacement

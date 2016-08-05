@@ -35,6 +35,8 @@ export
         Crop,
         Zoom,
         Scale,
+        RandomDisplacement,
+        SmoothedRandomDisplacement,
 
     multiplier,
 
@@ -69,6 +71,8 @@ include("operations/scale.jl")
 include("operations/rotate90.jl")
 include("operations/rotate180.jl")
 include("operations/rotate270.jl")
+include("operations/randomdisplacement.jl")
+include("operations/smoothedrandomdisplacement.jl")
 
 include("imagesource.jl")
 include("dirimagesource.jl")
