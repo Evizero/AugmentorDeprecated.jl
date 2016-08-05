@@ -50,23 +50,38 @@ end
     yflip := true
     layout := 2
 
-    for i = 1:size(dm.indices,1)
-        x_in = [dm.input_vertices[dm.indices[i, j], 2] for j = 1:3]
-        y_in = [dm.input_vertices[dm.indices[i, j], 1] for j = 1:3]
-        x_out = [dm.output_vertices[dm.indices[i, j], 2] for j = 1:3]
-        y_out = [dm.output_vertices[dm.indices[i, j], 1] for j = 1:3]
-        @series begin
-            title --> "Input"
-            seriestype := :shape
-            subplot := 1
-            x_in, y_in
+    n_indices = size(dm.indices,1)
+    x_in = zeros(n_indices*4)
+    y_in = zeros(n_indices*4)
+    x_out = zeros(n_indices*4)
+    y_out = zeros(n_indices*4)
+    ti = 1
+    for i = 1:n_indices
+        for j = 1:3
+            x_in[ti] = dm.input_vertices[dm.indices[i, j], 2]
+            y_in[ti] = dm.input_vertices[dm.indices[i, j], 1]
+            x_out[ti] = dm.output_vertices[dm.indices[i, j], 2]
+            y_out[ti] = dm.output_vertices[dm.indices[i, j], 1]
+            ti += 1
         end
-        @series begin
-            title --> "Output"
-            seriestype := :shape
-            subplot := 2
-            x_out, y_out
-        end
+        x_in[ti] = NaN
+        y_in[ti] = NaN
+        x_out[ti] = NaN
+        y_out[ti] = NaN
+        ti += 1
+    end
+
+    @series begin
+        title --> "Input"
+        seriestype := :shape
+        subplot := 1
+        x_in, y_in
+    end
+    @series begin
+        title --> "Output"
+        seriestype := :shape
+        subplot := 2
+        x_out, y_out
     end
 end
 
