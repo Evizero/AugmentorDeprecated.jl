@@ -16,10 +16,25 @@ For details on a specific aspect, see the documentation outlined below.
 
 .. toctree::
    :maxdepth: 2
-   :caption: User Guide
+   :caption: Introduction
 
-   userguide/install
-   userguide/gettingstarted
+   introduction/install
+   introduction/gettingstarted
+
+.. toctree::
+   :maxdepth: 2
+   :caption: User's Guide
+
+   usersguide/sources
+   usersguide/pipelines
+   usersguide/transforms
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+
+   tutorials/augmentation
+   tutorials/mnist
 
 .. toctree::
    :maxdepth: 2
@@ -28,13 +43,6 @@ For details on a specific aspect, see the documentation outlined below.
    api/source
    api/pipeline
    api/transformation
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Image Transformations
-
-   transforms/affine
-   transforms/piecewiseaffine
 
 
 Indices and tables

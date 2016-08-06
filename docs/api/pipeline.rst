@@ -1,3 +1,5 @@
+DEPRECATED SOON (in favour of plain vectors)
+
 Pipelines
 ==========
 

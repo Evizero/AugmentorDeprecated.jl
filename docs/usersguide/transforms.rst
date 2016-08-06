@@ -1,5 +1,16 @@
+Supported Transformations
+==========================
+
+This page lists and describes all supported image transformations,
+and is mainly intended as a quick preview of the available
+functionality. To get more detailed information on the interface
+take a look at :class:`ImageTranformation`.
+
 Affine Tranformations
-======================
+----------------------
+
+FlipX
+******
 
 .. class:: FlipX
 
@@ -13,6 +24,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/FlipX.png         |
 +------------------------------------------------+------------------------------------------------+
 
+FlipY
+******
+
 .. class:: FlipY
 
    Reverses the y-order of each pixel column. Another way of
@@ -24,6 +38,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/FlipY.png         |
 +------------------------------------------------+------------------------------------------------+
+
+Rotate90
+*********
 
 .. class:: Rotate90
 
@@ -39,6 +56,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate90.png      |
 +------------------------------------------------+------------------------------------------------+
 
+Rotate180
+**********
+
 .. class:: Rotate180
 
    Rotates the image 180 degrees. This is a special case rotation
@@ -51,6 +71,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate180.png     |
 +------------------------------------------------+------------------------------------------------+
+
+Rotate270
+**********
 
 .. class:: Rotate270
 
@@ -66,6 +89,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Rotate270.png     |
 +------------------------------------------------+------------------------------------------------+
+
+Resize
+*******
 
 .. class:: Resize
 
@@ -89,6 +115,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Resize.png        |
 +------------------------------------------------+------------------------------------------------+
 
+Zoom
+*****
+
 .. class:: Zoom
 
    Multiplies the image height and image width equally by some
@@ -106,6 +135,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Zoom08.png        |
 +------------------------------------------------+------------------------------------------------+
+
+Scale
+******
 
 .. class:: Scale
 
@@ -130,6 +162,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Scale_x.png       |
 +------------------------------------------------+------------------------------------------------+
 
+CropRatio
+**********
+
 .. class:: CropRatio
 
    Crops out the biggest area around the center of the given image
@@ -146,6 +181,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropRatio2to1.png |
 +------------------------------------------------+------------------------------------------------+
+
+CropSize
+*********
 
 .. class:: CropSize
 
@@ -165,6 +203,9 @@ Affine Tranformations
 +================================================+================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/CropSize.png      |
 +------------------------------------------------+------------------------------------------------+
+
+Crop
+*****
 
 .. class:: Crop
 
@@ -197,6 +238,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/Crop.png          |
 +------------------------------------------------+------------------------------------------------+
 
+RCropSize
+**********
+
 .. class:: RCropSize
 
    Crops out an area of the specified pixel dimensions
@@ -216,6 +260,9 @@ Affine Tranformations
 | .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313007/7cf77b18-3977-11e6-8677-7c465b18ea87.gif |
 +------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 
+RCropRatio
+***********
+
 .. class:: RCropRatio
 
    Crops out the biggest possible area at some random position
@@ -231,5 +278,89 @@ Affine Tranformations
 | Input                                          | Example gif for output of ``RCropRatio(2)``                                                                      |
 +================================================+==================================================================================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313006/7ceccc54-3977-11e6-9cef-e17f82f58c0f.gif |
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+
+
+Piecewise Affine Transformations
+---------------------------------
+
+RandomDisplacement
+*******************
+
+.. class:: RandomDisplacement
+
+   Distorts the given image using a randomly (uniform) generated
+   :class:`DisplacementField` of the given grid size.
+   This field will be streched over the given image and converted
+   into a :class:`DisplacementMesh`, which in turn will morph the
+   original image into a new image using piecewise affine
+   transformations.
+
+   .. attribute:: gridwidth
+
+      The number of reference points along the horizontal dimension.
+
+   .. attribute:: gridheight
+
+      The number of reference points along the vertical dimensions
+
+   .. attribute:: scale
+
+      The scaling factor applied to both components of all
+      displacement vectors. This real number effectively controls
+      the length of the vectors and as such the strength of the
+      distortion. A number somewhere between 0 and 1 is usually
+      the most reasonable choice. Defaults to 0.2
+
+   .. attribute:: static_border
+
+      If ``true``, then all reference points along the border/frame
+      of the image will remain static during the transformation.
+      In other words, they will remain in the same place in the
+      output image as they were in the input image, an thus only
+      the inner content of the image will be distorted.
+      Default to true.
+
+   .. attribute:: normalize
+
+      If ``true``, then both components of all displacement vectors
+      will be divided by the norm of the matrix representing the
+      corresponding dimension. This will have the effect that the
+      displacement vector will always be scaled appropriatly to the
+      size of the grid. That means that if set to ``false``, one
+      usually has to choose different :attr:`scale` for
+      different grid sizes. Defaults to true.
+
++------------------------------------------------+-----------------------------------------------------+
+| Input                                          | Output for ``RandomDisplacement(4,5)``              |
++================================================+=====================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/RandomDisplacement.png |
++------------------------------------------------+-----------------------------------------------------+
+
+SmoothedRandomDisplacement
+***************************
+
+Utilities
+----------
+
+Either
+*******
+
+.. class:: Either
+
+   Allows for choosing between different ImageOperations at
+   random. This is particularly useful if one for example wants
+   to first either rotate the image 90 degree clockwise or
+   anticlockwise (but never both) and then apply some other
+   operation(s) afterwards.
+
+   By default each specified image operation has the same
+   probability of occurance. This default behaviour can be
+   overwritten by specifying the parameter ``chance`` manually
+
++------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
+| Input                                          | Example gif for output of ``Either(Rotate90(), Rotate270(), NoOp())``                                            |
++================================================+==================================================================================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313482/b01e2b2a-3979-11e6-9838-aba3cd910bb4.gif |
 +------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 
