@@ -4,29 +4,42 @@
 Description
 ============
 
-Distorts the given image using a randomly generated (uniform)
+Distorts the given image using a randomly (uniform) generated
 `DisplacementField` of the given grid size. This field will be
-streched over the given image and converted into a `DisplacementMesh`,
+streched over the given image and converted into a `DisplacementMesh`.
 which in turn will morph the original image into a new image using
 piecewise affine transformations.
 
 Usage
 ======
 
-    RandomDisplacement(gridwidth, gridheight; scale = 0.2, static_border = true, normalize = true)
+    RandomDisplacement(gridwidth, gridheight[, scale=0.2, static_border=true, normalize=true])
 
 Arguments
 ==========
 
-- **`gridwidth`** :
+- **`gridwidth`** : The width of the displacment field. Effectively
+specifies the number of vertices along the X dimension used as
+landmarks during the deformation process
 
-- **`gridheight`** :
+- **`gridheight`** : The height of the displacment field. Effectively
+specifies the number of vertices along the Y dimension used as
+landmarks during the deformation process
 
-- **`scale`** :
+- **`scale`** : The scaling factor applied to all displacement
+vectors in the field. This effectively defines the "strength" of the
+deformation. There is no theoretical upper limit to this factor, but
+a value somewhere between `0.01` and `1.0` seem to be the most reasonable
+choices. Default to `0.2`.
 
-- **`static_border`** :
+- **`static_border`** : If true, the borders of the image will be
+preserved. This effectively pins the outermost verticies on their
+original position and the operation thus only deforms the inner
+content of the image.
 
-- **`normalize`** :
+- **`normalize`** : If true, the field will be normalized its norm.
+This will have the effect that the `scale` factor should be more or
+less independent of the grid size.
 
 Methods
 ========
@@ -53,6 +66,8 @@ Examples
 
 see also
 =========
+
+`SmoothedRandomDisplacement`
 
 `uniform_displacement`, `ImageOperation`, `transform`
 """

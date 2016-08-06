@@ -104,13 +104,13 @@ function transform{T<:AbstractImage}(dm::DisplacementMesh, img::T)
 end
 
 function _compute_vertices(field::DisplacementField, img_width::Float64, img_height::Float64)
-    height, width = size(field.X)
+    height, width = size(field.delta_X)
     input_vertices  = zeros(height*width, 2)
     output_vertices = zeros(height*width, 2)
     i = 1
     for x = 1:width, y = 1:height
-        input_vertices[i,1] = clamp(clamp(field.Y[y,x], 0., 1.) * img_height, 1., img_height)
-        input_vertices[i,2] = clamp(clamp(field.X[y,x], 0., 1.) * img_width,  1., img_width)
+        input_vertices[i,1] = clamp(clamp(field.y[y], 0., 1.) * img_height, 1., img_height)
+        input_vertices[i,2] = clamp(clamp(field.x[x], 0., 1.) * img_width,  1., img_width)
         output_vertices[i,1] = clamp(input_vertices[i,1] + field.delta_Y[y,x] * img_height, 1., img_height)
         output_vertices[i,2] = clamp(input_vertices[i,2] + field.delta_X[y,x] * img_width,  1., img_width)
         i = i + 1
@@ -119,7 +119,7 @@ function _compute_vertices(field::DisplacementField, img_width::Float64, img_hei
 end
 
 function _compute_indices(field::DisplacementField)
-    grid_size = size(field.X)
+    grid_size = size(field.delta_X)
     height, width = grid_size
     w_half = floor(Int, width/2)
     h_half = floor(Int, height/2)

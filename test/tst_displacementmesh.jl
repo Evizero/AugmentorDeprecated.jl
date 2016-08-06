@@ -2,7 +2,8 @@
     srand(123)
     df = gaussian_displacement(3, 3, .3, 2)
     dm = DisplacementMesh(df, testimg)
-    println(dm)
+    show(dm); println()
+    showcompact(dm); println()
     @test typeof(dm) <: DisplacementMesh
     dm2 = DisplacementMesh(df, size(testimg, "x"), size(testimg, "y"))
     @test dm.input_vertices == dm2.input_vertices

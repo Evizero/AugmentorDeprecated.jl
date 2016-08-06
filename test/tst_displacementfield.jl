@@ -11,17 +11,18 @@ end
 
 function test_equidistance(df::DisplacementField)
     @testset "equidistance" begin
-        w, h = size(df.X)
+        w, h = size(df.delta_X)
         for i = 1:w, j = 1:h
-            @test_approx_eq df.X[i,j] (j-1)/(h-1)
-            @test_approx_eq df.Y[i,j] (i-1)/(w-1)
+            @test_approx_eq df.x[j] (j-1)/(h-1)
+            @test_approx_eq df.y[i] (i-1)/(w-1)
         end
     end
 end
 
 @testset "uniform_displacement" begin
     df = uniform_displacement(5, 8)
-    println(df)
+    show(df); println()
+    showcompact(df); println()
     @test typeof(df) <: DisplacementField
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
@@ -46,8 +47,8 @@ end
     srand(123)
     df = uniform_displacement(5, 8, .2, true, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (8, 5)
-    @test size(df.Y) == (8, 5)
+    @test length(df.x) == 5
+    @test length(df.y) == 8
     @test size(df.delta_X) == (8, 5)
     @test size(df.delta_Y) == (8, 5)
     @test sum_border(df.delta_X) == 0.
@@ -63,8 +64,8 @@ end
 
     df = uniform_displacement(10, 9, .1, false, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (9, 10)
-    @test size(df.Y) == (9, 10)
+    @test length(df.x) == 10
+    @test length(df.y) == 9
     @test size(df.delta_X) == (9, 10)
     @test size(df.delta_Y) == (9, 10)
     @test sum_border(df.delta_X) > 0.
@@ -74,7 +75,8 @@ end
 
 @testset "gaussian_displacement" begin
     df = gaussian_displacement(10, 12)
-    println(df)
+    show(df); println()
+    showcompact(df); println()
     @test typeof(df) <: DisplacementField
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
@@ -112,8 +114,8 @@ end
     srand(123)
     df = gaussian_displacement(10, 12, .3, 2, 1, true, true)
     @test typeof(df) <: DisplacementField
-    @test size(df.X) == (12, 10)
-    @test size(df.Y) == (12, 10)
+    @test length(df.x) == 10
+    @test length(df.y) == 12
     @test size(df.delta_X) == (12, 10)
     @test size(df.delta_Y) == (12, 10)
     @test sum_border(df.delta_X) == 0.
