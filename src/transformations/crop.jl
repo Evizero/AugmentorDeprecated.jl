@@ -1,5 +1,5 @@
 """
-`Crop <: ImageOperation`
+`Crop <: ImageTransformation`
 
 Description
 ============
@@ -25,10 +25,10 @@ window that should be cropped out
 - **`y`** : The vertical offset of the top left corner of the
 window that should be cropped out
 
-- **`width`** : The desired width or the cropped out subimage
+- **`width`** : The desired width or the cropped out sub-image
 in pixels
 
-- **`height`** : The desired height or the cropped out subimage
+- **`height`** : The desired height or the cropped out sub-image
 in pixels
 
 Methods
@@ -57,9 +57,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `transform`
+`ImageTransformation`, `transform`
 """
-immutable Crop <: ImageOperation
+immutable Crop <: ImageTransformation
     x::Int
     y::Int
     width::Int

@@ -1,5 +1,5 @@
 """
-`RandomDisplacement <: ImageOperation`
+`RandomDisplacement <: ImageTransformation`
 
 Description
 ============
@@ -69,9 +69,9 @@ see also
 
 `SmoothedRandomDisplacement`
 
-`uniform_displacement`, `ImageOperation`, `transform`
+`uniform_displacement`, `ImageTransformation`, `transform`
 """
-immutable RandomDisplacement <: ImageOperation
+immutable RandomDisplacement <: ImageTransformation
     gridwidth::Int
     gridheight::Int
     scale::Float64

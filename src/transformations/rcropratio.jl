@@ -1,5 +1,5 @@
 """
-`RCropRatio <: ImageOperation`
+`RCropRatio <: ImageTransformation`
 
 Description
 ============
@@ -47,9 +47,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `transform`
+`ImageTransformation`, `transform`
 """
-immutable RCropRatio <: ImageOperation
+immutable RCropRatio <: ImageTransformation
     ratio::Float64
 
     function RCropRatio(ratio::Real)

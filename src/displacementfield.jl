@@ -1,5 +1,5 @@
 """
-`DisplacementField <: ImageOperation`
+`DisplacementField <: ImageTransformation`
 
 Description
 ============
@@ -37,8 +37,8 @@ Usage
 
     DisplacementField(delta_X, delta_Y)
 
-Arguments
-==========
+Fields
+=======
 
 - **`x`** : The horizontal component of the position for the
 displacement vectors in the field. If not specified then
@@ -101,13 +101,15 @@ Examples
 see also
 =========
 
-`uniform_displacement`, `gaussian_displacement`
+`uniform_displacement`, and `gaussian_displacement` for generating
+random displacement fields
 
-`RandomDisplacement`, `SmoothedRandomDisplacement`
+`RandomDisplacement`, and `SmoothedRandomDisplacement` for
+generating new random displacement fields on every use
 
-`ImageOperation`, `transform`
+`ImageTransformation`, `transform`
 """
-immutable DisplacementField <: ImageOperation
+immutable DisplacementField <: ImageTransformation
     x::Vector{Float64}
     y::Vector{Float64}
     delta_X::Matrix{Float64}

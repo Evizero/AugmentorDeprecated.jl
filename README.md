@@ -72,18 +72,18 @@ on `DirImageSource` within Julia's REPL:
 ## Overview
 
 There are three basic building-blocks to create a system for image
-augmentation, namely an *image source*, *image operations*, and
+augmentation, namely an *image source*, *image transformations*, and
 an *image operation pipeline*.
 
 - `ImageSouce`: Functionality to access images from some data source,
 such as a directory.
 
-- `Pipeline`: A chain or tree of (probabilistic) operations that
+- `Pipeline`: A chain or tree of (probabilistic) transformations that
 should be applied to a given image, or set of images.
 
-- `ImageOperation`: As the name suggests concrete subclasses define
+- `ImageTransformation`: As the name suggests concrete subclasses define
 a specific transformation that can be applied to an image, or a set
-of images. Operations can also be lifted into a `ProbableOperation`,
+of images. Operations can also be lifted into a `Either`,
 which have a random probability of occuring, depending on the
 hyperparameter `chance`.
 
@@ -100,8 +100,8 @@ img = testimage("toucan")
 # create empty pipeline
 pl = LinearPipeline()
 
-# add operations to pipeline
-push!(pl, FlipX(0.5))     # lifted to ProbableOperation{FlipX}. 50% chance of occuring
+# add transformations to pipeline
+push!(pl, FlipX(0.5))     # lifted to Either(FlipX(), NoOp()). 50% chance of occuring
 push!(pl, FlipY())        # not lifted. will always occur
 push!(pl, CropRatio(1.5)) # crop out biggest area that satisfies aspect ration
 push!(pl, Resize(64,64))
@@ -114,7 +114,7 @@ img_new = transform(pl, img)
 RGBA Images.Image with:
   data: 64x64 Array{ColorTypes.RGBA{FixedPointNumbers.UFixed{UInt8,8}},2}
   properties:
-    operations:  Flip x-axis. Flip y-axis. Crop to 1.5 aspect ratio. Resize to 64x64.
+    transformations:  Flip x-axis. Flip y-axis. Crop to 1.5 aspect ratio. Resize to 64x64.
     imagedescription: <suppressed>
     spatialorder:  x y
     pixelspacing:  1 1

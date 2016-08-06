@@ -39,6 +39,7 @@ end
     srand(123)
     df = uniform_displacement(5, 8, scale = .2)
     @test typeof(df) <: DisplacementField
+    @test typeof(df) <: ImageTransformation
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
@@ -78,6 +79,7 @@ end
     show(df); println()
     showcompact(df); println()
     @test typeof(df) <: DisplacementField
+    @test typeof(df) <: ImageTransformation
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)

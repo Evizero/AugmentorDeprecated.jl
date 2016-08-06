@@ -1,5 +1,5 @@
 """
-`CropSize <: ImageOperation`
+`CropSize <: ImageTransformation`
 
 Description
 ============
@@ -49,9 +49,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `transform`
+`ImageTransformation`, `transform`
 """
-immutable CropSize <: ImageOperation
+immutable CropSize <: ImageTransformation
     width::Int
     height::Int
 

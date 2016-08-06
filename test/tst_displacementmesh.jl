@@ -5,6 +5,7 @@
     show(dm); println()
     showcompact(dm); println()
     @test typeof(dm) <: DisplacementMesh
+    @test typeof(dm) <: ImageTransformation
     dm2 = DisplacementMesh(df, size(testimg, "x"), size(testimg, "y"))
     @test dm.input_vertices == dm2.input_vertices
     @test dm.output_vertices == dm2.output_vertices

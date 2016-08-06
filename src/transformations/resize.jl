@@ -1,5 +1,5 @@
 """
-`Resize <: ImageOperation`
+`Resize <: ImageTransformation`
 
 Description
 ============
@@ -50,9 +50,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageTransformation`, `ProbableOperation`, `transform`
 """
-immutable Resize <: ImageOperation
+immutable Resize <: ImageTransformation
     width::Int
     height::Int
 

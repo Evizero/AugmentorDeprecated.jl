@@ -25,9 +25,16 @@ For details on a specific aspect, see the documentation outlined below.
    :maxdepth: 2
    :caption: API Documentation
 
-   api/imagesource
+   api/source
    api/pipeline
-   api/imageoperation.rst
+   api/transformation
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Image Transformations
+
+   transforms/affine
+   transforms/piecewiseaffine
 
 
 Indices and tables

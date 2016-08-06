@@ -1,5 +1,5 @@
 """
-`Zoom <: ImageOperation`
+`Zoom <: ImageTransformation`
 
 Description
 ============
@@ -48,9 +48,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageTransformation`, `ProbableOperation`, `transform`
 """
-immutable Zoom <: ImageOperation
+immutable Zoom <: ImageTransformation
     factor::Float64
 
     function Zoom(factor::Real)

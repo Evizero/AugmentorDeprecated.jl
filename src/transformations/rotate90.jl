@@ -1,5 +1,5 @@
 """
-`Rotate90 <: ImageOperation`
+`Rotate90 <: ImageTransformation`
 
 Description
 ============
@@ -57,9 +57,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `Either`, `transform`
+`ImageTransformation`, `Either`, `transform`
 """
-immutable Rotate90 <: ImageOperation
+immutable Rotate90 <: ImageTransformation
 end
 
 Rotate90(chance) = ProbableOperation(Rotate90(); chance = chance)

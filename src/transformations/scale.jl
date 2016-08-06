@@ -1,5 +1,5 @@
 """
-`Scale <: ImageOperation`
+`Scale <: ImageTransformation`
 
 Description
 ============
@@ -51,9 +51,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `ProbableOperation`, `transform`
+`ImageTransformation`, `ProbableOperation`, `transform`
 """
-immutable Scale <: ImageOperation
+immutable Scale <: ImageTransformation
     width::Float64
     height::Float64
 

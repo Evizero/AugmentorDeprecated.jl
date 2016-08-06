@@ -1,50 +1,50 @@
 """
-`LinearPipeline(operations)` → `Pipeline`
+`LinearPipeline(transformations)` → `Pipeline`
 
 Description
 ============
 
 Concrete implementation of `Pipeline` for purely linear sequences
-of image operations.
+of image transformations.
 
-The contained `ImageOperation`s are stored as a vector, in which
-the first element will be the first operation applied to an image
+The contained `ImageTransformation`s are stored as a vector, in which
+the first element will be the first transformation applied to an image
 passed to `transform`.
-The outcome of the first operation will then be fed as input to
-the second one, and so on, until all operations were applied. The
-outcome of the last operation will then be returned as the result.
+The outcome of the first transformation will then be fed as input to
+the second one, and so on, until all transformations were applied. The
+outcome of the last transformation will then be returned as the result.
 
 Usage
 ======
 
-    LinearPipeline(operations)
+    LinearPipeline(transformations)
 
-    LinearPipeline(operations...)
+    LinearPipeline(transformations...)
 
 Methods
 ========
 
-- **`length`** : Returns the number of `ImageOperation`s that the
+- **`length`** : Returns the number of `ImageTransformation`s that the
 pipeline contains.
 
-- **`push!`** : Adds the given `ImageOperation` to the end of the
+- **`push!`** : Adds the given `ImageTransformation` to the end of the
 pipeline. Returns itself.
 
 - **`append!`** : Adds the elements of the second parameter, which
 can either be another `LinearPipeline` or some other collection of
-`ImageOperation`s, to the end of the current pipeline.
+`ImageTransformation`s, to the end of the current pipeline.
 Returns itself.
 
-- **`insert!`** : Adds the given `ImageOperation` to the pipeline
+- **`insert!`** : Adds the given `ImageTransformation` to the pipeline
 at the given position (index). Returns itself.
 
-- **`deleteat!`** : Removes the `ImageOperation` at the specified
+- **`deleteat!`** : Removes the `ImageTransformation` at the specified
 position from the pipeline. Returns itself.
 
-- **`fit!`** : Fits all the image operations of the pipeline,
+- **`fit!`** : Fits all the image transformations of the pipeline,
 which have learnable parameters, to the given trainingset.
 
-- **`transform`** : Applies the `ImageOperation`s of the pipeline
+- **`transform`** : Applies the `ImageTransformation`s of the pipeline
 one after another to the given image, or set of images, and returns
 the transformed image(s).
 
@@ -69,7 +69,7 @@ Examples
     # create empty pipeline
     pl = LinearPipeline()
 
-    # add operations to pipeline
+    # add transformations to pipeline
     push!(pl, FlipX(0.5))
     push!(pl, FlipY(0.1))
     push!(pl, Resize(64,64))
@@ -82,18 +82,18 @@ see also
 
 `length`, `push!`, `append!`, `insert!`, `deleteat!`, `fit!`, `transform`
 
-`Pipeline`, `ImageOperation`
+`Pipeline`, `ImageTransformation`
 """
 type LinearPipeline <: Pipeline
-    operations::Vector{ImageOperation}
+    transformations::Vector{ImageTransformation}
 
-    function LinearPipeline(ops::Vector{ImageOperation} = Array{ImageOperation,1}())
+    function LinearPipeline(ops::Vector{ImageTransformation} = Array{ImageTransformation,1}())
         new(ops)
     end
 end
 
-function LinearPipeline(ops::ImageOperation...)
-    LinearPipeline(Vector{ImageOperation}(collect(ops)))
+function LinearPipeline(ops::ImageTransformation...)
+    LinearPipeline(Vector{ImageTransformation}(collect(ops)))
 end
 
 Base.endof(pl::LinearPipeline) = length(pl)
@@ -101,36 +101,36 @@ Base.start(::LinearPipeline) = 1
 Base.next(pl::LinearPipeline, state) = (pl[state], state+1)
 Base.done(pl::LinearPipeline, state) = state > length(pl)
 
-Base.getindex(pl::LinearPipeline, idx) = pl.operations[idx]
-Base.length(pl::LinearPipeline) = length(pl.operations)
+Base.getindex(pl::LinearPipeline, idx) = pl.transformations[idx]
+Base.length(pl::LinearPipeline) = length(pl.transformations)
 
-Base.append!(pl::LinearPipeline, other::LinearPipeline) = append!(pl, other.operations)
+Base.append!(pl::LinearPipeline, other::LinearPipeline) = append!(pl, other.transformations)
 
-function Base.append!(pl::LinearPipeline, ops::Vector{ImageOperation})
-    append!(pl.operations, ops)
+function Base.append!(pl::LinearPipeline, ops::Vector{ImageTransformation})
+    append!(pl.transformations, ops)
     pl
 end
 
-function Base.push!(pl::LinearPipeline, op::ImageOperation)
-    push!(pl.operations, op)
+function Base.push!(pl::LinearPipeline, op::ImageTransformation)
+    push!(pl.transformations, op)
     pl
 end
 
-function Base.insert!(pl::LinearPipeline, idx, op::ImageOperation)
-    insert!(pl.operations, idx, op)
+function Base.insert!(pl::LinearPipeline, idx, op::ImageTransformation)
+    insert!(pl.transformations, idx, op)
     pl
 end
 
 function Base.deleteat!(pl::LinearPipeline, idx)
-    deleteat!(pl.operations, idx)
+    deleteat!(pl.transformations, idx)
     pl
 end
 
 function Base.show(io::IO, pl::LinearPipeline)
     println(io, "LinearPipeline")
-    println(io, "- $(length(pl.operations)) operation(s): ")
+    println(io, "- $(length(pl.transformations)) transformation(s): ")
     maxfactor = 1
-    for op in pl.operations
+    for op in pl.transformations
         println(io, "    - $op (factor: $(multiplier(op))x)")
         maxfactor = maxfactor * multiplier(op)
     end
@@ -140,7 +140,7 @@ end
 function _transform(ops, N, types, img)
     ex = :(img_0 = img)
     for i in 1:N
-        types[i] <: Any || throw(ArgumentError("Pipline must consist of ImageOperation objects"))
+        types[i] <: Any || throw(ArgumentError("Pipline must consist of ImageTransformation objects"))
         vin  = symbol("img_$(i-1)")
         vout = symbol("img_$i")
         ex = quote
@@ -160,7 +160,7 @@ end
 
 function transform{I<:AbstractImage}(pl::LinearPipeline, imgs::AbstractArray{I})
     imgs_out = similar(imgs)
-    pl_tuple = (pl.operations...)
+    pl_tuple = (pl.transformations...)
     for iter in eachindex(imgs)
         img = imgs[iter]
         T = typeof(img)
@@ -170,6 +170,6 @@ function transform{I<:AbstractImage}(pl::LinearPipeline, imgs::AbstractArray{I})
 end
 
 function transform{T}(pl::LinearPipeline, img::T)
-    transform((pl.operations...), img)::T
+    transform((pl.transformations...), img)::T
 end
 

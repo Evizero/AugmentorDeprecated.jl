@@ -1,5 +1,5 @@
 """
-`RCropSize <: ImageOperation`
+`RCropSize <: ImageTransformation`
 
 Description
 ============
@@ -49,9 +49,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `transform`
+`ImageTransformation`, `transform`
 """
-immutable RCropSize <: ImageOperation
+immutable RCropSize <: ImageTransformation
     width::Int
     height::Int
 

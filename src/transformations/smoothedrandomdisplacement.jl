@@ -1,4 +1,4 @@
-immutable SmoothedRandomDisplacement <: ImageOperation
+immutable SmoothedRandomDisplacement <: ImageTransformation
     gridwidth::Int
     gridheight::Int
     scale::Float64

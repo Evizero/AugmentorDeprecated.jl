@@ -19,7 +19,7 @@ export
 
     DisplacementMesh,
 
-    ImageOperation,
+    ImageTransformation,
         Either,
         NoOp,
         FlipX,
@@ -53,26 +53,26 @@ include("common.jl")
 include("rotate.jl")
 include("crop.jl")
 
-include("imageoperation.jl")
+include("imagetransformation.jl")
 
 include("displacementfield.jl")
 include("displacementmesh.jl")
 
-include("operations/flipx.jl")
-include("operations/flipy.jl")
-include("operations/resize.jl")
-include("operations/cropratio.jl")
-include("operations/cropsize.jl")
-include("operations/rcropsize.jl")
-include("operations/rcropratio.jl")
-include("operations/crop.jl")
-include("operations/zoom.jl")
-include("operations/scale.jl")
-include("operations/rotate90.jl")
-include("operations/rotate180.jl")
-include("operations/rotate270.jl")
-include("operations/randomdisplacement.jl")
-include("operations/smoothedrandomdisplacement.jl")
+include("transformations/flipx.jl")
+include("transformations/flipy.jl")
+include("transformations/resize.jl")
+include("transformations/cropratio.jl")
+include("transformations/cropsize.jl")
+include("transformations/rcropsize.jl")
+include("transformations/rcropratio.jl")
+include("transformations/crop.jl")
+include("transformations/zoom.jl")
+include("transformations/scale.jl")
+include("transformations/rotate90.jl")
+include("transformations/rotate180.jl")
+include("transformations/rotate270.jl")
+include("transformations/randomdisplacement.jl")
+include("transformations/smoothedrandomdisplacement.jl")
 
 include("imagesource.jl")
 include("dirimagesource.jl")

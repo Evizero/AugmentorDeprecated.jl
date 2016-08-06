@@ -45,7 +45,7 @@ macro imagetest(testname, expr)
     end)
 end
 
-type FaultyOp <: Augmentor.ImageOperation end
+type FaultyOp <: Augmentor.ImageTransformation end
 
 tests = [
     ("tst_displacementmesh.jl", "Low-level functionality for image displacement"),
@@ -53,7 +53,7 @@ tests = [
     ("tst_common.jl", "Utility methods"),
     ("tst_rotate.jl", "Low-level functionality for image rotation"),
     ("tst_crop.jl", "Low-level functionality for image cropping"),
-    ("tst_imageoperation.jl", "High-level abstractions for image operations"),
+    ("tst_imagetransformations.jl", "High-level abstractions for image transformations"),
     ("tst_imagesource.jl", "High-level abstractions for image sources"),
     ("tst_pipeline.jl", "Pipeline implementations"),
     ("tst_MLDataUtils.jl", "Data Access Pattern integration"),

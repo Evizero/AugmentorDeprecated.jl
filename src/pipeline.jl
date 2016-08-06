@@ -35,5 +35,5 @@ see also
 """
 abstract Pipeline
 
-Base.eltype{T<:Pipeline}(::Type{T}) = ImageOperation
+Base.eltype{T<:Pipeline}(::Type{T}) = ImageTransformation
 

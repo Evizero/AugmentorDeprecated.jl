@@ -9,7 +9,7 @@ Overview
 
 Augmentor's design is based around three basic building-blocks in
 order to provide its functionality, namely an *image source*,
-a number of *image operations*, and an *image operation pipeline*.
+a number of *image transformations*, and an *image operation pipeline*.
 
 .. class:: ImageSource
 
@@ -24,19 +24,19 @@ a number of *image operations*, and an *image operation pipeline*.
 
 .. class:: Pipeline
 
-    A chain or tree of (probabilistic) operations that should be
+    A chain or tree of (probabilistic) transformations that should be
     applied to a given image, or set of images.
 
     Pipelines are container objects that define what kind of
-    operations are performed and in what order. They are designed
+    transformations are performed and in what order. They are designed
     for convenient user interaction and provide some information on
     what is going on.
 
-.. class:: ImageOperation
+.. class:: ImageTransformation
 
     As the name suggests concrete subclasses define a specific
     transformation that can be applied to an image, or a set of
-    images. Operations can also be lifted into a
+    images. Transformations can also be lifted into a
     :class:`Either`, which have a random probability of
     occuring, depending on the hyperparameter.
 
@@ -75,7 +75,7 @@ which can be sampled on the fly
     # create empty pipeline
     pl = LinearPipeline()
 
-    # add operations to pipeline
+    # add transformations to pipeline
     push!(pl, FlipX(0.5)) # lifted to Either(FlipX(), NoOp()). 50% chance of occuring
     push!(pl, FlipY())    # not lifted. will always occur
     push!(pl, Resize(64,64))
@@ -88,7 +88,7 @@ which can be sampled on the fly
     RGBA Images.Image with:
     data: 64x64 Array{ColorTypes.RGBA{FixedPointNumbers.UFixed{UInt8,8}},2}
     properties:
-        operations:  Flip y-axis. Resize to 64x64.
+        transformations:  Flip y-axis. Resize to 64x64.
         imagedescription: <suppressed>
         spatialorder:  x y
         pixelspacing:  1 1

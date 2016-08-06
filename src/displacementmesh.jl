@@ -1,4 +1,4 @@
-immutable DisplacementMesh <: ImageOperation
+immutable DisplacementMesh <: ImageTransformation
     input_vertices::Matrix{Float64}
     output_vertices::Matrix{Float64}
     indices::Matrix{Int}

@@ -1,5 +1,5 @@
-Image Sources
-==============
+Sources
+========
 
 The various image sources provide the functionality to access images
 from different data sources. This section outlines the API details

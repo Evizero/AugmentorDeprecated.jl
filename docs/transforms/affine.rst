@@ -1,30 +1,5 @@
-Image Operations
-==============
-
-All the possible transformations that can be composed together in a
-pipeline are subtypes of :class:`ImageOperation`.
-
-.. class:: ImageOperation
-
-   Abstract supertype for all image operation. Every subtype of
-   :class:`ImageOperation` must implement the :func:`transform`
-   and the :func:`multiplier` methods.
-
-.. function:: transform(operation, image) -> Image
-
-   Applies the transformation to the given Image or set of images.
-   This function effectifely specifies the exact effect the
-   operation has on the input it receives.
-
-.. function:: multiplier(operation) -> Int
-
-   Specifies how many unique output variations the operation can
-   result in (counting the case of not being applied to the input).
-
-Each concrete subclass defines a specific transformation that can
-be applied to an image, or a set of images. Furthermore, operations
-can also be lifted into a :class:`Either`, which have a
-random probability of occurring, depending on the function parameters.
+Affine Tranformations
+======================
 
 .. class:: FlipX
 
@@ -100,6 +75,14 @@ random probability of occurring, depending on the function parameters.
    resized to the given dimensions. This is useful when one needs a
    set of images to all be of the exact same size.
 
+   .. attribute:: width
+
+      The width in pixel of the output image
+
+   .. attribute:: height
+
+      The height in pixel of the output image
+
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``Resize(160, 80)``                 |
 +================================================+================================================+
@@ -112,6 +95,11 @@ random probability of occurring, depending on the function parameters.
    constant factor. This means that the size of the output image
    depends on the size of the input image. If one wants to resize
    each dimension by a different factor, use :class:`Scale` instead.
+
+   .. attribute:: factor
+
+      The constant factor that should be used to scale both width
+      and height of the output image
 
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``Zoom(0.8)``                       |
@@ -126,6 +114,16 @@ random probability of occurring, depending on the function parameters.
    depends on the size of the input image. If one wants to resize
    each dimension by the same factor, use :class:`Zoom` instead.
 
+   .. attribute:: width
+
+      The constant factor that should be used to scale the width of
+      the output image
+
+   .. attribute:: height
+
+      The constant factor that should be used to scale the height of
+      the output image
+
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``Scale(0.8, 1.2)``                 |
 +================================================+================================================+
@@ -138,6 +136,11 @@ random probability of occurring, depending on the function parameters.
    such that said sub-image satisfies the specified aspect ratio
    (i.e. width divided by height).
 
+   .. attribute:: ratio
+
+      The ratio of image height to image width that the output image
+      should satisfy
+
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``CropRatio(2)``                    |
 +================================================+================================================+
@@ -146,8 +149,16 @@ random probability of occurring, depending on the function parameters.
 
 .. class:: CropSize
 
-    Crops out the area of the specified pixel dimensions
-    around the center of the given image
+   Crops out the area of the specified pixel dimensions
+   around the center of the given image.
+
+   .. attribute:: width
+
+      The desired width or the cropped out sub-image in pixels
+
+   .. attribute:: height
+
+      The desired height or the cropped out sub-image in pixels
 
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``CropSize(64, 32)``                |
@@ -157,10 +168,28 @@ random probability of occurring, depending on the function parameters.
 
 .. class:: Crop
 
-    Crops out the area of the specified pixel dimensions starting
-    at a specified position, which in turn denotes the top-left corner
-    of the crop. A position of `x = 1`, and `y = 1` would mean that
-    the crop is located in the top-left corner of the given image
+   Crops out the area of the specified pixel dimensions starting
+   at a specified position, which in turn denotes the top-left corner
+   of the crop. A position of ``x = 1``, and ``y = 1`` would mean that
+   the crop is located in the top-left corner of the given image
+
+   .. attribute:: x
+
+      The horizontal offset of the top left corner of the window
+      that should be cropped out
+
+   .. attribute:: y
+
+      The vertical offset of the top left corner of the window
+      that should be cropped out
+
+   .. attribute:: width
+
+      The desired width or the cropped out sub-image in pixels
+
+   .. attribute:: height
+
+      The desired height or the cropped out sub-image in pixels
 
 +------------------------------------------------+------------------------------------------------+
 | Input                                          | Output for ``Crop(45, 10, 64, 32)``            |
@@ -170,8 +199,16 @@ random probability of occurring, depending on the function parameters.
 
 .. class:: RCropSize
 
-    Crops out an area of the specified pixel dimensions
-    at a randomized position of the given image
+   Crops out an area of the specified pixel dimensions
+   at a randomized position of the given image
+
+   .. attribute:: width
+
+      The desired width or the cropped out sub-image in pixels
+
+   .. attribute:: height
+
+      The desired height or the cropped out sub-image in pixels
 
 +------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 | Input                                          | Example gif for output of ``RCropSize(64, 32)``                                                                  |
@@ -181,81 +218,18 @@ random probability of occurring, depending on the function parameters.
 
 .. class:: RCropRatio
 
-    Crops out the biggest possible area at some random position
-    of the given image, such that said sub-image satisfies the
-    specified aspect ratio (i.e. width divided by height).
+   Crops out the biggest possible area at some random position
+   of the given image, such that said sub-image satisfies the
+   specified aspect ratio (i.e. width divided by height).
+
+   .. attribute:: ratio
+
+      The ratio of image height to image width that the output
+      image should satisfy
 
 +------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 | Input                                          | Example gif for output of ``RCropRatio(2)``                                                                      |
 +================================================+==================================================================================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313006/7ceccc54-3977-11e6-9cef-e17f82f58c0f.gif |
-+------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
-
-.. class:: RandomDisplacement
-
-   Distorts the given image using a randomly (uniform) generated
-   :class:`DisplacementField` of the given grid size.
-   This field will be streched over the given image and converted
-   into a :class:`DisplacementMesh`, which in turn will morph the
-   original image into a new image using piecewise affine
-   transformations.
-
-   .. attribute:: gridwidth
-
-      The number of reference points along the horizontal dimension.
-
-   .. attribute:: hidden
-
-      The number of reference points along the vertical dimensions
-
-   .. attribute:: scale
-
-      The scaling factor applied to both components of all
-      displacement vectors. This real number effectively controls
-      the length of the vectors and as such the strength of the
-      distortion. A number somewhere between 0 and 1 is usually
-      the most reasonable choice. Defaults to 0.2
-
-   .. attribute:: static_border
-
-      If ``true``, then all reference points along the border/frame
-      of the image will remain static during the transformation.
-      In other words, they will remain in the same place in the
-      output image as they were in the input image, an thus only
-      the inner content of the image will be distorted.
-      Default to true.
-
-   .. attribute:: normalize
-
-      If ``true``, then both components of all displacement vectors
-      will be divided by the norm of the matrix representing the
-      corresponding dimension. This will have the effect that the
-      displacement vector will always be scaled appropriatly to the
-      size of the grid. That means that if set to ``false``, one
-      usually has to choose different :attribute:`scale` for
-      different grid sizes. Defaults to true.
-
-+------------------------------------------------+-----------------------------------------------------+
-| Input                                          | Output for ``RandomDisplacement(4,5)``              |
-+================================================+=====================================================+
-| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/RandomDisplacement.png |
-+------------------------------------------------+-----------------------------------------------------+
-
-.. class:: Either
-
-    Allows for choosing between different ImageOperations at
-    random. This is particularly useful if one for example wants
-    to first either rotate the image 90 degree clockwise or
-    anticlockwise (but never both) and then apply some other
-    operation(s) afterwards.
-
-    By default each specified image operation has the same
-    probability of occurance. This default behaviour can be
-    overwritten by specifying the parameter `chance` manually
-
-+------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
-| Input                                          | Example gif for output of ``Either(Rotate90(), Rotate270(), NoOp())``                                            |
-+================================================+==================================================================================================================+
-| .. image:: ../../test/refimg/testimage.png     | .. image:: https://cloud.githubusercontent.com/assets/10854026/16313482/b01e2b2a-3979-11e6-9838-aba3cd910bb4.gif |
 +------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
 

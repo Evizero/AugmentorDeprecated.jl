@@ -1,5 +1,5 @@
 """
-`FlipY <: ImageOperation`
+`FlipY <: ImageTransformation`
 
 Description
 ============
@@ -54,9 +54,9 @@ Examples
 see also
 =========
 
-`ImageOperation`, `Either`, `transform`
+`ImageTransformation`, `Either`, `transform`
 """
-immutable FlipY <: ImageOperation
+immutable FlipY <: ImageTransformation
 end
 
 FlipY(chance) = ProbableOperation(FlipY(); chance = chance)

@@ -4,12 +4,12 @@ img2 = grayim(A+10)
 B = UInt8[200 150 100; 80 50 10; 5 3 0]
 img3 = grayim(B)
 
-@testset "ImageOperation" begin
+@testset "ImageTransformation" begin
     @test_throws ArgumentError multiplier(FaultyOp())
 end
 
 @testset "NoOp" begin
-    @test NoOp <: ImageOperation
+    @test NoOp <: ImageTransformation
     op = NoOp()
     show(op); println()
     showcompact(op); println()
@@ -21,7 +21,7 @@ end
 end
 
 @testset "FlipX" begin
-    @test FlipX <: ImageOperation
+    @test FlipX <: ImageTransformation
     op = FlipX()
     show(op); println()
     showcompact(op); println()
@@ -31,14 +31,14 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Either
     @test_approx_eq op.chance [0.7, .3]
-    @test typeof(last(transform(FlipX(), img)["operations"])) <: FlipX
+    @test typeof(last(transform(FlipX(), img)["transformations"])) <: FlipX
     @test transform(FlipX(0), img) == img
     @test transform(FlipX(1), img) == flipdim(img, "x")
     @imagetest "FlipX" transform(FlipX(), testimg)
 end
 
 @testset "FlipY" begin
-    @test FlipY <: ImageOperation
+    @test FlipY <: ImageTransformation
     op = FlipY()
     show(op); println()
     showcompact(op); println()
@@ -50,14 +50,14 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Either
     @test_approx_eq op.chance [0.7, .3]
-    @test typeof(last(transform(FlipY(), img)["operations"])) <: FlipY
+    @test typeof(last(transform(FlipY(), img)["transformations"])) <: FlipY
     @test transform(FlipY(0), img) == img
     @test transform(FlipY(1), img) == flipdim(img, "y")
     @imagetest "FlipY" transform(FlipY(), testimg)
 end
 
 @testset "Rotate90" begin
-    @test Rotate90 <: ImageOperation
+    @test Rotate90 <: ImageTransformation
     op = Rotate90()
     show(op); println()
     showcompact(op); println()
@@ -67,14 +67,14 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Either
     @test_approx_eq op.chance [0.7, .3]
-    @test typeof(last(transform(Rotate90(), img)["operations"])) <: Rotate90
+    @test typeof(last(transform(Rotate90(), img)["transformations"])) <: Rotate90
     @test transform(Rotate90(0), img) == img
     @test transform(Rotate90(1), img) == rotate_expand(img, deg2rad(90))
     @imagetest "Rotate90" transform(Rotate90(), testimg)
 end
 
 @testset "Rotate180" begin
-    @test Rotate180 <: ImageOperation
+    @test Rotate180 <: ImageTransformation
     op = Rotate180()
     show(op); println()
     showcompact(op); println()
@@ -84,14 +84,14 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Either
     @test_approx_eq op.chance [0.7, .3]
-    @test typeof(last(transform(Rotate180(), img)["operations"])) <: Rotate180
+    @test typeof(last(transform(Rotate180(), img)["transformations"])) <: Rotate180
     @test transform(Rotate180(0), img) == img
     @test transform(Rotate180(1), img) == rotate_expand(img, deg2rad(180))
     @imagetest "Rotate180" transform(Rotate180(), testimg)
 end
 
 @testset "Rotate270" begin
-    @test Rotate270 <: ImageOperation
+    @test Rotate270 <: ImageTransformation
     op = Rotate270()
     show(op); println()
     showcompact(op); println()
@@ -101,14 +101,14 @@ end
     @test multiplier(op) == 2
     @test typeof(op) <: Either
     @test_approx_eq op.chance [0.7, .3]
-    @test typeof(last(transform(Rotate270(), img)["operations"])) <: Rotate270
+    @test typeof(last(transform(Rotate270(), img)["transformations"])) <: Rotate270
     @test transform(Rotate270(0), img) == img
     @test transform(Rotate270(1), img) == rotate_expand(img, deg2rad(270))
     @imagetest "Rotate270" transform(Rotate270(), testimg)
 end
 
 @testset "Resize" begin
-    @test Resize <: ImageOperation
+    @test Resize <: ImageTransformation
     @test multiplier(Resize()) == 1
     op = Resize()
     show(op); println()
@@ -118,14 +118,14 @@ end
     op = Resize(width = 23, height = 12)
     @test op.width == 23
     @test op.height == 12
-    @test typeof(last(transform(Resize(), img)["operations"])) <: Resize
+    @test typeof(last(transform(Resize(), img)["transformations"])) <: Resize
     @test size(transform(op, img)) == (23, 12)
     @imagetest "Resize" transform(Resize(160, 80), testimg)
     @imagetest "Resize_y" permutedims(transform(Resize(160, 80), permutedims(testimg, [2, 1])), [2, 1])
 end
 
 @testset "CropRatio" begin
-    @test CropRatio <: ImageOperation
+    @test CropRatio <: ImageTransformation
     @test multiplier(CropRatio()) == 1
     op = CropRatio(1//2)
     show(op); println()
@@ -137,7 +137,7 @@ end
     @test op.ratio == 1.
     op = CropRatio(1)
     @test op.ratio == 1.
-    @test typeof(last(transform(CropRatio(), img)["operations"])) <: CropRatio
+    @test typeof(last(transform(CropRatio(), img)["transformations"])) <: CropRatio
 
     @test_throws ArgumentError transform(CropRatio(0.), img)
     @test_throws ArgumentError transform(CropRatio(-1.), img)
@@ -163,7 +163,7 @@ end
 end
 
 @testset "CropSize" begin
-    @test CropSize <: ImageOperation
+    @test CropSize <: ImageTransformation
     @test multiplier(CropSize()) == 1
     op = CropSize(2, 3)
     show(op); println()
@@ -176,7 +176,7 @@ end
     op = CropSize()
     @test op.width == 64
     @test op.height == 64
-    @test typeof(last(transform(CropSize(1,1), img)["operations"])) <: CropSize
+    @test typeof(last(transform(CropSize(1,1), img)["transformations"])) <: CropSize
 
     @test_throws ArgumentError transform(CropSize(3,2), img)
     @test_throws ArgumentError transform(CropSize(2,3), img)
@@ -202,7 +202,7 @@ end
 end
 
 @testset "RCropSize" begin
-    @test RCropSize <: ImageOperation
+    @test RCropSize <: ImageTransformation
     @test multiplier(RCropSize()) == 1
     op = RCropSize(2, 3)
     show(op); println()
@@ -215,7 +215,7 @@ end
     op = RCropSize()
     @test op.width == 64
     @test op.height == 64
-    @test typeof(last(transform(RCropSize(1,1), img)["operations"])) <: RCropSize
+    @test typeof(last(transform(RCropSize(1,1), img)["transformations"])) <: RCropSize
 
     @test_throws ArgumentError transform(RCropSize(3,2), img)
     @test_throws ArgumentError transform(RCropSize(2,3), img)
@@ -247,7 +247,7 @@ end
 end
 
 @testset "RCropRatio" begin
-    @test RCropRatio <: ImageOperation
+    @test RCropRatio <: ImageTransformation
     @test multiplier(RCropRatio()) == 1
     op = RCropRatio(1//2)
     show(op); println()
@@ -259,7 +259,7 @@ end
     @test op.ratio == 1.
     op = RCropRatio(1)
     @test op.ratio == 1.
-    @test typeof(last(transform(RCropRatio(), img)["operations"])) <: RCropRatio
+    @test typeof(last(transform(RCropRatio(), img)["transformations"])) <: RCropRatio
 
     @test_throws ArgumentError transform(RCropRatio(0.), img)
     @test_throws ArgumentError transform(RCropRatio(-1.), img)
@@ -285,7 +285,7 @@ end
 end
 
 @testset "Crop" begin
-    @test Crop <: ImageOperation
+    @test Crop <: ImageTransformation
     @test multiplier(Crop()) == 1
     op = Crop(1, 2, 3, 4)
     show(op); println()
@@ -304,7 +304,7 @@ end
     @test op.y == 1
     @test op.width == 64
     @test op.height == 64
-    @test typeof(last(transform(Crop(1,1,1,1), img)["operations"])) <: Crop
+    @test typeof(last(transform(Crop(1,1,1,1), img)["transformations"])) <: Crop
 
     @test_throws ArgumentError transform(Crop(0,1,1,1), img)
     @test_throws ArgumentError transform(Crop(1,0,1,1), img)
@@ -333,7 +333,7 @@ end
 end
 
 @testset "Zoom" begin
-    @test Zoom <: ImageOperation
+    @test Zoom <: ImageTransformation
     @test multiplier(Zoom()) == 1
     op = Zoom(1//2)
     show(op); println()
@@ -345,14 +345,14 @@ end
     @test op.factor == 1.
     op = Zoom(1)
     @test op.factor == 1.
-    @test typeof(last(transform(Zoom(), img)["operations"])) <: Zoom
+    @test typeof(last(transform(Zoom(), img)["transformations"])) <: Zoom
 
     @imagetest "Zoom08" transform(Zoom(0.8), testimg)
     @imagetest "Zoom12" transform(Zoom(1.2), testimg)
 end
 
 @testset "Scale" begin
-    @test Scale <: ImageOperation
+    @test Scale <: ImageTransformation
     @test multiplier(Scale()) == 1
     op = Scale(2, .5)
     show(op); println()
@@ -371,63 +371,63 @@ end
     op = Scale(width = 1.5, height = 0.5)
     @test op.width == 1.5
     @test op.height == 0.5
-    @test typeof(last(transform(Scale(), img)["operations"])) <: Scale
+    @test typeof(last(transform(Scale(), img)["transformations"])) <: Scale
 
     @imagetest "Scale_x" transform(Scale(0.8, 1.2), testimg)
     @imagetest "Scale_y" permutedims(transform(Scale(0.8, 1.2), permutedims(testimg, [2, 1])), [2, 1])
 end
 
 @testset "Either" begin
-    @test Either <: ImageOperation
+    @test Either <: ImageTransformation
     @test_throws ArgumentError Either()
     op = Either(NoOp())
     show(op); println()
     showcompact(op); println()
     @test multiplier(op) == 1
-    @test op.operations == [NoOp()]
+    @test op.transformations == [NoOp()]
     @test op.chance == [1.]
     @test op.cum_chance == [1.]
     @test transform(op, img) == img
     op = Either(FlipX(), FlipY())
     @test multiplier(op) == 2
-    @test op.operations == [FlipX(), FlipY()]
+    @test op.transformations == [FlipX(), FlipY()]
     @test op.chance == [.5, .5]
     @test op.cum_chance == [.5, 1.]
     op = Either([FlipX(), FlipY()])
-    @test op.operations == [FlipX(), FlipY()]
+    @test op.transformations == [FlipX(), FlipY()]
     @test op.chance == [.5, .5]
     @test op.cum_chance == [.5, 1.]
     @test_throws AssertionError Either(FlipX(), FlipY(), chance = [0., 0.])
     @test_throws ArgumentError Either(FlipX(), FlipY(), Rotate90(), chance = [.5, .5])
     op = Either(FlipX(), FlipY(), Rotate90())
     @test multiplier(op) == 3
-    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.transformations == [FlipX(), FlipY(), Rotate90()]
     @test op.chance == [1/3, 1/3, 1/3]
     @test op.cum_chance == [1/3, 2/3, 1.]
     op = Either([FlipX(), FlipY(), Rotate90()])
-    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.transformations == [FlipX(), FlipY(), Rotate90()]
     @test op.chance == [1/3, 1/3, 1/3]
     @test op.cum_chance == [1/3, 2/3, 1.]
     op = Either(FlipX(), FlipY(), Rotate90(), chance = [1., 3, 1])
-    @test op.operations == [FlipX(), FlipY(), Rotate90()]
+    @test op.transformations == [FlipX(), FlipY(), Rotate90()]
     @test op.chance == [.2, .6, .2]
     @test op.cum_chance == [.2, .8, 1.]
     op = Either(FlipX(), FlipY(), chance = [1., 0.])
     @test multiplier(op) == 1
-    @test op.operations == [FlipX(), FlipY()]
+    @test op.transformations == [FlipX(), FlipY()]
     @test op.chance == [1., 0]
     @test op.cum_chance == [1., 1.]
     @test transform(op, deepcopy(img)) == transform(FlipX(), deepcopy(img))
     op = Either(FlipX(), FlipY(), chance = [0., 1.])
     @test multiplier(op) == 1
-    @test op.operations == [FlipX(), FlipY()]
+    @test op.transformations == [FlipX(), FlipY()]
     @test op.chance == [0., 1]
     @test op.cum_chance == [0., 1.]
     @test transform(op, deepcopy(img)) == transform(FlipY(), deepcopy(img))
 end
 
 @testset "RandomDisplacement" begin
-    @test RandomDisplacement <: ImageOperation
+    @test RandomDisplacement <: ImageTransformation
     @test multiplier(RandomDisplacement(10,10)) == 1
     op = RandomDisplacement(4,5)
     @test op == RandomDisplacement(4., 5.)
@@ -439,7 +439,7 @@ end
     @test op.static_border == true
     @test op.normalize == true
 
-    @test typeof(last(transform(op, testimg)["operations"])) <: DisplacementField
+    @test typeof(last(transform(op, testimg)["transformations"])) <: DisplacementField
 
     op = RandomDisplacement(10,12, scale = .4, normalize = false)
     @test op.gridwidth == 10
@@ -462,7 +462,7 @@ end
 end
 
 @testset "SmoothedRandomDisplacement" begin
-    @test SmoothedRandomDisplacement <: ImageOperation
+    @test SmoothedRandomDisplacement <: ImageTransformation
     @test multiplier(SmoothedRandomDisplacement(10,10)) == 1
     op = SmoothedRandomDisplacement(4,5)
     @test op == SmoothedRandomDisplacement(4., 5.)
@@ -476,7 +476,7 @@ end
     @test op.static_border == true
     @test op.normalize == true
 
-    @test typeof(last(transform(op, testimg)["operations"])) <: DisplacementField
+    @test typeof(last(transform(op, testimg)["transformations"])) <: DisplacementField
 
     op = SmoothedRandomDisplacement(10,12, scale = .4, sigma = 4, iterations = 9, normalize = false)
     @test op.gridwidth == 10
@@ -509,8 +509,8 @@ end
     imgs = (img, img2)
     op = FlipX()
     out1, out2 = transform(op, imgs)
-    @test typeof(last(out1["operations"])) <: FlipX
-    @test typeof(last(out2["operations"])) <: FlipX
+    @test typeof(last(out1["transformations"])) <: FlipX
+    @test typeof(last(out2["transformations"])) <: FlipX
     @test out1 == flipx(img)
     @test out2 == flipx(img2)
     op = FlipX(1)
