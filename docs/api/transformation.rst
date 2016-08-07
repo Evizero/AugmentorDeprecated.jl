@@ -1,4 +1,4 @@
-Transformations
+ImageTransformation
 ================
 
 All the possible transformations that can be composed together in a

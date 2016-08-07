@@ -35,6 +35,7 @@ For details on a specific aspect, see the documentation outlined below.
 
    tutorials/augmentation
    tutorials/mnist
+   tutorials/mxnet
 
 .. toctree::
    :maxdepth: 2
@@ -43,7 +44,15 @@ For details on a specific aspect, see the documentation outlined below.
    api/source
    api/pipeline
    api/transformation
+   api/displacementfield
+   api/displacementmesh
 
+.. toctree::
+   :maxdepth: 2
+   :caption: About
+
+   about/acknowledgements
+   about/license
 
 Indices and tables
 ==================
