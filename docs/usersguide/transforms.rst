@@ -309,8 +309,8 @@ RandomDisplacement
       The scaling factor applied to both components of all
       displacement vectors. This real number effectively controls
       the length of the vectors and as such the strength of the
-      distortion. A number somewhere between 0 and 1 is usually
-      the most reasonable choice. Defaults to 0.2
+      distortion. A number somewhere between ``0`` and ``1`` is usually
+      the most reasonable choice. Defaults to ``0.2``
 
    .. attribute:: static_border
 
@@ -339,6 +339,70 @@ RandomDisplacement
 
 SmoothedRandomDisplacement
 ***************************
+
+.. class:: SmoothedRandomDisplacement
+
+   Same as :class:`RandomDisplacement` with the addition that
+   the resulting vector field is also smoothed ``iterations`` times
+   using a gaussian filter with of parameter ``sigma``.
+   This will result in a less chaotic displacement field and be much
+   more similar to an elastic distortion.
+
+   .. attribute:: gridwidth
+
+      The number of reference points along the horizontal dimension.
+
+   .. attribute:: gridheight
+
+      The number of reference points along the vertical dimensions
+
+   .. attribute:: scale
+
+      The scaling factor applied to both components of all
+      displacement vectors. This real number effectively controls
+      the length of the vectors and as such the strength of the
+      distortion. A number somewhere between ``0`` and ``1`` is usually
+      the most reasonable choice. Defaults to ``0.2``.
+
+   .. attribute:: sigma
+
+      Sigma parameter of the gaussian filter. This parameter
+      effectively controls the strength of the smoothing.
+      Defaults to ``2``.
+
+   .. attribute:: iterations
+
+      The number of times the smoothing operation is applied to
+      the :class:`DisplacementField`. This is especially useful
+      if ``static_border == true`` because the border will be reset
+      to zero after each pass. Thus the displacement is a little less
+      aggressive towards the borders of the image than it is towards
+      its center.
+
+   .. attribute:: static_border
+
+      If ``true``, then all reference points along the border/frame
+      of the image will remain static during the transformation.
+      In other words, they will remain in the same place in the
+      output image as they were in the input image, an thus only
+      the inner content of the image will be distorted.
+      Default to true.
+
+   .. attribute:: normalize
+
+      If ``true``, then both components of all displacement vectors
+      will be divided by the norm of the matrix representing the
+      corresponding dimension. This will have the effect that the
+      displacement vector will always be scaled appropriatly to the
+      size of the grid. That means that if set to ``false``, one
+      usually has to choose different :attr:`scale` for
+      different grid sizes. Defaults to true.
+
++------------------------------------------------+-------------------------------------------------------------+
+| Input                                          | Output for ``SmoothedRandomDisplacement(4,5, sigma=2)``     |
++================================================+=============================================================+
+| .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/SmoothedRandomDisplacement.png |
++------------------------------------------------+-------------------------------------------------------------+
 
 Utilities
 ----------

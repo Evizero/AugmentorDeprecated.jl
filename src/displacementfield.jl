@@ -214,7 +214,7 @@ end
 Generates a `DisplacementField` by placing uniformly random
 generated displacement vectors on an equally space grid of size
 `gridheight × gridwidth`. In addition, this vectorfield is smoothed
-using a gaussian kernel of size `sigma × sigma`. This will result
+using a gaussian filter with parameter `sigma`. This will result
 in a less chaotic displacement field and be much more similar to
 an elastic distortion.
 
