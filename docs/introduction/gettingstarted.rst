@@ -12,37 +12,30 @@ order to provide its functionality, namely an *image source*,
 a number of *image transformations*, and an *image operation pipeline*.
 
 Image Sources
-**************
+   Functionality to access images from some data source,
+   such as a directory.
 
-Functionality to access images from some data source,
-such as a directory.
-
-Abstract supertype for all image sources. Every subtype of
-:class:`ImageSource` must implement the read-only functions of
-the array interface. Additionally, they must fully implement the
-iterator interface so that they can be used as for-loops to
-iterate over all the stored images.
+   Abstract supertype for all image sources. Every subtype of
+   :class:`ImageSource` must implement the read-only functions of
+   the array interface. Additionally, they must fully implement the
+   iterator interface so that they can be used as for-loops to
+   iterate over all the stored images.
 
 Image Transformations
-**********************
-
-As the name suggests concrete subclasses define a specific
-transformation that can be applied to an image, or a set of
-images. Transformations can also be lifted into a
-:class:`Either`, which have a random probability of
-occuring, depending on the hyperparameter.
+   As the name suggests concrete subclasses define a specific
+   transformation that can be applied to an image, or a set of
+   images. Transformations can also be lifted into a
+   :class:`Either`, which have a random probability of
+   occuring, depending on the hyperparameter.
 
 Transformation Pipelines
-*************************
+   A chain or tree of (probabilistic) transformations that should be
+   applied to a given image, or set of images.
 
-A chain or tree of (probabilistic) transformations that should be
-applied to a given image, or set of images.
-
-Pipelines are container objects that define what kind of
-transformations are performed and in what order. They are designed
-for convenient user interaction and provide some information on
-what is going on.
-
+   Pipelines are container objects that define what kind of
+   transformations are performed and in what order. They are designed
+   for convenient user interaction and provide some information on
+   what is going on.
 
 Using Augmentor.jl
 -------------------

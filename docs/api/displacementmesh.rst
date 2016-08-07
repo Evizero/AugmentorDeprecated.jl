@@ -1,10 +1,10 @@
 DisplacementMesh
 =================
 
-todo: plots
+.. TODO: plots
 
-todo: triangulation
+.. TODO: triangulation
 
-todo: other use than with fields
+.. TODO: other use than with fields
 
-todo: give attribution to PiecewiseAffineTransforms
+.. TODO: give attribution to PiecewiseAffineTransforms
