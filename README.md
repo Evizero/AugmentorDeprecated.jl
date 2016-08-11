@@ -78,7 +78,7 @@ an *image operation pipeline*.
 - `ImageSouce`: Functionality to access images from some data source,
 such as a directory.
 
-- `Pipeline`: A chain or tree of (probabilistic) transformations that
+- `Pipeline` (*DEPRECATED*): A chain or tree of (probabilistic) transformations that
 should be applied to a given image, or set of images.
 
 - `ImageTransformation`: As the name suggests concrete subclasses define
