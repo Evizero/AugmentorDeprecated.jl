@@ -1,30 +1,39 @@
 # Augmentor
 
-[![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
-[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md)
-[![Documentation Status](https://readthedocs.org/projects/augmentorjl/badge/?version=latest)](http://augmentorjl.readthedocs.io/en/latest/?badge=latest)
-
-Augmentor is an image-augmentation library designed to render the
+_Augmentor is an image-augmentation library designed to render the
 process of artificial dataset enlargement more convenient, less
-error prone, and easier to reproduce.
-This is achieved using probabilistic transformation pipelines.
+error prone, and easier to reproduce. This is achieved using
+probabilistic transformation pipelines._
 
-The following code snipped shows how such a pipeline can be
-specified using simple building blocks. To show the effect we
-compiled a few resulting output images into a gif while using
-the famous lena image as input.
-
-```julia
-LinearPipeline(Rotate90(.5), Rotate270(.5), FlipX(.5), FlipY(.5), RCropSize(128, 128), Resize(64, 64))
-```
-
-Input                               | Output
-:----------------------------------:|:------------------------------:
-![lena](https://cloud.githubusercontent.com/assets/10854026/16039252/03ce762e-3229-11e6-8670-a25cf9a149ca.png) | ![pipeline](https://cloud.githubusercontent.com/assets/10854026/16039237/f252481c-3228-11e6-84b0-c20f796270d9.gif)
+| **Package Status** | **Package Evaluator** | **Build Status**  |
+|:------------------:|:---------------------:|:-----------------:|
+| [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip) [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE.md) | [![Package Evaluator v4](http://pkg.julialang.org/badges/Augmentor_0.4.svg)](http://pkg.julialang.org/?pkg=Augmentor&ver=0.4) [![Package Evaluator v5](http://pkg.julialang.org/badges/Augmentor_0.5.svg)](http://pkg.julialang.org/?pkg=Augmentor&ver=0.5) | [![Build Status](https://travis-ci.org/Evizero/Augmentor.jl.svg?branch=master)](https://travis-ci.org/Evizero/Augmentor.jl) [![Coverage Status](https://coveralls.io/repos/github/Evizero/Augmentor.jl/badge.svg?branch=master)](https://coveralls.io/github/Evizero/Augmentor.jl?branch=master) [![Documentation Status](https://readthedocs.org/projects/augmentorjl/badge/?version=latest)](http://augmentorjl.readthedocs.io/en/latest/?badge=latest) |
 
 **Augmentor.jl** is the [Julia](http://julialang.org) package
 for *Augmentor*. You can find the Python version
 [here](https://github.com/mdbloice/Augmentor).
+
+The following code snipped shows how such a pipeline can be
+specified using simple building blocks. To show the effect we
+compiled a few resulting output images into a gif while using
+an example image from the [ISIC archive](https://isic-archive.com/)
+as input.
+
+```julia
+# Define a pipeline
+pipeline = [Rotate90(.5), Rotate270(.5), FlipX(.5), FlipY(.5), RCropSize(160, 160), Resize(64, 64)]
+
+# Load an input imae
+input_img = get(ISICArchive.ImageThumbnailRequest(id = "5592ac599fc3c13155a57a85"))
+
+# Apply pipeline on image
+output_img = transform(pipeline, input_img)
+```
+
+Input                               | Output
+:----------------------------------:|:------------------------------:
+![input](https://cloud.githubusercontent.com/assets/10854026/17646095/58e01dbe-61ba-11e6-98dc-21370609c551.png) | ![output](https://cloud.githubusercontent.com/assets/10854026/17646096/58e992e0-61ba-11e6-81bd-c129f3742b47.gif)
+
 
 ## Installation
 
@@ -40,9 +49,6 @@ Additionally, for example if you encounter any sudden issues,
 you can manually choose to be on the latest (untagged)
 development version.
 
-[![Build Status](https://travis-ci.org/Evizero/Augmentor.jl.svg?branch=master)](https://travis-ci.org/Evizero/Augmentor.jl)
-[![Coverage Status](https://coveralls.io/repos/github/Evizero/Augmentor.jl/badge.svg?branch=master)](https://coveralls.io/github/Evizero/Augmentor.jl?branch=master)
-
 ```julia
 Pkg.checkout("Augmentor")
 ```
@@ -57,7 +63,6 @@ using Augmentor
 ```
 
 ## Documentation
-
 
 Check out the **[latest documentation](http://augmentorjl.readthedocs.io/en/latest/index.html)**
 
@@ -78,7 +83,7 @@ an *image operation pipeline*.
 - `ImageSouce`: Functionality to access images from some data source,
 such as a directory.
 
-- `Pipeline` (*DEPRECATED*): A chain or tree of (probabilistic) transformations that
+- `Pipeline`: A chain or tree of (probabilistic) transformations that
 should be applied to a given image, or set of images.
 
 - `ImageTransformation`: As the name suggests concrete subclasses define
@@ -98,7 +103,7 @@ using TestImages
 img = testimage("toucan")
 
 # create empty pipeline
-pl = LinearPipeline()
+pl = Array{ImageTransformation,1}()
 
 # add transformations to pipeline
 push!(pl, FlipX(0.5))     # lifted to Either(FlipX(), NoOp()). 50% chance of occuring
@@ -157,16 +162,14 @@ end
 It is also possible to create a pipeline in a more concise way
 
 ```julia
-pl = LinearPipeline(FlipX(.5), FlipY(.5), Resize(32,32))
+pl = [FlipX(.5), FlipY(.5), Resize(32,32)]
 ```
 
 ```
-LinearPipeline
-- 3 operation(s):
-    - 50% chance to: Flip x-axis. (factor: 2x)
-    - 50% chance to: Flip y-axis. (factor: 2x)
-    - Resize to 32x32. (factor: 1x)
-- total factor: 4x
+3-element Array{Augmentor.ImageTransformation,1}:
+ Either: (50%) Flip x-axis. (50%) No transformation.
+ Either: (50%) Flip y-axis. (50%) No transformation.
+ Resize to 32x32.
 ```
 
 ## License
