@@ -1,3 +1,5 @@
+.. _mxnet_tut:
+
 MNIST: Using MXNet with Augmentor
 =================================
 
@@ -7,14 +9,25 @@ the elastic distortions discussed in [SIMARD2003]_.
 We choose to follow this particular paper in this tutorial, because
 the approach discussed in Simard et al. is both simple and effective.
 
-If you haven't already check out the first tutorial in which
-we explore appropriate displacement parameters for the data set
+If you haven't already, make sure to check out the first tutorial
+:ref:`mnist_tut` of this series, in which we explore appropriate
+displacement field parameters for the data set. In this tutorial we
+will assume you are already familiar with augmentation pipelines and
+displacement fields.
 
 To start off with the first line of code, we import ``Augmentor.jl``
 
 .. code-block:: julia
 
     using Augmentor
+
+Understanding Tensor Dimensions
+--------------------------------
+
+todo: describe difference between typical image convention (colors of
+a pixel closer in memory than neighboring pixel) and ML convention
+(neighboring pixel of one color channel is closer in memory than
+colors of pixel)
 
 Creating the Pipeline
 ----------------------

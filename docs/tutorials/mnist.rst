@@ -1,3 +1,5 @@
+.. _mnist_tut:
+
 MNIST: Emulating Elastic Distortions
 =====================================
 
@@ -39,6 +41,7 @@ To this end we employ the help of two additional Julia packages,
 Smoothed Displacement Fields
 -----------------------------
 
+.. image:: https://cloud.githubusercontent.com/assets/10854026/17645973/3894d2b0-61b6-11e6-8b10-1cb5139bfb6d.gif
 
 Visualizing Displacement Parameters
 ---------------------------------
@@ -63,7 +66,7 @@ for the displacement.
             scale = .1:.1:.5,
             sigma = 1:5,
             iterations = 1:6
-        op = SmoothedDisplacement(gridsize, gridsize,
+        op = SmoothedDisplacement(gridsize, gridsize, # equal width & height
                                   sigma = sigma,
                                   scale = scale,
                                   iterations = iterations)
@@ -75,11 +78,11 @@ following interactive visualisation. You can now use the sliders
 to investigate the effects that different parameters have on the
 MNIST training set.
 
-.. note::
+.. Tip::
 
    You should always use your **training** set to do this kind of
    visualisation (not the test test!). Otherwise you are likely to
-   achieve overly optimistic (i.e. biased) results.
+   achieve overly optimistic (i.e. biased) results during training.
 
 
 .. image:: https://cloud.githubusercontent.com/assets/10854026/17641720/5de6cd8c-612c-11e6-933f-b91d58cf2fde.gif
@@ -90,8 +93,8 @@ Once you found a set of parameters that you think are appropriate
 for your dataset you can go ahead and train your model.
 
 If you are interested on how we could use these parameters to
-train a convolutional neural network in MXNet, you should check out
-the next tutorial TODO LINK
+train a convolutional neural network in ``MXNet.jl``, you should
+check out the tutorial for :ref:`mxnet_tut`
 
 
 References
