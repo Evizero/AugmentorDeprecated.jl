@@ -36,7 +36,7 @@ export
         Zoom,
         Scale,
         RandomDisplacement,
-        SmoothedRandomDisplacement,
+        SmoothedDisplacement,
 
     multiplier,
 
@@ -71,7 +71,7 @@ include("transformations/rotate90.jl")
 include("transformations/rotate180.jl")
 include("transformations/rotate270.jl")
 include("transformations/randomdisplacement.jl")
-include("transformations/smoothedrandomdisplacement.jl")
+include("transformations/smootheddisplacement.jl")
 
 include("imagesource.jl")
 include("dirimagesource.jl")

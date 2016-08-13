@@ -67,7 +67,7 @@ Examples
 see also
 =========
 
-`SmoothedRandomDisplacement`
+`SmoothedDisplacement`
 
 `uniform_displacement`, `ImageTransformation`, `transform`
 """

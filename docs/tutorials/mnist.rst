@@ -20,8 +20,8 @@ To start off with the first line of code, we import ``Augmentor.jl``
 
     using Augmentor
 
-Loading the training set
--------------------------
+Loading the Trainingset
+------------------------
 
 To this end we employ the help of two additional Julia packages,
 ``Images.jl``, and ``MNIST.jl``.
@@ -49,9 +49,9 @@ for the displacement.
 
 .. code-block:: julia
 
-	# These two package will provide us with the capabilities
-	# to perform interactive visualisations in a jupyter notebook
-	using Interact, Reactive
+    # These two package will provide us with the capabilities
+    # to perform interactive visualisations in a jupyter notebook
+    using Interact, Reactive
 
     # The manipulate macro will turn the parameters of the
     # loop into interactive widgets.
@@ -63,10 +63,10 @@ for the displacement.
             scale = .1:.1:.5,
             sigma = 1:5,
             iterations = 1:6
-        op = SmoothedRandomDisplacement(gridsize, gridsize,
-                                        sigma = sigma,
-                                        scale = scale,
-                                        iterations = iterations)
+        op = SmoothedDisplacement(gridsize, gridsize,
+                                  sigma = sigma,
+                                  scale = scale,
+                                  iterations = iterations)
         transform(op, grayim(train_images[:, :, index]))
     end
 

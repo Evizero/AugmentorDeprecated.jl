@@ -337,10 +337,10 @@ RandomDisplacement
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/RandomDisplacement.png |
 +------------------------------------------------+-----------------------------------------------------+
 
-SmoothedRandomDisplacement
+SmoothedDisplacement
 ***************************
 
-.. class:: SmoothedRandomDisplacement
+.. class:: SmoothedDisplacement
 
    Same as :class:`RandomDisplacement` with the addition that
    the resulting vector field is also smoothed ``iterations`` times
@@ -399,7 +399,7 @@ SmoothedRandomDisplacement
       different grid sizes. Defaults to true.
 
 +------------------------------------------------+-------------------------------------------------------------+
-| Input                                          | Output for ``SmoothedRandomDisplacement(4,5, sigma=2)``     |
+| Input                                          | Output for ``SmoothedDisplacement(4,5, sigma=2)``           |
 +================================================+=============================================================+
 | .. image:: ../../test/refimg/testimage.png     | .. image:: ../../test/refimg/SmoothedRandomDisplacement.png |
 +------------------------------------------------+-------------------------------------------------------------+

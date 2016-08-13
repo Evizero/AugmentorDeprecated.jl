@@ -104,7 +104,7 @@ see also
 `uniform_displacement`, and `gaussian_displacement` for generating
 random displacement fields
 
-`RandomDisplacement`, and `SmoothedRandomDisplacement` for
+`RandomDisplacement`, and `SmoothedDisplacement` for
 generating new random displacement fields on every use
 
 `ImageTransformation`, `transform`
