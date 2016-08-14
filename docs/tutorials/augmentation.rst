@@ -55,11 +55,12 @@ with the image on the right side.
 
 .. code-block:: julia
 
-    using MNIST
-    img = grayim(MNIST.trainimage_raw(19))
+    using Augmentor, Images, MNIST
+    input_img  = grayim(MNIST.trainimage_raw(19))
+    output_img = trainsform(Rotate180(), img)
 
 +------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
-| Input: ``img``                                                                                                   | Output: ``trainsform(Rotate180(), img)``                                                                         |
+| Input                                                                                                            | Output                                                                                                           |
 +==================================================================================================================+==================================================================================================================+
 | .. image:: https://cloud.githubusercontent.com/assets/10854026/17642518/228b4f42-614a-11e6-8524-543a1b2735b5.png | .. image:: https://cloud.githubusercontent.com/assets/10854026/17642519/22921a16-614a-11e6-9ac0-628d52a88dd4.png |
 +------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
@@ -91,17 +92,17 @@ where a subtask was lesion classification.
 
 Let's consider the following input image on the left side.
 It shows a photo of a skin lesion that was taken from above.
-
 Again applying the :class:`Rotate180` transformation on the input
 image we end up with a transformed version shown on the right side.
 
 .. code-block:: julia
 
-    using ISICArchive
-    img = get(ImageThumbnailRequest(id = "5592ac599fc3c13155a57a85"))
+    using Augmentor, ISICArchive
+    input_img  = get(ImageThumbnailRequest(id = "5592ac599fc3c13155a57a85"))
+    output_img = trainsform(Rotate180(), img)
 
 +------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+
-| Input: ``img``                                                                                                   | Output: ``trainsform(Rotate180(), img)``                                                                         |
+| Input                                                                                                            | Output                                                                                                           |
 +==================================================================================================================+==================================================================================================================+
 | .. image:: https://cloud.githubusercontent.com/assets/10854026/17645934/6256652a-61b4-11e6-8c35-aa98d8c20043.png | .. image:: https://cloud.githubusercontent.com/assets/10854026/17645935/6272affa-61b4-11e6-9b65-447b5e29686c.png |
 +------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------+

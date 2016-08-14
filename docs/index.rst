@@ -33,6 +33,7 @@ For details on a specific aspect, see the documentation outlined below.
    :maxdepth: 2
    :caption: Tutorials
 
+   tutorials/images
    tutorials/augmentation
    tutorials/mnist
    tutorials/mxnet

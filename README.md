@@ -13,6 +13,9 @@ probabilistic transformation pipelines._
 for *Augmentor*. You can find the Python version
 [here](https://github.com/mdbloice/Augmentor).
 
+
+## Introduction
+
 The following code snipped shows how such a pipeline can be
 specified using simple building blocks. To show the effect we
 compiled a few resulting output images into a gif while using
@@ -20,10 +23,12 @@ an example image from the [ISIC archive](https://isic-archive.com/)
 as input.
 
 ```julia
+using Augmentor, ISICArchive
+
 # Define a pipeline
 pipeline = [Rotate90(.5), Rotate270(.5), FlipX(.5), FlipY(.5), RCropSize(160, 160), Resize(64, 64)]
 
-# Load an input imae
+# Load an input image
 input_img = get(ISICArchive.ImageThumbnailRequest(id = "5592ac599fc3c13155a57a85"))
 
 # Apply pipeline on image
@@ -34,33 +39,6 @@ Input                               | Output
 :----------------------------------:|:------------------------------:
 ![input](https://cloud.githubusercontent.com/assets/10854026/17646095/58e01dbe-61ba-11e6-98dc-21370609c551.png) | ![output](https://cloud.githubusercontent.com/assets/10854026/17646096/58e992e0-61ba-11e6-81bd-c129f3742b47.gif)
 
-
-## Installation
-
-To install Augmentor.jl, start up Julia and type the following code
-snipped into the REPL. It makes use of the native Julia package
-manager.
-
-```julia
-Pkg.clone("git@github.com:Evizero/Augmentor.jl.git")
-```
-
-Additionally, for example if you encounter any sudden issues,
-you can manually choose to be on the latest (untagged)
-development version.
-
-```julia
-Pkg.checkout("Augmentor")
-```
-
-## Usage
-
-Once installed the Augmentor package can be imported just as any
-other Julia package.
-
-```julia
-using Augmentor
-```
 
 ## Documentation
 
@@ -73,6 +51,29 @@ on `DirImageSource` within Julia's REPL:
 ```julia
 ?DirImageSource
 ```
+
+
+## Installation
+
+To install Augmentor.jl, start up Julia and type the following code
+snipped into the REPL. It makes use of the native Julia package
+manager.
+Once installed the Augmentor package can be imported just as any
+other Julia package.
+
+```julia
+Pkg.clone("git@github.com:Evizero/Augmentor.jl.git")
+using Augmentor
+```
+
+Additionally, for example if you encounter any sudden issues,
+you can manually choose to be on the latest (untagged)
+development version.
+
+```julia
+Pkg.checkout("Augmentor")
+```
+
 
 ## Overview
 

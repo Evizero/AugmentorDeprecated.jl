@@ -46,9 +46,9 @@ Smoothed Displacement Fields
 Visualizing Displacement Parameters
 ---------------------------------
 
-Before we go and train a network (see <next tutorial here>) we should
-invest some time to come up with a decent set of hyper parameters
-for the displacement.
+Before we apply a smoothed displacement field to our dataset and
+train a network (see next tutorial), we should invest some time to
+come up with a decent set of hyper parameters for the displacement.
 
 .. code-block:: julia
 
