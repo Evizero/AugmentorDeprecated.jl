@@ -46,13 +46,6 @@ Whenever we work with arrays in which the elements are bit types
 array as a continuous block of memory. This is useful for many
 different reasons, such as cache locality and BLAS interaction.
 
-.. Tip::
-
-   If you are interested in more general information about the
-   concept of arrays, take a look at the thoughts on
-   `"What is an array" <https://gist.github.com/JeffBezanson/24b9e2820262cdeb74f96b81534a4d1f>`_
-   by one of the language's co-creator.
-
 The same block of memory can be interpreted in a number of ways.
 Consider the following example in which we allocate a vector
 (i.e. a one dimensional array) of ``UInt8`` (i.e. bytes)
