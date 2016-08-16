@@ -16,30 +16,32 @@ the elastic distortions discussed in [SIMARD2003]_.
    image it is applied on. As a consequence the parameter numbers
    specified in the paper are not 1-to-1 transferable to Augmentor
 
-To start off with the first line of code, we import ``Augmentor.jl``
-
-.. code-block:: julia
-
-    using Augmentor
 
 Loading the Trainingset
 ------------------------
 
-To this end we employ the help of two additional Julia packages,
-``Images.jl``, and ``MNIST.jl``.
+In order to access and visualize the MNIST images we employ the help
+of two additional Julia packages.
+
+- `Images.jl <https://github.com/timholy/Images.jl>`_ will provide
+  us with the tool for working with image data in Julia
+
+- `MNIST.jl <https://github.com/johnmyleswhite/MNIST.jl>`_ offers
+  offers a convenience interface to read the MNIST database.
 
 .. code-block:: julia
 
-    # We bring Images.jl into scope to visualize the data
-    # see: https://github.com/timholy/Images.jl
-    using Images
+    using Images, MNIST
 
-    # MNIST.jl will provide tools to access the dataset
-    # see: https://github.com/johnmyleswhite/MNIST.jl
-    using MNIST
+    train_images, train_labels = MNIST.trainimages(), MNIST.trainlabels()
 
 Smoothed Displacement Fields
 -----------------------------
+
+
+.. code-block:: julia
+
+    using Augmentor
 
 .. image:: https://cloud.githubusercontent.com/assets/10854026/17645973/3894d2b0-61b6-11e6-8b10-1cb5139bfb6d.gif
 
@@ -47,7 +49,7 @@ Visualizing Displacement Parameters
 ---------------------------------
 
 Before we apply a smoothed displacement field to our dataset and
-train a network (see next tutorial), we should invest some time to
+train a network (see :ref:`mxnet_tut`), we should invest some time to
 come up with a decent set of hyper parameters for the displacement.
 
 .. code-block:: julia

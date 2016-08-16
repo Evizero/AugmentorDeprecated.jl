@@ -2,39 +2,39 @@ Image Augmentation for Beginners
 =================================
 
 The term *data augmentation* is commonly used to describe the process
-of applying label-preserving transformations on some dataset, with
+of applying label-preserving transformations to some dataset, with
 the hope that their output (i.e. the newly generated observations)
 bias the model towards learning better features.
-Depending on the structure and semantics of the data, this is can
-be a difficult problem by itself.
+Depending on the structure and semantics of the data, coming up with
+such transformations can be a challenge by itself.
 
-Images are a special class of data that have interesting some
-properties in respect to their structure. For example do the
-dimensions of an image (i.e. the pixel) have a spatial relationship
+Images are a special class of data that have some interesting
+properties in respect to their structure. For example exhibit the
+dimensions of an image (i.e. the pixel) a spatial relationship
 to each other.
-Because images are such a popular and special case of data it
-deserves its own sub category, which we will unsurprisingly refer
-to as **image augmentation**.
+Because images are such a popular and special case of data,
+they deserve their own sub category, which we will unsurprisingly
+refer to as **image augmentation**.
 
-The general idea is that if we want our model to generalize well,
-we should try to design the learning process in such a way as to
-bias the model into learning such properties.
+The general idea is the following: if we want our model to generalize
+well, then we should design the learning process in such a way as to
+bias the model into learning such information equivariant properties.
 One way to do this is via the design of the model itself, which
-for example is was idea behind convolutional neural networks.
+for example was idea behind convolutional neural networks.
 
 An orthogonal approach - and the focus of the rest if this tutorial
-- to bias the model to learn about this information equi-variance is
-by using label-preserving transformations
+- to bias the model to learn about this information equi-variance,
+is by using label-preserving transformations
 
 
 Label-preserving Transformations
 ---------------------------------
 
-Before we go and train a model using some augmentation pipeline
-we should invest some time to decide on an appropriate set of
+Before we attempt to train a model using some augmentation pipeline
+we should invest some time in deciding on an appropriate set of
 transformations. Some of these transformations also have parameters
-to tune. In that we we should also make sure that we settle on a
-decent set of parameters for those.
+to tune, and we should also make sure that we settle on a decent set
+of values for those.
 
 What constitutes as "decent" depends on the dataset. In general we
 want the augmented images to be fairly dissimilar to the originals.
@@ -50,8 +50,8 @@ Consider the following example from the MNIST database of
 handwritten digits [MNIST1998]_. Our input image clearly represents
 its associated label "6".
 If we were to use the transformation :class:`Rotate180` in our
-augmentation pipeline for the this type of images, we would end up
-with the image on the right side.
+augmentation pipeline for this type of images, we could end up
+with the situation depicted by the image on the right side.
 
 .. code-block:: julia
 
@@ -81,9 +81,9 @@ is **not** label-preserving and should not be used for augmentation.
 Example: ISIC Skin Lesions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On the order hand, the exact same transformation could very well
-be label preserving for other types of images. Let us consider
-a different type of data; this time from the medical domain.
+On the other hand, the exact same transformation could very well
+be label-preserving for other types of images. Let us take a look at
+a different set of image data; this time from the medical domain.
 
 The International Skin Imaging Collaboration [ISIC]_ hosts a large
 collection of publicly available and labeled skin lesion images.
