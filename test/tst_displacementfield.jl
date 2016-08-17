@@ -34,7 +34,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "uniform_displacement" plot(df)
+    #@plottest "uniform_displacement" plot(df)
 
     srand(123)
     df = uniform_displacement(5, 8, scale = .2)
@@ -43,7 +43,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "uniform_displacement" plot(df)
+    #@plottest "uniform_displacement" plot(df)
 
     srand(123)
     df = uniform_displacement(5, 8, .2, true, true)
@@ -55,7 +55,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "uniform_displacement" plot(df)
+    #@plottest "uniform_displacement" plot(df)
 
     df = uniform_displacement(10, 9, static_border = false)
     @test typeof(df) <: DisplacementField
@@ -90,7 +90,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "gaussian_displacement" plot(df)
+    #@plottest "gaussian_displacement" plot(df)
 
     srand(123)
     df = gaussian_displacement(10, 12, scale = .3, sigma = 2)
@@ -98,7 +98,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "gaussian_displacement" plot(df)
+    #@plottest "gaussian_displacement" plot(df)
 
     srand(123)
     df = gaussian_displacement(10, 12, scale = .3, sigma = 1)
@@ -123,7 +123,7 @@ end
     @test sum_border(df.delta_X) == 0.
     @test sum_border(df.delta_Y) == 0.
     test_equidistance(df)
-    @plottest "gaussian_displacement" plot(df)
+    #@plottest "gaussian_displacement" plot(df)
 
     df = gaussian_displacement(10, 12, static_border = false)
     @test typeof(df) <: DisplacementField

@@ -26,7 +26,7 @@
     srand(123)
     df = gaussian_displacement(4, 8, .3, 2)
     dm = DisplacementMesh(df, testimg)
-    @plottest "displacemen_mesh_1" plot(dm)
+    # @plottest "displacemen_mesh_1" plot(dm)
     # @plottest "displacemen_mesh_2" plot(dm, testimg)
 end
 

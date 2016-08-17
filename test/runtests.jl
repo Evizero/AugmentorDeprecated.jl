@@ -2,14 +2,13 @@ using Augmentor
 using Images
 using TestImages
 using VisualRegressionTests
-using Plots
+#using Plots
 
-ENV["MPLBACKEND"] = "Agg"
-try
-    @eval import PyPlot
-    info("Matplotlib version: $(PyPlot.matplotlib[:__version__])")
-end
-pyplot(size=(200,150), reuse=true)
+#ENV["MPLBACKEND"] = "Agg"
+#try
+#    @eval import PyPlot
+#    info("Matplotlib version: $(PyPlot.matplotlib[:__version__])")
+#end
 
 if VERSION >= v"0.5-"
     using Base.Test
